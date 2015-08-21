@@ -1,0 +1,2 @@
+/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp: In member function 'void Acorde::fijarTonica(Acorde)':
+/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp:127: error: 'grado' was not declared in this scope

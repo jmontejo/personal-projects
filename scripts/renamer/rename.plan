@@ -1,0 +1,30 @@
+# The general structure of the commando will be:
+# rename [^][*]{text*}[text][$]
+# Eg:	rename bla foo
+#	rename *bla *foo
+#	rename * *add
+#	rename phys* phys*add
+#	rename *in* tuin*
+#	rename *A*B* *B*A*
+#
+#	in  = *phys*
+#	out = sust_phys*add
+#
+#	Algorithm:
+#	- parse input and output as *text*text* or text*text*text
+#	if both start with *
+#	if both start with text
+#
+#	[^][$] 	to	text
+#	*	to	text
+#	text	to	text'
+#
+#	if structure is the same - obvious change
+#	if starts/ends with * and structure is the same + append/prepend - obvious change
+#	difficult * to text' because of text merging:
+#		find text in second chain and separate
+#
+#
+#
+#
+

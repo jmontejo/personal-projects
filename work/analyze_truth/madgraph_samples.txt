@@ -1,0 +1,10 @@
+NAME                    PDF   Q-SCALE SHOWER    GRIDPACK  PDFRW
+4F  -- dead
+5F                      cteq6 1       Perugia   Valerio   true
+Ktfac2                  cteq6 2       Z2        Valerio   true
+CTEQ6                   cteq6 1       Perugia   CMS       false
+CT10                    ct10  1       Perugia   Valerio   false
+CMS_gridPack_4M_u       cteq6 1       Perugia   CMS       false
+CMS_gridPack_4M_u_ForZ2 cteq6 1       Z2        CMS       false
+
+Should be produced ->   cteq6 2       Perugia   --        false

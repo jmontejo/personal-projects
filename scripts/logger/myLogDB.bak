@@ -1,0 +1,78 @@
+#Log DB: /Users/Jmontejo/bin/logger/myLogDB.txt
+
+log: 2012-03-14
+ID: 12
+tag: ['mva']
+summary: Basic introduction about MVA techniques
+content: MVA techniques use the correlation among N variables to define a single discriminant which is sensitive to signal vs background.
+Boosted/Bagged decision trees: builds up a binary tree, in each step you take a decision over a variable and a threshold. Variables can appear several times. At the end you get your event classified as signal or background.
+Neural networks: one input layer with one neuron per variable, all possible connections to a second layer with the same number and connected to a final neuron. At the end, given N inputs you obtain one output close to 1 if it is signal-like.
+The training of the network proceeds in steps, you monitor the difference of outputs over iterations, it decreases until you overtrain and get a step up.
+In all methods you need a minimum of statistics to perform, if the discriminant distribution has spikes you are using too little mc.
+The way to choose the best method is to plot signal efficiency vs 1-bkg efficiency. You want to go close to 1,1 and you select your method accordingly.
+The mc is split into [[training,testing],rest for limit setting] don't mix up testing (to evaluate the performance of your training) and the part left for limits.
+The usual number of variables is around 4, at the end you have a ranking of discriminating power. Inefficient variables can degradate the performance of NN but are not used in BDT.
+
+Use BDT to check the discrimination of N variables. Pick up the best, check again in BDT and NN (which should perform slightly better)
+
+log: 2012-03-06
+ID: 11
+tag: ['mc', 'pdf', 'hasResource']
+summary: pdf mc
+content: where I can find information of what PDFs were used to generate the various MC samples in the Top group?
+
+the most secure way (I always use it when in doubt)  is to dq2-get input 
+unit used for the sample production and read the PDF data from the 
+.events file (e.g. Powheg) or .dat  (Alpgen, MC@NLO, Protos) card for 
+the ME part . The PS is added within the Athena, so the PDF is set by 
+the *common* file included in the jO file.
+
+Take 105200 as a concrete example:
+1) get a hold of jO file by (e.g.) following the clickable "DSID" link 
+on the  twiki  pages  
+https://svnweb.cern.ch/trac/atlasoff/browser/Generators/MC10JobOptions/trunk/share/MC10.105200.T1_McAtNlo_Jimmy.py
+(alternatively, svn list the MC10JobOptions/trunk/share and grep/export 
+105200)
+2)the 7 TeV input unit is  
+"group09.phys-gener.mcatnlo341.105200.ttbar_7TeV.TXT.v1"; if you dq2-get 
+-n 1and unpack the input unit, the PDF used for the ME is in the .dat 
+file, passed by the LHAPDF id: 10550 (CTEQ66)
+3) for the PS part, the tune/PDF is specified in the *common* file  
+https://svnweb.cern.ch/trac/atlasoff/browser/Generators/MC10JobOptions/trunk/common/MC10_McAtNloJimmy_Common_7TeV.py 
+
+consulting it you see that "modpdf 10550" i.e. CTEQ66 (and the 
+corresponding tune) is also used for the PS part
+
+An alternative would be to make AMI evgen-level samples queries, which 
+do return a PDF used for the PS part. AMI query can be made using AMI 
+command line interface (see 
+https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopMC, the FAQ&A 
+link How to find the sample cross-section and filtering efficiency? for 
+setup instructions) or (e.g.) by clicking the "AMI link" in the twiki 
+pages.
+Taking 105200 for example again, the query link is:
+https://ami.in2p3.fr/AMI/servlet/net.hep.atlas.Database.Bookkeeping.AMI.Servlet.Command?Converter=/AMIXmlToAMIProdHtml.xsl&Command=FormBrowseDatasetPerParameter+-datasetNumber=105200+-dataType=EVNT+-version=e598
++ click on the "details"; this leads you to an answer "CTEQ6.6" in the 
+PDF field. The pitfall with the AMI queries is that you learn nothing 
+about the  PDF used for the ME part , so in case the ME and PS use 
+different PDFs (only the case for Powheg samples in MC10b), you'll still 
+need to use the 1st "secure" option.
+
+The  1st option is therefore warmly recommended since you might want to 
+address matters like which generator tune, version and other parameter 
+setups were used to generate the sample and this data is most reliably 
+obtained from jO and inputs directly.
+
+log: 2012-03-06
+ID: 10
+tag: ['cross section', 'top', 'hasResource']
+summary: ttbar cross section measurement
+content: http://cdsweb.cern.ch/record/1379855/files/ATL-COM-PHYS-2011-1192.pdf
+
+log: 2012-03-06
+ID: 9
+tag: ['jets', 'hasResource']
+summary: Gavin Salam lectures
+content: https://indico.cern.ch/conferenceDisplay.py?confId=115078
+http://arxiv.org/abs/0906.1833
+

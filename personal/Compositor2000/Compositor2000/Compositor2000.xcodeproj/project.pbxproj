@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3D534BD7151F4AE300FB789B /* Compas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D534BD6151F4AE300FB789B /* Compas.cpp */; };
+		3D993B6615224A5000C894FD /* Algoritmo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D993B6515224A5000C894FD /* Algoritmo.cpp */; };
+		3DFA7F42151E44840019AC77 /* Monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F41151E44840019AC77 /* Monitor.cpp */; };
+		3DFA7F45151E449E0019AC77 /* Partitura.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F44151E449E0019AC77 /* Partitura.cpp */; };
+		3DFA7F48151E44A70019AC77 /* Posicion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F47151E44A70019AC77 /* Posicion.cpp */; };
+		3DFA7F4B151E44B10019AC77 /* Solucion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F4A151E44B10019AC77 /* Solucion.cpp */; };
+		3DFA7F4E151E44C00019AC77 /* Coste.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F4D151E44C00019AC77 /* Coste.cpp */; };
+		3DFA7F51151E44D50019AC77 /* Instrumento.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F50151E44D50019AC77 /* Instrumento.cpp */; };
+		3DFA7F54151E44F70019AC77 /* Acorde.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F53151E44F70019AC77 /* Acorde.cpp */; };
+		3DFA7F57151E45030019AC77 /* Nota.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F56151E45030019AC77 /* Nota.cpp */; };
+		3DFA7F5A151E451F0019AC77 /* CompositorV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F59151E451F0019AC77 /* CompositorV.cpp */; };
+		3DFA7F5D151E452B0019AC77 /* CompositorH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F5C151E452B0019AC77 /* CompositorH.cpp */; };
+		3DFA7F60151E46790019AC77 /* InterfazOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7F5F151E46790019AC77 /* InterfazOut.cpp */; };
+		8DD76F650486A84900D96B5E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
+		8DD76F6A0486A84900D96B5E /* Compositor2000.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* Compositor2000.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				8DD76F6A0486A84900D96B5E /* Compositor2000.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		08FB7796FE84155DC02AAC07 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3D534BD5151F4AE300FB789B /* Compas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compas.h; sourceTree = "<group>"; };
+		3D534BD6151F4AE300FB789B /* Compas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Compas.cpp; sourceTree = "<group>"; };
+		3D993B6415224A5000C894FD /* Algoritmo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Algoritmo.h; sourceTree = "<group>"; };
+		3D993B6515224A5000C894FD /* Algoritmo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Algoritmo.cpp; sourceTree = "<group>"; };
+		3DFA7F40151E44840019AC77 /* Monitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
+		3DFA7F41151E44840019AC77 /* Monitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monitor.cpp; sourceTree = "<group>"; };
+		3DFA7F43151E449E0019AC77 /* Partitura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Partitura.h; sourceTree = "<group>"; };
+		3DFA7F44151E449E0019AC77 /* Partitura.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Partitura.cpp; sourceTree = "<group>"; };
+		3DFA7F46151E44A70019AC77 /* Posicion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Posicion.h; sourceTree = "<group>"; };
+		3DFA7F47151E44A70019AC77 /* Posicion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Posicion.cpp; sourceTree = "<group>"; };
+		3DFA7F49151E44B10019AC77 /* Solucion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Solucion.h; sourceTree = "<group>"; };
+		3DFA7F4A151E44B10019AC77 /* Solucion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Solucion.cpp; sourceTree = "<group>"; };
+		3DFA7F4C151E44C00019AC77 /* Coste.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coste.h; sourceTree = "<group>"; };
+		3DFA7F4D151E44C00019AC77 /* Coste.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coste.cpp; sourceTree = "<group>"; };
+		3DFA7F4F151E44D50019AC77 /* Instrumento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Instrumento.h; sourceTree = "<group>"; };
+		3DFA7F50151E44D50019AC77 /* Instrumento.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Instrumento.cpp; sourceTree = "<group>"; };
+		3DFA7F52151E44F70019AC77 /* Acorde.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Acorde.h; sourceTree = "<group>"; };
+		3DFA7F53151E44F70019AC77 /* Acorde.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Acorde.cpp; sourceTree = "<group>"; };
+		3DFA7F55151E45030019AC77 /* Nota.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nota.h; sourceTree = "<group>"; };
+		3DFA7F56151E45030019AC77 /* Nota.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Nota.cpp; sourceTree = "<group>"; };
+		3DFA7F58151E451F0019AC77 /* CompositorV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositorV.h; sourceTree = "<group>"; };
+		3DFA7F59151E451F0019AC77 /* CompositorV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompositorV.cpp; sourceTree = "<group>"; };
+		3DFA7F5B151E452B0019AC77 /* CompositorH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositorH.h; sourceTree = "<group>"; };
+		3DFA7F5C151E452B0019AC77 /* CompositorH.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompositorH.cpp; sourceTree = "<group>"; };
+		3DFA7F5E151E46790019AC77 /* InterfazOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfazOut.h; sourceTree = "<group>"; };
+		3DFA7F5F151E46790019AC77 /* InterfazOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterfazOut.cpp; sourceTree = "<group>"; };
+		8DD76F6C0486A84900D96B5E /* Compositor2000 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Compositor2000; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6859E8B029090EE04C91782 /* Compositor2000.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Compositor2000.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* Compositor2000 */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6859E8C029090F304C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = Compositor2000;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7796FE84155DC02AAC07 /* main.cpp */,
+				3DFA7F40151E44840019AC77 /* Monitor.h */,
+				3DFA7F41151E44840019AC77 /* Monitor.cpp */,
+				3DFA7F43151E449E0019AC77 /* Partitura.h */,
+				3DFA7F44151E449E0019AC77 /* Partitura.cpp */,
+				3DFA7F46151E44A70019AC77 /* Posicion.h */,
+				3DFA7F47151E44A70019AC77 /* Posicion.cpp */,
+				3DFA7F49151E44B10019AC77 /* Solucion.h */,
+				3DFA7F4A151E44B10019AC77 /* Solucion.cpp */,
+				3DFA7F4C151E44C00019AC77 /* Coste.h */,
+				3DFA7F4D151E44C00019AC77 /* Coste.cpp */,
+				3DFA7F4F151E44D50019AC77 /* Instrumento.h */,
+				3DFA7F50151E44D50019AC77 /* Instrumento.cpp */,
+				3DFA7F52151E44F70019AC77 /* Acorde.h */,
+				3DFA7F53151E44F70019AC77 /* Acorde.cpp */,
+				3DFA7F55151E45030019AC77 /* Nota.h */,
+				3DFA7F56151E45030019AC77 /* Nota.cpp */,
+				3DFA7F58151E451F0019AC77 /* CompositorV.h */,
+				3DFA7F59151E451F0019AC77 /* CompositorV.cpp */,
+				3DFA7F5B151E452B0019AC77 /* CompositorH.h */,
+				3DFA7F5C151E452B0019AC77 /* CompositorH.cpp */,
+				3DFA7F5E151E46790019AC77 /* InterfazOut.h */,
+				3DFA7F5F151E46790019AC77 /* InterfazOut.cpp */,
+				3D534BD5151F4AE300FB789B /* Compas.h */,
+				3D534BD6151F4AE300FB789B /* Compas.cpp */,
+				3D993B6415224A5000C894FD /* Algoritmo.h */,
+				3D993B6515224A5000C894FD /* Algoritmo.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* Compositor2000 */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6859E8C029090F304C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				C6859E8B029090EE04C91782 /* Compositor2000.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F620486A84900D96B5E /* Compositor2000 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "Compositor2000" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Compositor2000;
+			productInstallPath = "$(HOME)/bin";
+			productName = Compositor2000;
+			productReference = 8DD76F6C0486A84900D96B5E /* Compositor2000 */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "Compositor2000" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* Compositor2000 */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* Compositor2000 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76F650486A84900D96B5E /* main.cpp in Sources */,
+				3DFA7F42151E44840019AC77 /* Monitor.cpp in Sources */,
+				3DFA7F45151E449E0019AC77 /* Partitura.cpp in Sources */,
+				3DFA7F48151E44A70019AC77 /* Posicion.cpp in Sources */,
+				3DFA7F4B151E44B10019AC77 /* Solucion.cpp in Sources */,
+				3DFA7F4E151E44C00019AC77 /* Coste.cpp in Sources */,
+				3DFA7F51151E44D50019AC77 /* Instrumento.cpp in Sources */,
+				3DFA7F54151E44F70019AC77 /* Acorde.cpp in Sources */,
+				3DFA7F57151E45030019AC77 /* Nota.cpp in Sources */,
+				3DFA7F5A151E451F0019AC77 /* CompositorV.cpp in Sources */,
+				3DFA7F5D151E452B0019AC77 /* CompositorH.cpp in Sources */,
+				3DFA7F60151E46790019AC77 /* InterfazOut.cpp in Sources */,
+				3D534BD7151F4AE300FB789B /* Compas.cpp in Sources */,
+				3D993B6615224A5000C894FD /* Algoritmo.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = Compositor2000;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = Compositor2000;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "Compositor2000" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "Compositor2000" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

@@ -1,0 +1,12 @@
+cut     jet_n>=6
+weight  TRFMCweight_in[4]*LeptonSF*MCweightXS*20000
+noCheck true
+
+var   jet_pt[3]
+var   jet_pt[0]-jet_pt[1]
+var   jet_pt[1]-jet_pt[2]
+var   jet_pt[2]-jet_pt[3]
+var   lep_pt
+var   met
+
+#var     jet_pt

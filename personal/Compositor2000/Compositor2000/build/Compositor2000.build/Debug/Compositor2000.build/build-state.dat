@@ -1,0 +1,444 @@
+TCompositor2000
+v7
+r0
+t354374104.391452
+cCheck dependencies
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/main.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Monitor.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Monitor.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Partitura.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Partitura.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Posicion.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Posicion.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Solucion.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Solucion.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Coste.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Coste.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Instrumento.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Instrumento.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Acorde.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Nota.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Nota.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorV.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorH.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorH.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/InterfazOut.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/InterfazOut.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Compas.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Compas.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cLd /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/Compositor2000 normal x86_64
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004D5A274300000000000000EE
+t1297753923
+s238
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/stdio.h
+c000000004BBD2CE90000000000004174
+t1270689001
+s16756
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp
+c000000004F6F15AA0000000000000734
+t1332680106
+s1844
+i"Acorde.h"
+i<iostream>
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.h
+c000000004F6F159400000000000001CD
+t1332680084
+s461
+i"Nota.h"
+i<string>
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Compas.cpp
+c000000004F6F156E000000000000016B
+t1332680046
+s363
+i"Compas.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Compas.h
+c000000004F6F155300000000000001BD
+t1332680019
+s445
+i<vector>
+i"Acorde.h"
+i"Instrumento.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorH.cpp
+c000000004F6E0DAB00000000000000A7
+t1332612523
+s167
+i"CompositorH.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorH.h
+c000000004F6E15F300000000000000D8
+t1332614643
+s216
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp
+c000000004F6F1A4F00000000000002F8
+t1332681295
+s760
+i"CompositorV.h"
+i<iostream>
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.h
+c000000004F6F14A00000000000000171
+t1332679840
+s369
+i<vector>
+i"Instrumento.h"
+i"Posicion.h"
+i"Compas.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Coste.cpp
+c000000004F6E0D40000000000000009B
+t1332612416
+s155
+i"Coste.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Coste.h
+c000000004F6E179000000000000000BF
+t1332615056
+s191
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Instrumento.cpp
+c000000004F6F1947000000000000053C
+t1332681031
+s1340
+i"Instrumento.h"
+i<iostream>
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Instrumento.h
+c000000004F6F16D1000000000000031F
+t1332680401
+s799
+i"Nota.h"
+i"Acorde.h"
+i<string>
+i<vector>
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/InterfazOut.cpp
+c000000004F6E0EF900000000000000A7
+t1332612857
+s167
+i"InterfazOut.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/InterfazOut.h
+c000000004F6E0EF9000000000000008B
+t1332612857
+s139
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Monitor.cpp
+c000000004F6E0D04000000000000009F
+t1332612356
+s159
+i"Monitor.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Monitor.h
+c000000004F6E15F600000000000000C6
+t1332614646
+s198
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Nota.cpp
+c000000004F6F054B0000000000000206
+t1332675915
+s518
+i"Nota.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Nota.h
+c000000004F6F19260000000000000293
+t1332680998
+s659
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Partitura.cpp
+c000000004F6F14B900000000000006F9
+t1332679865
+s1785
+i"Partitura.h"
+i"CompositorV.h"
+i<fstream>
+i<iostream>
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Partitura.h
+c000000004F6F140A000000000000036A
+t1332679690
+s874
+i<string>
+i<vector>
+i"Monitor.h"
+i"Acorde.h"
+i"Coste.h"
+i"Instrumento.h"
+i"Posicion.h"
+i"Solucion.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Posicion.cpp
+c000000004F6E0D2700000000000000A1
+t1332612391
+s161
+i"Posicion.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Posicion.h
+c000000004F6E15F600000000000000D4
+t1332614646
+s212
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Solucion.cpp
+c000000004F6E0D3100000000000000A1
+t1332612401
+s161
+i"Solucion.h"
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Solucion.h
+c000000004F6E15F600000000000000C8
+t1332614646
+s200
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Acorde.o
+t1332681000
+s74076
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Compas.o
+t1332681000
+s101588
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Compositor2000.LinkFileList
+c000000004F6F14410000000000000726
+t1332679745
+s1830
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorH.o
+t1332614647
+s1456
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorV.o
+t1332681296
+s203720
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Coste.o
+t1332615060
+s1452
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Instrumento.o
+t1332681032
+s120516
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/InterfazOut.o
+t1332613715
+s1440
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Monitor.o
+t1332614646
+s1452
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Nota.o
+t1332680999
+s6944
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Partitura.o
+t1332680999
+s381864
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Posicion.o
+t1332614647
+s1452
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Solucion.o
+t1332614647
+s1452
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/main.o
+t1332680999
+s120592
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/Compositor2000
+t1332681296
+s217808
+
+N/Users/JMontejo/Desktop/Compositor2000/Compositor2000/main.cpp
+c000000004F6F0C1D000000000000027C
+t1332677661
+s636
+i<iostream>
+i<string>
+i<vector>
+i"Monitor.h"
+i"Partitura.h"
+i"Solucion.h"
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies354374104#354374104#0(0"0(0#1#0"8646505408#0"0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Acorde.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354373799.832965
+e354373800.378666
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Acorde.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@72"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp354373799#354373800#0(0"0(0#0#64"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp8649205408#1586"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Acorde.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Acorde.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Compas.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Compas.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354373800.378946
+e354373800.680249
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Compas.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Compas.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@72"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Compas.cpp354373800#354373800#0(0"0(0#0#64"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Compas.cpp8649640448#1586"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Compas.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Compas.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorH.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorH.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354307447.285280
+e354307447.332966
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorH.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorH.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@77"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorH.cpp354307447#354307447#0(0"0(0#0#69"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorH.cpp8613974912#1596"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorH.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorH.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorV.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354374096.488228
+e354374096.489315
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorV.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@77"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp354374096#354374096#0(295"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp: In member function 'std::vector<Posicion, std::allocator<Posicion> > CompositorV::compose(Compas)':/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp:31: warning: control reaches end of non-void function1(22@40"Control reaches end of non-void function354374096#171#124#0(6@69"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp354374095#31#0#31#0#40"control reaches end of non-void function0(0#0#69"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp8648379616#1596"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/CompositorV.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/CompositorV.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Coste.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Coste.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354307860.220776
+e354307860.264329
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Coste.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Coste.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@71"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Coste.cpp354307860#354307860#0(0"0(0#0#63"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Coste.cpp8613352544#1584"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Coste.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Coste.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Instrumento.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Instrumento.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354373832.388245
+e354373832.569044
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Instrumento.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Instrumento.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@77"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Instrumento.cpp354373832#354373832#0(0"0(0#0#69"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Instrumento.cpp8646433760#1596"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Instrumento.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Instrumento.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/InterfazOut.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/InterfazOut.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354306515.629211
+e354306515.658955
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/InterfazOut.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/InterfazOut.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@77"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/InterfazOut.cpp354306515#354306515#0(0"0(0#0#69"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/InterfazOut.cpp8614690976#1596"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/InterfazOut.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/InterfazOut.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Monitor.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Monitor.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354307446.426828
+e354307446.543401
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Monitor.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Monitor.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@73"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Monitor.cpp354307446#354307446#0(0"0(0#0#65"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Monitor.cpp8613565760#1588"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Monitor.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Monitor.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Nota.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Nota.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354373799.854810
+e354373799.889167
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Nota.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Nota.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@70"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Nota.cpp354373799#354373799#0(0"0(0#0#62"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Nota.cpp8616209056#1582"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Nota.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Nota.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Partitura.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Partitura.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354373798.980199
+e354373799.854716
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Partitura.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Partitura.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@75"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Partitura.cpp354373798#354373799#0(0"0(0#0#67"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Partitura.cpp8614520928#1592"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Partitura.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Partitura.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Posicion.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Posicion.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354307447.079273
+e354307447.128756
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Posicion.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Posicion.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@74"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Posicion.cpp354307447#354307447#0(0"0(0#0#66"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Posicion.cpp8613734272#1590"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Posicion.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Posicion.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Solucion.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Solucion.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354307447.128854
+e354307447.178629
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Solucion.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Solucion.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@74"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Solucion.cpp354307447#354307447#0(0"0(0#0#66"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/Solucion.cpp8606410432#1590"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/Solucion.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Solucion.o0#
+
+CCompileC build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/main.o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s354373798.979210
+e354373799.452695
+r1
+xCompileC
+xbuild/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/main.o
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/main.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@70"Compile /Users/JMontejo/Desktop/Compositor2000/Compositor2000/main.cpp354373798#354373799#0(0"0(0#0#62"/Users/JMontejo/Desktop/Compositor2000/Compositor2000/main.cpp8642993664#1582"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-generated-files.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-own-target-headers.hmap -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-all-target-headers.hmap -iquote /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Compositor2000-project-headers.hmap -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/include -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources/x86_64 -I/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/DerivedSources -c /Users/JMontejo/Desktop/Compositor2000/Compositor2000/main.cpp -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/main.o0#
+
+CLd /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/Compositor2000 normal x86_64
+s354374096.489605
+e354374096.528529
+r1
+xLd
+x/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/Compositor2000
+xnormal
+xx86_64
+lSLF07#2@85"Link /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/Compositor2000354374096#354374096#0(0"0(0#0#0"8643119840#601"    cd /Users/JMontejo/Desktop/Compositor2000/Compositor2000    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/g++-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -F/Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug -filelist /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Compositor2000.build/Debug/Compositor2000.build/Objects-normal/x86_64/Compositor2000.LinkFileList -mmacosx-version-min=10.6 -o /Users/JMontejo/Desktop/Compositor2000/Compositor2000/build/Debug/Compositor20000#
+

@@ -1,0 +1,152 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+export HISTSIZE=100000
+export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
+alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
+
+#------ Machine dependent settings
+case `hostname` in
+  *pic*) # ------- pic
+    export MYSVN="/nfs/at3users/users/jmontejo/projects"
+    ;;
+  *lxplus* | *nifae* ) # ------- lxplus
+    export MYSVN="/afs/cern.ch/user/j/jmontejo/work/atlas-jmontejo/projects"
+    #export AtlasSetup=/afs/cern.ch/atlas/software/dist/AtlasSetup
+    #alias asetup='source $AtlasSetup/scripts/asetup.sh'
+    #source /afs/cern.ch/atlas/offline/external/GRID/DA/panda-client/latest/etc/panda/panda_setup.sh
+    #export PATHENA_GRID_SETUP_SH=/afs/cern.ch/project/gd/LCG-share/current/etc/profile.d/grid_env.sh
+    
+    if tty --quiet ; then
+       stty erase '^?'
+    fi
+    ;;
+  *atropos* | *caronte*) #atropos and caronte
+    export MYSVN="/www/personal/jmontejo/projects"
+    ;;
+  *) #local
+    export MANPATH=/opt/local/share/man:$MANPATH
+    export PATH=/opt/local/libexec/gnubin/:$PATH
+    export MYSVN="/projects"
+    alias tex2png='tex2png.sh'
+    alias log="python $MYSVN/scripts/logger/main_log.py"
+    alias ls='ls -G --color=auto'
+    alias allow="sudo $MYSVN/scripts/blockWebs.py -a"
+    alias block="sudo $MYSVN/scripts/blockWebs.py -b"
+    source /Users/JMontejo/Documents/root_5.34.26/bin/thisroot.sh
+    #source /Users/JMontejo/Downloads/root/bin/thisroot.sh 
+    if python -c "from socket import gethostname; print gethostname()" | grep -q cern; then
+     if grep 127 /etc/hosts | grep -v localhost | grep -q "#"; then 
+     echo "Logged at CERN, how about blocking websites?"; 
+     fi;
+    fi
+    ;;
+esac
+
+#------ Machine independent settings
+#exports
+export SVNROOT=svn+ssh://jmontejo@svn.cern.ch/reps/IfaeAnaRepo
+export SVN_EDITOR=/usr/bin/vim
+export EDITOR=/usr/bin/vim
+export PATH=$PATH:$HOME/bin:.
+export PYTHONPATH=$PYTHONPATH:$MYSVN/scripts
+export GZIP=-9
+
+#login alias
+alias nifae='ssh -Y jmontejo@nifaets1.cern.ch'
+alias caronte='ssh -Y jmontejo@caronte.ifae.es'
+alias atropos='ssh -t jmontejo@caronte.ifae.es ssh jmontejo@atropos.ifae.es'
+alias ui='ssh -Y jmontejo@ui.pic.es'
+alias at3='ssh -Y jmontejo@at3.pic.es'
+alias at301='ssh -Y jmontejo@at301.pic.es'
+alias at302='ssh -Y jmontejo@at302.pic.es'
+alias at303='ssh -Y jmontejo@at303.pic.es'
+alias at304='ssh -Y jmontejo@at304.pic.es'
+alias at305='ssh -Y jmontejo@at305.pic.es'
+alias at306='ssh -Y jmontejo@at306.pic.es'
+alias at307='ssh -Y jmontejo@at307.pic.es'
+alias lxplus='ssh -Y jmontejo@lxplus.cern.ch'
+alias lxplus5='ssh -Y jmontejo@lxplus5.cern.ch'
+alias nifae06='ssh -Y jmontejo@nifae06.cern.ch'
+
+#useful alias
+alias pythno='python'
+alias root='root -l'
+alias mv='mv -i'
+alias convert='convert -density 300 -quality 100'
+alias emacs='emacs -nw'
+alias cdb='cd `pwd -P`/..'
+alias lsd='ls -d -- */'
+alias valgrind='valgrind --suppressions=$ROOTSYS/etc/valgrind-root.supp'
+alias work='source $MYSVN/scripts/mystart.sh '
+#the empty space at the end is needed
+alias dq2-ls='if  ! which localSetupDQ2Client &> /dev/null ; then echo "Need ATLAS setup: work"; else echo "Setting up dq2"; localSetupDQ2Client --quiet --skipConfirm ; fi; dq2-ls $@ ' #after localSetupDQ2Client the alias is overriden
+alias dq2-get='if  ! which localSetupDQ2Client &> /dev/null ; then echo "Need ATLAS setup: work"; else echo "Setting up dq2"; localSetupDQ2Client --quiet --skipConfirm ; fi; dq2-get $@ ' #after localSetupDQ2Client the alias is overriden
+alias ami='if  ! which localSetupPyAMI &> /dev/null ; then echo "Need ATLAS setup: work"; else echo "Setting up ami"; unalias ami; localSetupPyAMI --quiet ; fi; ami $@ '
+alias checkAMI='echo "Please use: ami dataset info"'
+
+#my new commands
+alias comparePath='python $MYSVN/scripts/comparePath.py'
+alias compareTree='python $MYSVN/scripts/compareTree.py'
+alias hack='python $MYSVN/scripts/hack.py'
+alias pdfize='python $MYSVN/scripts/pdfize.py'
+alias webize='python $MYSVN/scripts/createHtmlOverview.py'
+alias rename='set -f; reset_expansion python $MYSVN/scripts/renamer/rename.py'
+my_wiki(){
+  dig +short txt $1.wp.dg.cx
+}
+alias wiki='my_wiki'
+getlast() {
+  fc -ln "$1" "$1" | sed '1s/^[[:space:]]*//'
+}
+
+#overwrite builtin commands
+reset_expansion(){
+   trap "set +f; exit" INT TERM EXIT
+  #CMD="$1"; shift; ARG="$@";
+  #$CMD $ARG; set +f
+  ARG="$@";
+  $ARG; set +f
+  trap - INT TERM EXIT
+}
+my_vim(){
+  python $MYSVN/scripts/hack.py --vim "$@" && \vim $@
+}
+my_make(){
+  python $MYSVN/scripts/hack.py --make "$@" && \make $@
+}
+my_display(){
+case `hostname` in
+  *pic*) # ------- pic
+    cmd=\display
+    ;;
+  *lxplus*) # ------- lxplus
+    cmd=\display
+    ;;
+  *) # ------- local
+    cmd=open
+    ;;
+esac
+for i in $@; do if [ ! -f $i ]; then echo "File doesn't exist:" $i; else $cmd $i & fi; done
+}
+
+my_redo(){
+  if [ $# -lt 2 ]; then
+    echo Usage: redo old new
+    return
+  fi
+  `getlast | sed s/$1/$2/g`
+}
+alias vim='my_vim'
+alias make='my_make'
+alias display='my_display '
+alias rm='set -f; reset_expansion python $MYSVN/scripts/my_rm.py'
+alias pwd='python $MYSVN/scripts/my_pwd.py'
+alias cp='python $MYSVN/scripts/my_cp.py'
+alias dccp='$MYSVN/scripts/my_dccp.py'
+alias redo='my_redo '
+

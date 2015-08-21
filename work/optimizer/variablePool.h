@@ -1,0 +1,45 @@
+#ifndef variablePool_H
+#define variablePool_H
+
+#include <map>
+#include <vector>
+#include "TString.h"
+#include "TTree.h"
+#include "TCanvas.h"
+#include "Options.h"
+
+class variablePool{
+
+public:
+  variablePool(TTree *sigtree, TTree *bkgtree, Options *options);
+  std::vector<TString> functionVars;
+  std::vector<TString> intVars;
+  std::vector<TString> doubleVars;
+  void AddFunctionVar(TString var);
+  void AddVectorVar(TString var);
+  void AddDoubleVar(TString var);
+  void AddIntVar(TString var);
+  void Print();
+  std::map<TString, double> var_mean;
+  std::map<TString, double> var_min;
+  std::map<TString, double> var_max;
+  std::map<TString, double> lim_min;
+  std::map<TString, double> lim_max;
+  TTree* getSigTree();
+  TTree* getBkgTree();
+
+private:
+  void AddVar(TString var,std::vector<TString> *vec);
+  void GetVarsFromTrees();
+  void doPlot(TString var,TH1F *hsig, TH1F *hbkg);
+
+  TTree *m_sigtree;
+  TTree *m_bkgtree;
+  TString m_cut, m_weight;
+  bool m_noCheck;
+  std::vector<TString> m_vars;
+  TCanvas c1;
+
+};
+
+#endif

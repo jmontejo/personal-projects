@@ -1,0 +1,364 @@
+#Log DB: /Users/Jmontejo/bin/logger/myLogDB.txt
+
+log: 2012-03-16
+ID: 30
+tag: ['alpgen', 'truth', 'reweight', 'hasResource']
+summary: Systematic studies on Alpgen by varying generator parameters. No D3PD are availabe, but NTUP_TRUTH
+content: Hi Aurelio,
+unfortunately we did not finish all the studies we wanted to do. But it is still on our to do list.
+In the meantime we have started to write some documentation of the studies we already did.
+You can find a very preliminary version of this at
+
+https://cdsweb.cern.ch/record/1419198
+
+But really take this as work in progress. I was asked to provide a ATLAS-COM-PHYS number
+for reference otherwise I would not have put it in cds yet. There is still no reweighting tool 
+available but it should be straight forward to apply the cross sections from the samples with
+scale variations to the nominal Alpgen ttbar samples.
+Concerning the availability, the samples are currently available only at the german NAF which can
+only be used by members german groups working on LHC experiments. But I will ask Carsten to upload
+the samples to the grid if he hasn't done this already.
+
+The list of samples can be found at:
+http://homepages.physik.uni-muenchen.de/~muellert/D3PD/html_mc10_p583.html
+login= susy11
+pwd = susy11
+
+A more detailed explanation can be found in the mail "tt+jets ALPGEN scale variations" by Mark Hohlfeld
+
+based on Marc and Mainz studies, we made some very simple tool returning the weight on a given Np slice when varying a parameter. Of course, this mainly work for ktfac and qfac as varyation like drjmin or ptjmin might be more complicated.
+You can find the tool there:
+https://svnweb.cern.ch/trac/atlasoff/browser/PhysicsAnalysis/SUSYPhys/SUSYTools/trunk/Root/ScaleVariatioReweighter.cxx
+In case you need further info on the tool, you can also ask Valerio in cc.
+
+log: 2012-03-16
+ID: 29
+tag: ['top', 'selection', 'hasResource']
+summary: object selection, calibration, bkg estimation and MC samples for top analysis
+content: we would like to signal the posting of the COM (soon to become INT) note summarizing object selection, calibration; bkg estimation and MC samples for Top analysis in Winter 2012 (rel17, 5 fb-1) in CDS
+
+This note can be cited on the various analysis notes for the EBs and ATLAS colleagues to read.
+As remarked in the past, the plan is to update the note  with refined recommendations as they come, in view of the papers.
+The note is:
+ATL-COM-PHYS-2012-224
+
+https://cdsweb.cern.ch/record/1427721
+
+log: 2012-03-15
+ID: 28
+tag: ['ttH', 'cross section']
+summary: Theroy input for ttH cross section
+content: You raise some very important points for which not everything has
+been done yet. The background to ttbarH,H->bb, i.e. (ttbar)(bbbar)
+has been calculated at NLO in QCD (see arXiv:0905.0110,0807.1248,
+1001.4006,0907.4723,1003.1241). This however includes only QCD
+processes, i.e., it does not include all the electroweak processes
+that could generate a (ttbar)(bbar) final state. So, no interference
+terms between QCD and EW generated (ttbar)(bbbar) final state are
+taken into account.
+
+The only study that includes both signal (ttbarH,H->bbar) and
+QCD background (ttbar bbbar), where the signal is indeed treated
+in a narrow width approximation (as you suggest), can be found in
+the proceedings of a Les Houches workshop (arXiv:1003.1241, p.31).
+Better studies are possible, but they require far more extensive
+calculations, since the EW part of the calculation is quite involved.
+
+
+However, more recently, the NLO calculation of the ttbarH signal
+has been interfaced with both MC@NLO and POWHEG. This could be helpful
+to get a better modelling of at least the signal events.
+We will have a section dedicated to this in the second report of the
+LHC Higgs Cross Section Working Group (that should soon be on the archives). Meanwhile you may want to contact some of the people that
+have contributed to this section of our report, in particular
+R. Frederix (for the MC@NLO interface) and M.V.Garzelli and Z.Trocsany
+(for teh POWHEG interface). I CC them in this e-mail.
+
+log: 2012-03-15
+ID: 27
+tag: ['vlq']
+summary: Cross section for the dataset 145486, TT->tHWb
+content: Dear u4u4 and tt+HF teams,
+	a test sample of Vector-like Tops is now becoming available at AOD
+level (MC11c):
+
+mc11_7TeV.145486.Pythia_Protos_TT_T500H120_lept.recon.AOD.e996_s1310_s1300_r3043
+
+they are being merged right now into:
+
+mc11_7TeV.145486.Pythia_Protos_TT_T500H120_lept.merge.AOD.e996_s1310_s1300_r3043_r2993
+
+We have requested that these be processed to make top d3pds, so they
+should available in the near future.
+
+This sample consists of pair production of Vector-like tops with Higgs
+mass of 120 GeV
+
+total cross section: NNLO cross section (HATHOR) 0.330 pb
+
+filter efficiency: 0.75238
+
+Branching fractions (before filter):
+
+TT->WbtH  0.3290
+TT->WbWb  0.2446
+TT->WbtZ  0.1705
+TT->tHtZ  0.1150
+TT->tHtH  0.1107
+TT->tZtZ  0.0302
+
+For the tt+HF team this makes for a nice sample to test the analysis on,
+specifically for the WbtH, H->bb events
+
+log: 2012-03-15
+ID: 26
+tag: ['ttcc']
+summary: Mail from Chris with the ttcc cross-section
+content: The cross-section from Herwig is reported as:
+MATCHING EFFICIENCY:  0.99800399201596801
+FINAL CROSS SECTION (PB):   1.7546307385229540
+INTEGRATED LUMINOSITY (PB-1):   284.96024207401007
+
+         OUTPUT ON LES HOUCHES EVENTS
+
+
+     PROC CODE  XSECT(pb)        XERR(pb)      Max wgt(nb) No. of events
+
+
+         OUTPUT ON ELEMENTARY PROCESS
+
+         N.B. NEGATIVE WEIGHTS NOT ALLOWED
+
+         NUMBER OF EVENTS   =         500
+         NUMBER OF WEIGHTS  =         501
+         MEAN VALUE OF WGT  =  1.7546E-03
+         RMS SPREAD IN WGT  =  7.8469E-05
+         ACTUAL MAX WEIGHT  =  1.7581E-03
+         ASSUMED MAX WEIGHT =  1.7581E-03
+
+         PROCESS CODE IPROC =       -1400
+         CROSS SECTION (PB) =   1.755
+         ERROR IN C-S  (PB) =  3.5058E-03
+         EFFICIENCY PERCENT =   99.80
+
+         MODIFIED OUTPUT ON ELEMENTARY PROCESS
+
+         MULTIPLE SCATTERS USED FOR UNDERLYING EVENT
+         NO CHANGE TO TOTAL CROSS SECTION.
+         NUMBER OF SCATTERS =                 1914
+MetaData: cross-section (nb)= 0.00175463
+
+log: 2012-03-15
+ID: 25
+tag: ['mc', 'truth', 'generator', 'alpgen', 'hasResource']
+summary: Information about generator level in Alpgen
+content: At generation there is a pT cut at the parton level of 15GeV. Afterwards a matching (MLM) is performed which requires Et>20GeV. At ME we see a cut-off at 15 and a step at 20, whereas at PS we see a gradual ending at 20.
+The default eta cut in alpgen is 2.5 but ATLAS does not use it, so the cut is at 6.0
+All the used parameters are in table 35 here:
+http://cdsweb.cern.ch/record/1312945?ln=en
+In general you can get this information by downloading the input datasets from dq2. (any individual .dat file contains the information)
+
+log: 2012-03-14
+ID: 24
+tag: ['limits', 'CLs', 'hasResource']
+summary: papers on CLs method for limit setting
+content: I read the cds one
+http://iopscience.iop.org/0954-3899/28/10/313/pdf/0954-3899_28_10_313.pdf
+https://cdsweb.cern.ch/record/451614
+http://lss.fnal.gov/archive/test-tm/2000/fermilab-tm-2386-e.pdf
+
+log: 2012-03-14
+ID: 23
+tag: ['higgs', 'cross section', 'hasResource']
+summary: Higgs cross-section reference
+content: http://arxiv.org/abs/1101.0593
+The final cross section is taken from table 19 (envelope method):
+xsec*filter efficiency (0.84 lepton filter)*BR H->bb (mass dependent ~0.75)*BR W->lnu*symmetry
+
+log: 2012-03-14
+ID: 22
+tag: ['vlq', 'theory', 'hasResource']
+summary: 
+content: theory paper on vector like quarks
+http://arxiv.org/abs/0907.3155
+
+log: 2012-03-14
+ID: 21
+tag: ['ttH', 'hasResource']
+summary: ttH papers
+content: - Latest report on ttH in ATLAS:
+https://indico.cern.ch/getFile.py/access?contribId=1&resId=0&materialId=slides&confId=167391
+The ATLAS discovery potential for the channel ttH, H to bb
+https://cdsweb.cern.ch/record/685523
+- CDF and D0 recent ttH results:
+http://www-cdf.fnal.gov/physics/new/hdg/Results_files/results/tthLeptons_110715/
+http://www-d0.fnal.gov/Run2Physics/WWW/results/prelim/HIGGS/H75/
+http://www-cdf.fnal.gov/physics/new/hdg/Results_files/results/tthLeptons_120307/ttH_pubNote.pdf
+
+log: 2012-03-14
+ID: 20
+tag: ['mc', 'generator level', 'pdf', 'hasResource']
+summary: How to obtain the pdf used in a MC sample
+content: where I can find information of what PDFs were used to generate the various MC samples in the Top group?
+
+the most secure way (I always use it when in doubt)  is to dq2-get input 
+unit used for the sample production and read the PDF data from the 
+.events file (e.g. Powheg) or .dat  (Alpgen, MC@NLO, Protos) card for 
+the ME part . The PS is added within the Athena, so the PDF is set by 
+the *common* file included in the jO file.
+
+Take 105200 as a concrete example:
+1) get a hold of jO file by (e.g.) following the clickable "DSID" link 
+on the  twiki  pages  
+https://svnweb.cern.ch/trac/atlasoff/browser/Generators/MC10JobOptions/trunk/share/MC10.105200.T1_McAtNlo_Jimmy.py
+(alternatively, svn list the MC10JobOptions/trunk/share and grep/export 
+105200)
+2)the 7 TeV input unit is  
+"group09.phys-gener.mcatnlo341.105200.ttbar_7TeV.TXT.v1"; if you dq2-get 
+-n 1and unpack the input unit, the PDF used for the ME is in the .dat 
+file, passed by the LHAPDF id: 10550 (CTEQ66)
+3) for the PS part, the tune/PDF is specified in the *common* file  
+https://svnweb.cern.ch/trac/atlasoff/browser/Generators/MC10JobOptions/trunk/common/MC10_McAtNloJimmy_Common_7TeV.py 
+
+consulting it you see that "modpdf 10550" i.e. CTEQ66 (and the 
+corresponding tune) is also used for the PS part
+
+An alternative would be to make AMI evgen-level samples queries, which 
+do return a PDF used for the PS part. AMI query can be made using AMI 
+command line interface (see 
+https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopMC, the FAQ&A 
+link How to find the sample cross-section and filtering efficiency? for 
+setup instructions) or (e.g.) by clicking the "AMI link" in the twiki 
+pages.
+Taking 105200 for example again, the query link is:
+https://ami.in2p3.fr/AMI/servlet/net.hep.atlas.Database.Bookkeeping.AMI.Servlet.Command?Converter=/AMIXmlToAMIProdHtml.xsl&Command=FormBrowseDatasetPerParameter+-datasetNumber=105200+-dataType=EVNT+-version=e598
++ click on the "details"; this leads you to an answer "CTEQ6.6" in the 
+PDF field. The pitfall with the AMI queries is that you learn nothing 
+about the  PDF used for the ME part , so in case the ME and PS use 
+different PDFs (only the case for Powheg samples in MC10b), you'll still 
+need to use the 1st "secure" option.
+
+The  1st option is therefore warmly recommended since you might want to 
+address matters like which generator tune, version and other parameter 
+setups were used to generate the sample and this data is most reliably 
+obtained from jO and inputs directly.
+
+log: 2012-03-14
+ID: 19
+tag: ['mc', 'status codes', 'hasResource']
+summary: List of mc status codes
+content: http://webber.home.cern.ch/webber/hw65_manual.html#htoc96
+
+log: 2012-03-14
+ID: 18
+tag: ['cross section', 'hasResource']
+summary: Measurement of the b-jet cross section in events with a W boson
+content: https://cdsweb.cern.ch/record/1345449/files/ATL-COM-PHYS-2011-411.pdf
+
+log: 2012-03-14
+ID: 17
+tag: ['tt+jets', 'hasResource']
+summary: tt+jets papers
+content: http://cdsweb.cern.ch/record/1370585/files/CERN-THESIS-2011-050.pdf
+http://cdsweb.cern.ch/record/1358619/files/ATL-COM-PHYS-2011-717.pdf
+
+log: 2012-03-14
+ID: 16
+tag: ['b-tagging', 'hasResource']
+summary: B-tagging papers
+content: http://cdsweb.cern.ch/record/1356198/files/ATLAS-CONF-2011-089.pdf
+http://cdsweb.cern.ch/record/1369219/files/ATLAS-CONF-2011-102.pdf
+
+log: 2012-03-14
+ID: 15
+tag: ['top cross section', 'hasResource']
+summary: Measurement of the top quark cross-section in the semileptonic channel in
+pp collisions at s = 7 TeV using kinematic information
+content: http://cdsweb.cern.ch/record/1379855/files/ATL-COM-PHYS-2011-1192.pdf
+
+log: 2012-03-14
+ID: 14
+tag: ['jes', 'jet energy scale', 'hasResource']
+summary: ATLAS paper on the jet energy calibration.
+content: The jet energy scale (JES) and its systematic uncertainty are determined for
+jets measured with the ATLAS detector at the LHC in proton-proton collision
+data at a centre-of-mass energy of sqrt(s) = 7 TeV corresponding to an
+integrated luminosity of 38 inverse pb. Jets are reconstructed with the anti-kt
+algorithm with distance parameters R=0.4 or R=0.6. Jet energy and angle
+corrections are determined from Monte Carlo simulations to calibrate jets with
+transverse momenta pt>  20 GeV and pseudorapidities eta<4.5. The JES systematic
+uncertainty is estimated using the single isolated hadron response measured in
+situ and in test-beams. The JES uncertainty is less than 2.5% in the central
+calorimeter region (eta<0.8) for jets with 60<  pt<  800 GeV, and is maximally
+14% for pt<  30 GeV in the most forward region 3.2<eta<4.5. The uncertainty for
+additional energy from multiple proton-proton collisions in the same bunch
+crossing is less than 1.5% per additional collision for jets with pt>  50 GeV
+after a dedicated correction for this effect. The JES is validated for jet
+transverse momenta up to 1 TeV to the level of a few percent using several in
+situ techniques by comparing a well-known reference such as the recoiling
+photon pt, the sum of the transverse momenta of tracks associated to the jet,
+or a system of low-pt jets recoiling against a high-pt jet. More sophisticated
+jet calibration schemes are presented based on calorimeter cell energy density
+weighting or hadronic properties of jets, providing an improved jet energy
+resolution and a reduced flavour dependence of the jet response. The JES
+systematic uncertainty determined from a combination of in situ techniques are
+consistent with the one derived from single hadron response measurements over a
+wide kinematic range. The nominal corrections and uncertainties are derived for
+isolated jets in an inclusive sample of high-pt jets.
+\\ (http://arxiv.org/abs/1112.6426  ,  5930kb)
+
+log: 2012-03-14
+ID: 13
+tag: ['profiling', 'hasResource']
+summary: Recommendations for profile likelihood analyses
+content: Dear Statistics Forum,
+
+In the Statistics Forum meeting on Tuesday, Nov 8 (agenda reminder below) Wouter
+Verkeke will present some recommendations for profile likelihood analyses which he
+developed for the Top Working Group. He has written a draft which I invite you to comment.
+
+I got quite excited when reading the draft because he discusses systematically issues
+we have discussed much in the Higgs searches during the last half year. I propose
+to publish this on the Statistics Forum twiki as recommendations for both searches and
+measurements that use profile likelihood. If there are no major objections we will
+announce this to the Physics Groups as soon as possible, preferably by the end of
+the P&P week.
+
+Directly after Wouter's presentation Bogdan Malaescu will present some thoughts
+on the profiling of JES, which is directly relevant to and indeed serves as an example
+in Wouter's document.
+
+Agenda reminder:
+https://indico.cern.ch/conferenceDisplay.py?confId=160965
+
+Draft on profiling for comments:
+https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/ProfilingChecksDraft
+
+log: 2012-03-14
+ID: 12
+tag: ['mva']
+summary: Basic introduction about MVA techniques
+content: MVA techniques use the correlation among N variables to define a single discriminant which is sensitive to signal vs background.
+Boosted/Bagged decision trees: builds up a binary tree, in each step you take a decision over a variable and a threshold. Variables can appear several times. At the end you get your event classified as signal or background.
+Neural networks: one input layer with one neuron per variable, all possible connections to a second layer with the same number and connected to a final neuron. At the end, given N inputs you obtain one output close to 1 if it is signal-like.
+The training of the network proceeds in steps, you monitor the difference of outputs over iterations, it decreases until you overtrain and get a step up.
+In all methods you need a minimum of statistics to perform, if the discriminant distribution has spikes you are using too little mc.
+The way to choose the best method is to plot signal efficiency vs 1-bkg efficiency. You want to go close to 1,1 and you select your method accordingly.
+The mc is split into [[training,testing],rest for limit setting] don't mix up testing (to evaluate the performance of your training) and the part left for limits.
+The usual number of variables is around 4, at the end you have a ranking of discriminating power. Inefficient variables can degradate the performance of NN but are not used in BDT.
+
+Use BDT to check the discrimination of N variables. Pick up the best, check again in BDT and NN (which should perform slightly better)
+
+log: 2012-03-06
+ID: 10
+tag: ['cross section', 'top', 'hasResource']
+summary: ttbar cross section measurement
+content: http://cdsweb.cern.ch/record/1379855/files/ATL-COM-PHYS-2011-1192.pdf
+
+log: 2012-03-06
+ID: 9
+tag: ['jets', 'hasResource']
+summary: Gavin Salam lectures
+content: https://indico.cern.ch/conferenceDisplay.py?confId=115078
+http://arxiv.org/abs/0906.1833
+

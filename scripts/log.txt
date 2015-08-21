@@ -1,0 +1,23 @@
+AUTO: Updating .
+AUTO: Adding .
+A         log.txt
+A         my_dccp.py
+A         tests
+A         tests/a.txt
+A         tests/nested
+A         tests/nested/b.txt
+AUTO: Committing .
+A	/projects/scripts/workflow_manager/manager.py
+A	/projects/scripts/my_dccp.py
+A	/projects/scripts/tests/nested/b.txt
+M	/projects/scripts/logger/myLogDB.txt
+M	/projects/scripts/my_bashrc
+A	/projects/scripts/workflow_manager
+M	/projects/scripts/mymorning.vim
+A	/projects/scripts/tests/a.txt
+M	/projects/scripts/trash
+A	/projects/scripts/tests
+A	/projects/scripts/logger/web_content
+A	/projects/scripts/log.txt
+A	/projects/scripts/tests/nested
+A	/projects/scripts/myutils.py
