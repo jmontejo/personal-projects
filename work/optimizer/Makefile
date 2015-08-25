@@ -3,6 +3,7 @@ FILES += optimizer
 FILES += computeVar
 FILES += variablePool
 FILES += Options
+FILES += GeneticAlgorithm
 
 OBJS  := $(addsuffix .o, $(FILES))
 
@@ -13,13 +14,13 @@ all: optimizer
   
 
 optimizer: $(OBJS)
-	g++ -m64 -Wall $(OBJS) `root-config --cflags --libs` -lMinuit -o optimizer
+	g++ --std=c++0x -m64 -Wall $(OBJS) `root-config --cflags --libs` -lMinuit -o optimizer
 
 optimizer.o: optimizer.cxx
-	g++ -m64 -Wall -c `root-config --cflags` -o $@ $<
+	g++ --std=c++0x -m64 -Wall -c `root-config --cflags` -o $@ $<
 
 %.o: %.cxx %.h
-	g++ -m64 -Wall -c `root-config --cflags` -o $@ $<
+	g++ --std=c++0x -m64 -Wall -c `root-config --cflags` -o $@ $<
 
 clean:
 	rm *.o optimizer AutoDict* *~ *.gch

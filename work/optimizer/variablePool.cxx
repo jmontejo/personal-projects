@@ -11,19 +11,20 @@
 #define DEBUG 1
 
 variablePool::variablePool(TTree *sigtree, TTree *bkgtree, Options *options){
-  m_cut     = options->getCut();
-  m_weight  = options->getWeight();
+  m_cut     = options->get("cut");
+  m_weight  = options->get("weight");
   m_vars    = options->getVars();
   m_noCheck = options->getNoCheck();
   TFile *dummy = TFile::Open("dummy.root","recreate");
-  std::cout << "Building variablePool..." << std::endl;
+  std::cout << "Building variablePool..." << sigtree << " " << bkgtree << std::endl;
   m_sigtree = sigtree->CopyTree(m_cut);
   m_bkgtree = bkgtree->CopyTree(m_cut);
+  std::cout << "Building variablePool..." << std::endl;
 
   GetVarsFromTrees();
   std::cout << "End variablePool" << std::endl;
-  AddFunctionVar("computeVar::Diff(jet_btag_weight[3],jet_btag_weight[2])");
-  AddFunctionVar("computeVar::BtagN(jet_btag_weight,3)");
+  //AddFunctionVar("computeVar::Diff(jet_btag_weight[3],jet_btag_weight[2])");
+  //AddFunctionVar("computeVar::BtagN(jet_btag_weight,3)");
   //AddFunctionVar("computeVar::BtagN(jet_MV1c_weight,3)");
   //AddFunctionVar("computeVar::BtagN(jet_btag_weight,2)+computeVar::BtagN(jet_btag_weight,3)");
   //AddFunctionVar("computeVar::BtagN(jet_MV1c_weight,2)+computeVar::BtagN(jet_MV1c_weight,3)");
@@ -51,13 +52,13 @@ void variablePool::AddFunctionVar(TString var){
 void variablePool::AddVectorVar(TString var){
   if(!var.Contains("jet_pt")) return;
 //  TCanvas c1;
-//  TString signame = "hsig"+var;
-//  m_sigtree->Draw("@"+var+".size() >>"+signame,m_cut);
-//  TH1F *hsig = (TH1F *) gDirectory->Get(signame);
+//  TString hname = "hsig"+var;
+//  m_sigtree->Draw("@"+var+".size() >>"+hname,m_cut);
+//  TH1F *hsig = (TH1F *) gDirectory->Get(hname);
 //  c1.SaveAs(var+"_size.png");
-//  TString bkgname = "hbkg"+var;
-//  m_bkgtree->Draw("@"+var+".size() >>"+bkgname,m_cut);
-//  TH1F *hbkg = (TH1F *) gDirectory->Get(bkgname);
+//  TString hname = "hbkg"+var;
+//  m_bkgtree->Draw("@"+var+".size() >>"+hname,m_cut);
+//  TH1F *hbkg = (TH1F *) gDirectory->Get(hname);
 //  int max = 0, max2 =0;
 //  for(int i=hbkg->GetNbinsX();i>0;i--)
 //    if(hbkg->GetBinContent(i)!=0){
@@ -91,17 +92,16 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
   if(DEBUG) std::cout << "AddVar " << var << std::endl;
   vec->push_back(var);
 
-  TString signame = "hsig"+var;
-  signame = signame.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","").ReplaceAll(",","");
-  std::cout << TString(var+">>"+signame+"(1000)") << std::endl;
-  m_sigtree->Draw(var+">>"+signame+"(1000)",m_cut+"*"+m_weight);
-  std::cout << TString(var+">>"+signame+"(1000)") << std::endl;
-  TH1F *hsig = (TH1F *) gDirectory->Get(signame);
-  std::cout << TString(var+">>"+signame+"(1000)") << std::endl;
-  TString bkgname = "hbkg"+var;
-  bkgname = bkgname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","");
-  m_bkgtree->Draw(var+">>"+bkgname+"(1000)",m_cut+"*"+m_weight);
-  TH1F *hbkg = (TH1F *) gDirectory->Get(bkgname);
+  TString hsigname = "hsig"+var;
+  hsigname = hsigname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","").ReplaceAll(",","");
+  m_sigtree->Draw(var+">>"+hsigname+"(1000)",m_cut+"*"+m_weight);
+  TH1F *hsig = (TH1F *) gDirectory->Get(hsigname);
+
+  TString hbkgname = "hbkg"+var;
+  hbkgname = hbkgname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","").ReplaceAll(",","");
+  m_bkgtree->Draw(var+">>"+hbkgname+"(1000,"+Form("%f",hsig->GetBinLowEdge(1))+","+Form("%f",hsig->GetBinLowEdge(hsig->GetNbinsX()))+")",m_cut+"*"+m_weight);
+  TH1F *hbkg = (TH1F *) gDirectory->Get(hbkgname);
+
   //---- hack
   //TH1F *hsig2;
   //TH1F *hbkg2;
@@ -109,10 +109,10 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
   //  int index = var.Index("[");
   //  float ptcut = 40000-5000*TString(var(index+1,1)).Atoi();
   //  TString cut = Form(" && %s >= %f",var.Data(), ptcut);
-  //  m_sigtree->Draw(var+">>"+signame+"2(1000)","TRFMCweight_in[4]*LeptonSF*MCweightXS*(jet_n>=6 "+cut+")");
-  //  hsig2 = (TH1F *) gDirectory->Get(signame+"2");
-  //  m_bkgtree->Draw(var+">>"+bkgname+"2(1000)","TRFMCweight_in[4]*LeptonSF*MCweightXS*(jet_n>=6 "+cut+")");
-  //  hbkg2 = (TH1F *) gDirectory->Get(bkgname+"2");
+  //  m_sigtree->Draw(var+">>"+hname+"2(1000)","TRFMCweight_in[4]*LeptonSF*MCweightXS*(jet_n>=6 "+cut+")");
+  //  hsig2 = (TH1F *) gDirectory->Get(hname+"2");
+  //  m_bkgtree->Draw(var+">>"+hname+"2(1000)","TRFMCweight_in[4]*LeptonSF*MCweightXS*(jet_n>=6 "+cut+")");
+  //  hbkg2 = (TH1F *) gDirectory->Get(hname+"2");
   //  std::cout << "Cut " << var << " " << ptcut << std::endl;
   //  std::cout.precision(15);
   //  std::cout << "Efficiency sig: " <<  hsig2->Integral(0,-1)/hsig->Integral(0,-1) << std::endl;
@@ -146,18 +146,18 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
       break;
     }
   var_min[var] = std::max(minsig,minbkg);
-  var_max[var] = std::min(hsig->GetMean(),hbkg->GetMean());
-  //var_max[var] = std::min(maxsig,maxbkg);
+  var_max[var] = std::min(maxsig,maxbkg);
   lim_min[var] = std::min(minsig,minbkg);
   lim_max[var] = std::max(maxsig,maxbkg);
-  var_mean[var] = (hsig->GetMean()+var_min[var]*2)/3.;
+  var_mean[var] = hsig->GetMean();
   //if (var.Contains("jet_pt[")){
   //  int index = var.Index("[");
   //  int ptcut = 40000-5000*TString(var(index+1,1)).Atoi();
   //  var_mean[var] = std::max(ptcut,26000);
   //}
 
-  delete hsig, hbkg;
+  delete hsig;
+  delete hbkg;
 }
 
 // --- Get list of variables from trees
@@ -178,12 +178,11 @@ void variablePool::GetVarsFromTrees(){
     std::cout << leaves_array->At(i)->GetName() << " " << ((TLeaf*)(leaves_array->At(i)))->GetTypeName() << std::endl;  
   }
 
-  TString basetypes   = "float double Float_t Double_t";
+  TString basetypes   = "int float double Int_t Float_t Double_t";
   TString vectortypes = "vector<float> vector<double> vector<Float_t> vector<Double_t>";
 
-  for(int i=0;i<m_vars.size();i++){
+  for(unsigned int i=0;i<m_vars.size();i++){
     TString varname = m_vars.at(i);
-    std::cout << varname <<std::endl;
     if(m_noCheck || bkg_set.count(varname)){
       if(basetypes.Contains(var_map[varname]))
         AddDoubleVar(varname);
@@ -204,12 +203,12 @@ void variablePool::Print(){
   TString var;
   std::cout << "--- Variable Pool ---" << std::endl;
   std::cout << "--- Functions: "<< functionVars.size() << std::endl;
-  for(int i=0;i<functionVars.size(); i++){
+  for(unsigned int i=0;i<functionVars.size(); i++){
     var = functionVars.at(i);
     std::cout << var << "\t" << var_min[var] <<"\t" << var_max[var] << "\t| " << lim_min[var] <<"\t" << lim_max[var] << std::endl;
   }
   std::cout << "--- Doubles: "<< doubleVars.size() << std::endl;
-  for(int i=0;i<doubleVars.size(); i++){
+  for(unsigned int i=0;i<doubleVars.size(); i++){
     var = doubleVars.at(i);
     std::cout << var << "\t" << var_min[var] <<"\t" << var_max[var] << "\t| " << lim_min[var] <<"\t" << lim_max[var] << std::endl;
   }
@@ -222,13 +221,70 @@ void variablePool::doPlot(TString var,TH1F *hsig, TH1F *hbkg){
   hsig->SetLineColor(2);
   hsig->SetLineWidth(2);
   hbkg->SetLineWidth(2);
-  hbkg->DrawNormalized();
-  hsig->DrawNormalized("same");
-  c1.SaveAs(var.ReplaceAll("[","").ReplaceAll("]","")+".png");
+  hbkg = (TH1F *) hbkg->DrawNormalized();
+  hsig = (TH1F *) hsig->DrawNormalized("same");
+  int rebinN = getRebinN(hsig);
+  
+  hsig->Rebin(rebinN);
+  hbkg->Rebin(rebinN);
+
+  c1.SetLogy(0);
+  c1.SaveAs("plots/"+var.ReplaceAll("[","").ReplaceAll("]","")+".png");
   c1.SetLogy(1);
-  c1.SaveAs(var.ReplaceAll("[","").ReplaceAll("]","")+"_logscale.png");
+  c1.SaveAs("plots/"+var.ReplaceAll("[","").ReplaceAll("]","")+"_logscale.png");
 }
 
 // --- Get trees
 TTree* variablePool::getSigTree(){ return m_sigtree; }
 TTree* variablePool::getBkgTree(){ return m_bkgtree; }
+
+int variablePool::getRebinN(TH1F *h){
+  
+  TH1F *copy = (TH1F *) h->Clone("copy");
+  bool empty = emptyMiddleBins(copy);
+  int rb = 1;
+  if (empty && copy->GetNbinsX() >= 50 && copy->GetNbinsX()%5==0){
+    copy->Rebin(5);
+    rb *= 5;
+  }
+  while (emptyMiddleBins(copy)){
+    if(copy->GetNbinsX() <= 10) break;
+    if(copy->GetNbinsX()%2==0){copy->Rebin(2); rb*=2;}
+    else if(copy->GetNbinsX()%5==0){copy->Rebin(5); rb*=5;}
+    else break;
+  }
+   
+  return rb; 
+}
+
+bool variablePool::emptyMiddleBins(TH1F *h){
+  int start=1, end=h->GetNbinsX();
+  for(int i=1; i<h->GetNbinsX();i++)
+    if(h->GetBinContent(i) > 0){ start=i; break;}
+  for(int i=h->GetNbinsX(); i>0;i--)
+    if(h->GetBinContent(i) > 0){ end=i; break;}
+  for(int i=start; i<end;i++)
+    if(h->GetBinContent(i) > 0) return true;
+  return false;
+}
+  
+std::vector<float> variablePool::GetVarStart(){
+  std::vector<float> mean;
+  TString var;
+  for(unsigned int i=0;i<doubleVars.size(); i++){
+    var = doubleVars.at(i);
+    mean.push_back((var_mean[var]+2*var_min[var])/3.);
+  }
+  return mean;
+
+}
+std::vector<float> variablePool::GetVarMin(){
+  std::vector<float> min;
+  TString var;
+  for(unsigned int i=0;i<doubleVars.size(); i++){
+    var = doubleVars.at(i);
+    min.push_back(lim_min[var]);//lim not var
+  }
+  return min;
+
+}

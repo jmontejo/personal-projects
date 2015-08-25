@@ -1,3 +1,7 @@
+signal  ttH125_skimmed.root
+bkg     ttbar_skimmed.root
+tree    atree
+
 cut     jet_n>=6
 weight  TRFMCweight_in[4]*LeptonSF*MCweightXS*20000
 noCheck true

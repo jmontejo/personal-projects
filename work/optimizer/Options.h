@@ -3,20 +3,19 @@
 
 #include "TString.h"
 #include <vector>
+#include <map>
 
 class Options{
 
   public:
     Options(TString jo);
     std::vector<TString> getVars();
-    TString getCut();
-    TString getWeight();
+    TString get(TString key);
     bool getNoCheck();
 
   private:
     std::vector<TString> vars;
-    TString cut;
-    TString weight;
+    std::map<TString, TString> options;
     bool noCheck;
 
 };

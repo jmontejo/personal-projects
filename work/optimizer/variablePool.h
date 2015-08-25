@@ -27,11 +27,15 @@ public:
   std::map<TString, double> lim_max;
   TTree* getSigTree();
   TTree* getBkgTree();
+  std::vector<float> GetVarStart();
+  std::vector<float> GetVarMin();
 
 private:
   void AddVar(TString var,std::vector<TString> *vec);
   void GetVarsFromTrees();
   void doPlot(TString var,TH1F *hsig, TH1F *hbkg);
+  bool emptyMiddleBins(TH1F *h);
+  int  getRebinN(TH1F *h);
 
   TTree *m_sigtree;
   TTree *m_bkgtree;

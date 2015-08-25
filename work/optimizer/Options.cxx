@@ -8,10 +8,9 @@ Options::Options(TString jo){
 
   vars.clear();
   noCheck = false;
-  cut = weight = "";
   std::set<TString> var_set;
   TString key, value;
-  ifstream infile(jo.Data());
+  std::ifstream infile(jo.Data());
   std::string line;
   while(getline(infile,line)){
     std::istringstream ss(line);
@@ -20,20 +19,6 @@ Options::Options(TString jo){
     if(key=="" || key.Contains("#")) continue;
     else if(key=="var"){
       var_set.insert(value);
-    }
-    else if(key=="weight"){
-      if(weight!=""){
-        std::cout << "Duplicated key: weight" <<std::endl;
-        exit(1);
-      }
-      weight = value;
-    }
-    else if(key=="cut"){
-      if(cut!=""){
-        std::cout << "Duplicated key: cut" <<std::endl;
-        exit(1);
-      }
-      cut = value;
     }
     else if(key=="noCheck"){
       if(noCheck!=false){
@@ -44,9 +29,12 @@ Options::Options(TString jo){
       if (value=="true" || value=="True")
         noCheck = true;
     }
-    else {
-      std::cout << "Unknown key: "<< key <<std::endl;
-      exit(1);
+    else{
+      if(options.find(key) != options.end() ){
+        std::cout << "Duplicated key: "<<key <<std::endl;
+        exit(1);
+      }
+      options[key] = value;
     }
   }
 
@@ -61,10 +49,10 @@ std::vector<TString> Options::getVars(){
 bool Options::getNoCheck(){
   return noCheck;
 }
-TString Options::getCut(){
-  return cut;
+TString Options::get(TString key){
+  if(options.find(key) == options.end() ){
+    std::cout << "Tried to read non-existent key: "<<key <<std::endl;
+    exit(1);
+  }
+  return options[key];
 }
-TString Options::getWeight(){
-  return weight;
-}
-

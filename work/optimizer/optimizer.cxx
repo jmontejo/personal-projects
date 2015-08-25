@@ -4,25 +4,32 @@
 #include "TMinuit.h"
 #include "TFile.h"
 #include "TTree.h"
+#include "TROOT.h"
 #include "TCanvas.h"
 #include "TH1F.h"
+#include "TGraph.h"
 #include "TInterpreter.h"
+#include "GeneticAlgorithm.h"
 #include <cmath>
 
 double (*f)();
 void SoverB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
 void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
-void SoverSqrtBSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
 void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral );
 void setStartingPoint(TMinuit *gMinuit);
-void PrintFit();
+void PrintBestFit();
 variablePool *pool;
-Double_t sig_integral, bkg_integral, min_value;
+Double_t sig_integral, bkg_integral, min_sig, min_bkg, min_value=99999;
+std::map<float,std::vector<float> > seekPool;
+TGraph graph;
+int igraph=0;
 
-bool debug = 1;
+
+bool debug = 0;
 TString weight;
 
 int main(int argn, char *args[]){
+gROOT->SetBatch(1);
   
   if(argn < 2){
     std::cout << "Usage: ./optimizer JobOptionFile [-n]" <<std::endl;
@@ -30,17 +37,16 @@ int main(int argn, char *args[]){
   gInterpreter->GenerateDictionary("computeVar","computeVar.cxx");
   TString jofile = args[1];
   Options *options = new Options(jofile);
-  weight = options->getWeight();
+  weight = options->get("weight");
 
 
-  TFile *bkgfile = TFile::Open("ttbar_skimmed.root");
-  TFile *sigfile = TFile::Open("ttH125_skimmed.root");
-  TString treename = "atree";
-  //TString treename = "Muon/4jetin25252525_0elecex25topcommonetacommon_1muonex25topcommonetacommon_MET0_MTW_MET0_-1/0btagin0.7892MV1/atree";
+  TFile *bkgfile = TFile::Open(options->get("bkg"));
+  TFile *sigfile = TFile::Open(options->get("signal"));
+  TString treename = options->get("tree");
   TTree *bkgtree = (TTree *) bkgfile->Get(treename);
   TTree *sigtree = (TTree *) sigfile->Get(treename);
 
-  pool = new variablePool(bkgtree,sigtree,options);
+  pool = new variablePool(sigtree,bkgtree,options);
   pool->Print();
 
   const int N = (pool->functionVars.size() + pool->intVars.size() + pool->doubleVars.size());
@@ -53,7 +59,7 @@ int main(int argn, char *args[]){
 
   // Now ready for minimization step
   Double_t arglist[2];
-  arglist[0] = 100*N;
+  arglist[0] = 10*N; //100*N
   arglist[1] = 1.;
 
   Int_t ierflg = 0;
@@ -62,31 +68,35 @@ int main(int argn, char *args[]){
 //  setStartingPoint(gMinuit);
 //  gMinuit->SetFCN(SoverB);
 //  gMinuit->mnexcm("SEEK", arglist ,2,ierflg);
-//  PrintFit();
+//  PrintBestFit();
   std::cout << "------- SoverSqrtB -------" << std::endl;
   ierflg = 0;
   setStartingPoint(gMinuit);
   //gMinuit->SetFCN(SoverB);
   gMinuit->SetFCN(SoverSqrtB);
   gMinuit->mnexcm("SEEK", arglist ,2,ierflg);
-  PrintFit();
-  arglist[0] = 100*N;
-  ierflg = 0;
+  PrintBestFit();
+
+  //------------ Genetic
+  GeneticAlgorithm ga(10);
+  ga.SetFCN(N,SoverSqrtB);
+  std::vector<float> start = pool->GetVarStart();
+  //ga.SetVarStart(start);
+  ga.SetInitPool(seekPool);
+  ga.Minimize(20);
+  std::vector<float> min = pool->GetVarMin();
+  ga.Analyze(min);
+
   // one can try to minimize on top of the best seek
+  //arglist[0] = 100*N;
+  //ierflg = 0;
   //setStartingPoint(gMinuit);
-  gMinuit->mnexcm("MINIZE", arglist ,2,ierflg);
-  PrintFit();
-  arglist[0] = 100*N;
-//  std::cout << "------- SoverSqrtBSqrtB -------" << std::endl;
-//  ierflg = 0;
-//  setStartingPoint(gMinuit);
-//  gMinuit->SetFCN(SoverSqrtBSqrtB);
-//  gMinuit->mnexcm("SEEK", arglist ,2,ierflg);
-//  PrintFit();
-//  arglist[0] = 50000;
-//  gMinuit->mnexcm("MINIMIZE", arglist ,2,ierflg);
-//  gMinuit->mnprin(1,gMinuit->fAmin);
-//  gMinuit->mnexcm("HESSE", arglist ,2,ierflg);
+  //gMinuit->mnexcm("MINIZE", arglist ,2,ierflg);
+  //PrintBestFit();
+  //
+  TCanvas can("can");
+  graph.Draw();
+  can.SaveAs("graph.png");
 
   delete options;
 }
@@ -132,27 +142,29 @@ void SoverB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag)
 
   getSB(npar,par,&sig_integral,&bkg_integral);
   f = -sig_integral/(bkg_integral+0.00001); 
-  min_value = f;
-  
+  //if (f<min_value){
+  //min_value = f;
+  //min_sig = sig_integral;
+  //min_bkg = bkg_integral;
+  //min_pars = std::vector<double>(par, par + sizeof(Double_t)*npar);
+  //} 
 }
 
 void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag){
 
   getSB(npar,par,&sig_integral,&bkg_integral);
-  f = -sig_integral/sqrt(bkg_integral+0.00001);
+  f = -sig_integral/sqrt(bkg_integral+1);
+  if (f<min_value){
   min_value = f;
+  min_sig = sig_integral;
+  min_bkg = bkg_integral;
+  std::vector<double> min_pars(par, par + sizeof(Double_t)*npar);
+  seekPool[min_value] = std::vector<float>(min_pars.begin(), min_pars.end());
+  } 
   if(debug)
     std::cout << "Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;
-  
-}
-
-void SoverSqrtBSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag){
-
-  getSB(npar,par,&sig_integral,&bkg_integral);
-  f = -sig_integral/sqrt(bkg_integral+0.00001+sqrt(bkg_integral));
-  min_value = f;
-  if(debug)
-    std::cout << "Sig/bkg: " << sig_integral<<"/"<<bkg_integral<< " = " << -f << std::endl;
+  graph.SetPoint(igraph,igraph,-f);
+  igraph++;
   
 }
 
@@ -163,17 +175,17 @@ void setStartingPoint(TMinuit *gMinuit){
   TString var;
   for(int i=0;i<pool->functionVars.size(); i++){
     var = pool->functionVars.at(i);
-    gMinuit->mnparm(iN  , var, pool->var_mean[var],(pool->var_mean[var]-pool->var_min[var])/1.01, pool->var_min[var],pool->var_max[var],ierflg);
+    gMinuit->mnparm(iN  , var, (pool->var_mean[var]+2*pool->var_min[var])/3.,(pool->var_mean[var]-pool->var_min[var])/3.01, pool->var_min[var],pool->var_max[var],ierflg);
     iN += 1;
   }
   for(int i=0;i<pool->doubleVars.size(); i++){
     var = pool->doubleVars.at(i);
-    gMinuit->mnparm(iN  , var, pool->var_mean[var],(pool->var_mean[var]-pool->var_min[var])/1.01, pool->var_min[var],pool->var_max[var],ierflg);
+    gMinuit->mnparm(iN  , var, (pool->var_mean[var]+2*pool->var_min[var])/3.,(pool->var_mean[var]-pool->var_min[var])/3.01, pool->var_min[var],pool->var_max[var],ierflg);
     iN += 1;
   }
 }
 
-void PrintFit(){
+void PrintBestFit(){
   gMinuit->mnprin(1,gMinuit->fAmin);
-  std::cout << "Sig/bkg: " << sig_integral<<"/"<<bkg_integral<< " -> " << -min_value << std::endl;
+  std::cout << "Sig/bkg: " << min_sig<<"/"<<min_bkg<< " -> " << -min_value << std::endl;
 }
