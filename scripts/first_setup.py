@@ -18,24 +18,24 @@ if __name__ == "__main__":
 
   print "-- Link .bashrc .bash_profile"
   if os.path.exists(os.path.expanduser("~/.bashrc")):
-    os.system("cp ~/.bashrc ~/.bashrc.old")
-    print "Previous .bashrc copied to .bashrc.old"
+    os.system("mv ~/.bashrc ~/.bashrc.old")
+    print "Previous .bashrc moved to .bashrc.old"
   print mysvn+"/scripts/my_bashrc"
   os.system("ln -s "+mysvn+"/scripts/my_bashrc ~/.bashrc")
   if os.path.exists(os.path.expanduser("~/.bash_profile")):
-    os.system("cp ~/.bash_profile ~/.bash_profile.old")
-    print "Previous .bash_profile copied to .bash_profile.old"
+    os.system("mv ~/.bash_profile ~/.bash_profile.old")
+    print "Previous .bash_profile moved to .bash_profile.old"
   os.system("ln -s "+mysvn+"/scripts/my_bash_profile ~/.bash_profile")
 
   print "-- Link .subversion/config"
   if os.path.exists(os.path.expanduser("~/.subversion/config")):
-    os.system("cp ~/.subversion/config ~/.subversion/config.old")
-    print "Previous .subversion/config copied to .subversion/config.old"
+    os.system("mv ~/.subversion/config ~/.subversion/config.old")
+    print "Previous .subversion/config moved to .subversion/config.old"
   os.system("ln -s "+mysvn+"/scripts/my_svnconfig ~/.subversion/config")
 
   print "-- Link .vim/colors/mymorning.vim"
   if os.path.exists(os.path.expanduser("~/.vim/colors/mymorning.vim")):
-    os.system("cp ~/.vim/colors/mymorning.vim ~/.vim/colors/mymorning.vim.old")
-    print "Previous .vim/colors/mymorning.vim copied to .vim/colors/mymorning.vim.old"
+    os.system("mv ~/.vim/colors/mymorning.vim ~/.vim/colors/mymorning.vim.old")
+    print "Previous .vim/colors/mymorning.vim moved to .vim/colors/mymorning.vim.old"
   os.system("mkdir -p ~/.vim/colors")
   os.system("ln -s "+mysvn+"/scripts/my_morning.vim ~/.vim/colors/mymorning.vim")
