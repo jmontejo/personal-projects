@@ -20,7 +20,6 @@ if __name__ == "__main__":
   if os.path.exists(os.path.expanduser("~/.bashrc")):
     os.system("mv ~/.bashrc ~/.bashrc.old")
     print "Previous .bashrc moved to .bashrc.old"
-  print mysvn+"/scripts/my_bashrc"
   os.system("ln -s "+mysvn+"/scripts/my_bashrc ~/.bashrc")
   if os.path.exists(os.path.expanduser("~/.bash_profile")):
     os.system("mv ~/.bash_profile ~/.bash_profile.old")
