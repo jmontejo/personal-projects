@@ -59,7 +59,7 @@ gROOT->SetBatch(1);
 
   // Now ready for minimization step
   Double_t arglist[2];
-  arglist[0] = 10*N; //100*N
+  arglist[0] = 1000*N; //100*N
   arglist[1] = 1.;
 
   Int_t ierflg = 0;
@@ -78,12 +78,12 @@ gROOT->SetBatch(1);
   PrintBestFit();
 
   //------------ Genetic
-  GeneticAlgorithm ga(10);
+  GeneticAlgorithm ga(20);
   ga.SetFCN(N,SoverSqrtB);
   std::vector<float> start = pool->GetVarStart();
   //ga.SetVarStart(start);
   ga.SetInitPool(seekPool);
-  ga.Minimize(20);
+  ga.Minimize(100);
   std::vector<float> min = pool->GetVarMin();
   ga.Analyze(min);
 
@@ -160,6 +160,7 @@ void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t if
   min_bkg = bkg_integral;
   std::vector<double> min_pars(par, par + sizeof(Double_t)*npar);
   seekPool[min_value] = std::vector<float>(min_pars.begin(), min_pars.end());
+    std::cout << "Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;
   } 
   if(debug)
     std::cout << "Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;

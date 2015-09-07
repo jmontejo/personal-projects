@@ -1,6 +1,7 @@
 #include "GeneticAlgorithm.h"
 #include <iostream>
 #include <iterator>
+#define threshold 0.01
 
 GeneticAlgorithm::GeneticAlgorithm(int max){
   maxpool = max;
@@ -15,8 +16,6 @@ void GeneticAlgorithm::SetVarStart(std::vector<float> &start){
 }
 void GeneticAlgorithm::SetInitPool(  std::map<float,std::vector<float> > &initPool){
   chromosomePool = initPool;
-  Print();
-  exit(1);
   Purge();
 }
 void GeneticAlgorithm::Minimize(int n){
@@ -110,7 +109,26 @@ float GeneticAlgorithm::Evaluate(std::vector<float> &c){
   return ret;
 }  
 void GeneticAlgorithm::Purge(){
+  std::map<float,std::vector<float> >::iterator it;
+  std::map<float,std::vector<float> >::iterator it2;
+  for(it=chromosomePool.begin();it!=chromosomePool.end();it++){
+    for(it2 = std::next(it,1);it2!=chromosomePool.end();it2++){
+      if(it==it2) continue;
+      float similarity = Similarity(it->second,it2->second);
+      if(similarity < threshold*var_n){
+        chromosomePool.erase(it2);
+        std::cout << similarity <<" Delete " << it2->first << std::endl;
+      }
+    }
+  }
   if(chromosomePool.size()>maxpool)
   chromosomePool = std::map<float,std::vector<float> >(chromosomePool.begin(),std::next(chromosomePool.begin(),maxpool));
-
+}
+float GeneticAlgorithm::Similarity(std::vector<float> &c1, std::vector<float> &c2){
+  float sim=0;
+  for(int i=0;i<c1.size();i++){
+    if ((c1.at(i)+c2.at(i))>0)
+      sim += fabs(c1.at(i)-c2.at(i))/(c1.at(i)+c2.at(i));
+  }
+  return sim;
 }

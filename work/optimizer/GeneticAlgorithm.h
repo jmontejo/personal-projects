@@ -18,6 +18,7 @@ private:
   void InitPool(std::vector<float> &start, int ini);
   void Iterate();
   void Purge();
+  float Similarity(std::vector<float> &c1, std::vector<float> &c2);
   std::vector<float> Mutate(std::vector<float> &original);
   std::vector<float> Combine(std::vector<float> &c1, std::vector<float> &c2, int swappoint);
   std::vector<float> Average(std::vector<float> &c1, std::vector<float> &c2);

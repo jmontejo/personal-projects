@@ -94,12 +94,12 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
 
   TString hsigname = "hsig"+var;
   hsigname = hsigname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","").ReplaceAll(",","");
-  m_sigtree->Draw(var+">>"+hsigname+"(1000)",m_cut+"*"+m_weight);
+  m_sigtree->Draw(var+">>"+hsigname+"(100)",m_cut+"*"+m_weight);
   TH1F *hsig = (TH1F *) gDirectory->Get(hsigname);
 
   TString hbkgname = "hbkg"+var;
   hbkgname = hbkgname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","").ReplaceAll(",","");
-  m_bkgtree->Draw(var+">>"+hbkgname+"(1000,"+Form("%f",hsig->GetBinLowEdge(1))+","+Form("%f",hsig->GetBinLowEdge(hsig->GetNbinsX()))+")",m_cut+"*"+m_weight);
+  m_bkgtree->Draw(var+">>"+hbkgname+"(100,"+Form("%f",hsig->GetBinLowEdge(1))+","+Form("%f",hsig->GetBinLowEdge(hsig->GetNbinsX()))+")",m_cut+"*"+m_weight);
   TH1F *hbkg = (TH1F *) gDirectory->Get(hbkgname);
 
   //---- hack
@@ -109,9 +109,9 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
   //  int index = var.Index("[");
   //  float ptcut = 40000-5000*TString(var(index+1,1)).Atoi();
   //  TString cut = Form(" && %s >= %f",var.Data(), ptcut);
-  //  m_sigtree->Draw(var+">>"+hname+"2(1000)","TRFMCweight_in[4]*LeptonSF*MCweightXS*(jet_n>=6 "+cut+")");
+  //  m_sigtree->Draw(var+">>"+hname+"2(100)","TRFMCweight_in[4]*LeptonSF*MCweightXS*(jet_n>=6 "+cut+")");
   //  hsig2 = (TH1F *) gDirectory->Get(hname+"2");
-  //  m_bkgtree->Draw(var+">>"+hname+"2(1000)","TRFMCweight_in[4]*LeptonSF*MCweightXS*(jet_n>=6 "+cut+")");
+  //  m_bkgtree->Draw(var+">>"+hname+"2(100)","TRFMCweight_in[4]*LeptonSF*MCweightXS*(jet_n>=6 "+cut+")");
   //  hbkg2 = (TH1F *) gDirectory->Get(hname+"2");
   //  std::cout << "Cut " << var << " " << ptcut << std::endl;
   //  std::cout.precision(15);
@@ -221,12 +221,11 @@ void variablePool::doPlot(TString var,TH1F *hsig, TH1F *hbkg){
   hsig->SetLineColor(2);
   hsig->SetLineWidth(2);
   hbkg->SetLineWidth(2);
-  hbkg = (TH1F *) hbkg->DrawNormalized();
-  hsig = (TH1F *) hsig->DrawNormalized("same");
   int rebinN = getRebinN(hsig);
-  
   hsig->Rebin(rebinN);
   hbkg->Rebin(rebinN);
+  hbkg = (TH1F *) hbkg->DrawNormalized();
+  hsig = (TH1F *) hsig->DrawNormalized("same");
 
   c1.SetLogy(0);
   c1.SaveAs("plots/"+var.ReplaceAll("[","").ReplaceAll("]","")+".png");
@@ -264,7 +263,7 @@ bool variablePool::emptyMiddleBins(TH1F *h){
   for(int i=h->GetNbinsX(); i>0;i--)
     if(h->GetBinContent(i) > 0){ end=i; break;}
   for(int i=start; i<end;i++)
-    if(h->GetBinContent(i) > 0) return true;
+    if(h->GetBinContent(i) == 0) return true;
   return false;
 }
   
