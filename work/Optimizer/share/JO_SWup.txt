@@ -1,0 +1,37 @@
+signal  /afs/cern.ch/work/j/jmontejo/stop1l-xaod/output/default/signal_tN_50ns/data-ntuple/mc15_13TeV:mc15_13TeV.387172.MadGraphPythia8EvtGen_A14NNPDF23LO_TT_directTT_650_50.merge.DAOD_SUSY5.e3969_a766_a767_r6264_p2361.root
+bkg     /afs/cern.ch/work/j/jmontejo/stop1l-xaod/output/default/powheg_ttbar_50ns/data-ntuple/mc15_13TeV:mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_SUSY5.e3698_s2608_s2183_r6630_r6264_p2375.root
+tree    CollectionTree
+
+cut     n_jet>=2
+weight  weight
+noCheck true
+
+var n_jet
+var jet_pt[3]
+var jet_pt[0]-jet_pt[1]
+var jet_pt[1]-jet_pt[2]
+var jet_pt[2]-jet_pt[3]
+var lep_pt
+var met
+var n_bjet
+var bjet_pt[1]
+var bjet_pt[0]-bjet_pt[1]
+var n_fatjet
+var fatjet_pt
+var fatjet_m
+var dphi_jet0_ptmiss
+var dphi_jet1_ptmiss
+var dphi_jet2_ptmiss
+var dphi_jet3_ptmiss
+var mt
+var ht
+var met_sig
+var m_top
+var m_top_chi2
+var m_top_chi2_chi2
+var -dr_bjet_lep
+var dr_bjet_lep
+var ht_sig
+var amt2
+var mt2_tau
+var topness

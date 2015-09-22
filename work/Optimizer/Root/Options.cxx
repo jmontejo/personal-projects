@@ -1,4 +1,4 @@
-#include "Options.h"
+#include "Optimizer/Options.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -11,11 +11,14 @@ Options::Options(TString jo){
   std::set<TString> var_set;
   TString key, value;
   std::ifstream infile(jo.Data());
+  if(!infile.good()){
+    std::cout << "Problem reading "<<jo <<std::endl;
+    exit(2);
+  }
   std::string line;
   while(getline(infile,line)){
     std::istringstream ss(line);
     ss  >> key >> value;
-    std::cout << key << value <<std::endl;
     if(key=="" || key.Contains("#")) continue;
     else if(key=="var"){
       var_set.insert(value);

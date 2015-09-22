@@ -1,6 +1,7 @@
 #include <iostream>
-#include "computeVar.h"
-#include "variablePool.h"
+#include "Optimizer/computeVar.h"
+#include "Optimizer/variablePool.h"
+#include "Optimizer/GeneticAlgorithm.h"
 #include "TMinuit.h"
 #include "TFile.h"
 #include "TTree.h"
@@ -9,15 +10,20 @@
 #include "TH1F.h"
 #include "TGraph.h"
 #include "TInterpreter.h"
-#include "GeneticAlgorithm.h"
 #include <cmath>
+#include <SampleHandler/SampleLocal.h>
+#include <SampleHandler/SampleHist.h>
+#include "xAODRootAccess/Init.h"
+
+
+const char* APP_NAME = "Optimizer";
 
 double (*f)();
 void SoverB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
 void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
 void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral );
 void setStartingPoint(TMinuit *gMinuit);
-void PrintBestFit();
+void PrintBestFit(TMinuit *gMinuit);
 variablePool *pool;
 Double_t sig_integral, bkg_integral, min_sig, min_bkg, min_value=99999;
 std::map<float,std::vector<float> > seekPool;
@@ -27,6 +33,7 @@ int igraph=0;
 
 bool debug = 0;
 TString weight;
+float bkgweight=1., sigweight=1., lumi=1., bkgsyst=0.;
 
 int main(int argn, char *args[]){
 gROOT->SetBatch(1);
@@ -38,13 +45,52 @@ gROOT->SetBatch(1);
   TString jofile = args[1];
   Options *options = new Options(jofile);
   weight = options->get("weight");
+  bkgsyst = options->get("syst").Atof()/100.;
+  lumi = options->get("lumi").Atof();
 
 
+  TString treename = options->get("tree");
   TFile *bkgfile = TFile::Open(options->get("bkg"));
   TFile *sigfile = TFile::Open(options->get("signal"));
-  TString treename = options->get("tree");
-  TTree *bkgtree = (TTree *) bkgfile->Get(treename);
-  TTree *sigtree = (TTree *) sigfile->Get(treename);
+  TTree *bkgtree;
+  TTree *sigtree;
+  if(treename=="sample"){
+    xAOD::Init(APP_NAME);
+    SH::SampleLocal *sample = (SH::SampleLocal *) bkgfile->Get(treename);
+    bkgtree = (TTree *) sample->makeTChain();
+    float xs = sample->getMetaDouble("xs");
+    TFile *bkgfile_hist = TFile::Open(options->get("bkg").ReplaceAll("output-ntuple","hist"));
+    SH::SampleHist *s_hist = (SH::SampleHist *) bkgfile_hist->Get(treename);
+    TH1F *cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
+    int n_tot = cutflow->GetBinContent(1);
+    if(n_tot < 1){
+      cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
+      n_tot = cutflow->GetBinContent(1);
+    }
+    bkgweight = xs/n_tot;
+
+    std::cout << xs << " " << n_tot << std::endl;
+
+    sample = (SH::SampleLocal *) sigfile->Get(treename);
+    sigtree = (TTree *) sample->makeTChain();
+    xs = sample->getMetaDouble("xs");
+    TFile *sigfile_hist = TFile::Open(options->get("signal").ReplaceAll("output-ntuple","hist"));
+    s_hist = (SH::SampleHist *) sigfile_hist->Get(treename);
+    cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
+    n_tot = cutflow->GetBinContent(1);
+    if(n_tot < 1){
+      cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
+      n_tot = cutflow->GetBinContent(1);
+    }
+    sigweight = xs/n_tot;
+
+    std::cout << xs << " " << n_tot << std::endl;
+
+  }
+  else{
+    bkgtree = (TTree *) bkgfile->Get(treename);
+    sigtree = (TTree *) sigfile->Get(treename);
+  }
 
   pool = new variablePool(sigtree,bkgtree,options);
   pool->Print();
@@ -53,13 +99,13 @@ gROOT->SetBatch(1);
   TMinuit *gMinuit = new TMinuit(N);
   if(debug) gMinuit->SetPrintLevel(1);
   else      gMinuit->SetPrintLevel(-1);
-  Double_t vstart[N];
-  Double_t step[N];
+  //Double_t vstart[N];
+  //Double_t step[N];
 
 
   // Now ready for minimization step
   Double_t arglist[2];
-  arglist[0] = 1000*N; //100*N
+  arglist[0] = 10*N; //100*N
   arglist[1] = 1.;
 
   Int_t ierflg = 0;
@@ -68,37 +114,35 @@ gROOT->SetBatch(1);
 //  setStartingPoint(gMinuit);
 //  gMinuit->SetFCN(SoverB);
 //  gMinuit->mnexcm("SEEK", arglist ,2,ierflg);
-//  PrintBestFit();
   std::cout << "------- SoverSqrtB -------" << std::endl;
   ierflg = 0;
   setStartingPoint(gMinuit);
   //gMinuit->SetFCN(SoverB);
   gMinuit->SetFCN(SoverSqrtB);
   gMinuit->mnexcm("SEEK", arglist ,2,ierflg);
-  PrintBestFit();
+  PrintBestFit(gMinuit);
 
   //------------ Genetic
-  GeneticAlgorithm ga(20);
+  GeneticAlgorithm ga(10);
   ga.SetFCN(N,SoverSqrtB);
   std::vector<float> start = pool->GetVarStart();
   //ga.SetVarStart(start);
   ga.SetInitPool(seekPool);
-  ga.Minimize(100);
-  std::vector<float> min = pool->GetVarMin();
-  ga.Analyze(min);
+  ga.Minimize(5);
+  std::map<TString, double> minvar= pool->GetVarMin();
+  ga.Analyze(minvar);
 
   // one can try to minimize on top of the best seek
   //arglist[0] = 100*N;
   //ierflg = 0;
   //setStartingPoint(gMinuit);
   //gMinuit->mnexcm("MINIZE", arglist ,2,ierflg);
-  //PrintBestFit();
   //
   TCanvas can("can");
   graph.Draw();
   can.SaveAs("graph.png");
 
-  delete options;
+  return 0;
 }
 
 // --- Get integrals
@@ -107,12 +151,12 @@ void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_in
   TString evcut    = "1";
   int iN = 0;
   TString var;
-  for(int i=0;i<pool->functionVars.size(); i++){
+  for(unsigned int i=0;i<pool->functionVars.size(); i++){
     var = pool->functionVars.at(i);
     evcut += Form("*(%s > %g)",var.Data(),par[iN]);
     iN  += 1;
   }
-  for(int i=0;i<pool->doubleVars.size(); i++){
+  for(unsigned int i=0;i<pool->doubleVars.size(); i++){
     var = pool->doubleVars.at(i);
     evcut += Form("*(%s > %g)",var.Data(),par[iN]);
     iN  += 1;
@@ -128,12 +172,12 @@ void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_in
   signame = signame.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","");
   sigtree->Draw("1 >>"+signame,evcut);
   TH1F *hsig = (TH1F *) gDirectory->Get(signame);
-  *sig_integral = hsig->Integral();
+  *sig_integral = lumi*sigweight*hsig->Integral();
   TString bkgname = "hbkg";
   bkgname = bkgname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","");
   bkgtree->Draw("1 >>"+bkgname,evcut);
   TH1F *hbkg = (TH1F *) gDirectory->Get(bkgname);
-  *bkg_integral = hbkg->Integral();
+  *bkg_integral = lumi*bkgweight*hbkg->Integral();
 
 }
 
@@ -153,7 +197,7 @@ void SoverB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag)
 void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag){
 
   getSB(npar,par,&sig_integral,&bkg_integral);
-  f = -sig_integral/sqrt(bkg_integral+1);
+  f = -sig_integral/sqrt(bkg_integral+pow(bkg_integral*bkgsyst,2)+1);
   if (f<min_value){
   min_value = f;
   min_sig = sig_integral;
@@ -174,19 +218,19 @@ void setStartingPoint(TMinuit *gMinuit){
   int iN = 0;
   Int_t ierflg = 0;
   TString var;
-  for(int i=0;i<pool->functionVars.size(); i++){
+  for(unsigned int i=0;i<pool->functionVars.size(); i++){
     var = pool->functionVars.at(i);
-    gMinuit->mnparm(iN  , var, (pool->var_mean[var]+2*pool->var_min[var])/3.,(pool->var_mean[var]-pool->var_min[var])/3.01, pool->var_min[var],pool->var_max[var],ierflg);
+    gMinuit->mnparm(iN  , var, pool->var_start[var],(pool->var_start[var]-pool->var_min[var])/1.01, pool->var_min[var],pool->var_max[var],ierflg);
     iN += 1;
   }
-  for(int i=0;i<pool->doubleVars.size(); i++){
+  for(unsigned int i=0;i<pool->doubleVars.size(); i++){
     var = pool->doubleVars.at(i);
-    gMinuit->mnparm(iN  , var, (pool->var_mean[var]+2*pool->var_min[var])/3.,(pool->var_mean[var]-pool->var_min[var])/3.01, pool->var_min[var],pool->var_max[var],ierflg);
+    gMinuit->mnparm(iN  , var, pool->var_start[var],(pool->var_start[var]-pool->var_min[var])/1.01, pool->var_min[var],pool->var_max[var],ierflg);
     iN += 1;
   }
 }
 
-void PrintBestFit(){
+void PrintBestFit(TMinuit *gMinuit){
   gMinuit->mnprin(1,gMinuit->fAmin);
   std::cout << "Sig/bkg: " << min_sig<<"/"<<min_bkg<< " -> " << -min_value << std::endl;
 }

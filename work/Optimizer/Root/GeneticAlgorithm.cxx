@@ -1,6 +1,8 @@
-#include "GeneticAlgorithm.h"
+#include "Optimizer/GeneticAlgorithm.h"
 #include <iostream>
+#include <iomanip>
 #include <iterator>
+#include <set>
 #define threshold 0.01
 
 GeneticAlgorithm::GeneticAlgorithm(int max){
@@ -26,17 +28,48 @@ void GeneticAlgorithm::Minimize(int n){
   Print();
 
 }
-void GeneticAlgorithm::Analyze(std::vector<float> &min){
-  for(int i=0;i<min.size();i++){
+void GeneticAlgorithm::Analyze(std::map<TString, double> &min){
+  std::set<TString> uselessvar;
+  int i=0;
+  for(auto itvar = min.begin(); itvar!=min.end();itvar++){
     bool useless = true;
-    std::map<float,std::vector<float> >::iterator it = chromosomePool.begin();
-    for(;it!=chromosomePool.end() && useless;it++){
-      if(it->second.at(i) > min.at(i))
+//    std::map<float,std::vector<float> >::iterator it = chromosomePool.begin();
+    for(auto it = chromosomePool.begin();it!=chromosomePool.end() && useless;it++){
+      if(it->second.at(i) > itvar->second){
         useless = false;
+      }
     }
     if (useless)
-      std::cout << "Useless variable: " << i <<" " << min.at(i) << std::endl;
+      uselessvar.insert(itvar->first);
+    i++;
   }
+
+  std::cout <<std::endl << "----------------- RESULTS --------------" <<std::endl;
+  std::cout <<std::setw(20) << std::setfill(' ') << "Some header"<< std::endl;
+  i=0;
+  for(auto itvar = min.begin(); itvar!=min.end();itvar++){
+    if(uselessvar.count(itvar->first))
+      std::cout << "X-";
+    else
+      std::cout << "  ";
+    std::cout << std::setw(20) << std::setfill(' ') << itvar->first;
+    float modulo = 0;
+    TString gev;
+    for(auto it = chromosomePool.begin();it!=chromosomePool.end();it++){
+      if(!modulo){
+        modulo = (fabs(it->second.at(i))>1000 ? 1000.: 1.);
+        gev    = (fabs(it->second.at(i))>1000 ? " 1e3": "    ");
+        std::cout << gev;
+      }
+       std::cout << std::setw(7) << std::setfill(' ') << std::setprecision(3) << it->second.at(i)/modulo;
+    }
+    std::cout << std::endl;
+    i++;
+  }
+
+
+
+
 }
 void GeneticAlgorithm::Print(){
 
@@ -73,10 +106,10 @@ void GeneticAlgorithm::Iterate(){
       if(it==it2) continue;
       chrom = Combine(it->second, it2->second, rand.Integer(var_n-1));
       chromosomePool[Evaluate(chrom)] = chrom;
-      if(it->first > it2->first){
-        chrom = Average(it->second, it2->second);
-        chromosomePool[Evaluate(chrom)] = chrom;
-      }
+      //if(it->first > it2->first){
+      //  chrom = Average(it->second, it2->second);
+      //  chromosomePool[Evaluate(chrom)] = chrom;
+      //}
     }
   }
 
@@ -117,7 +150,7 @@ void GeneticAlgorithm::Purge(){
       float similarity = Similarity(it->second,it2->second);
       if(similarity < threshold*var_n){
         chromosomePool.erase(it2);
-        std::cout << similarity <<" Delete " << it2->first << std::endl;
+        //std::cout << similarity <<" Delete " << it2->first << std::endl;
       }
     }
   }

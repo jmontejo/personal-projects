@@ -3,8 +3,8 @@
 #include "TROOT.h"
 #include "TH1F.h"
 #include "TCanvas.h"
-#include "computeVar.h"
-#include "variablePool.h"
+#include "Optimizer/computeVar.h"
+#include "Optimizer/variablePool.h"
 #include <iostream>
 #include <set>
 
@@ -15,14 +15,19 @@ variablePool::variablePool(TTree *sigtree, TTree *bkgtree, Options *options){
   m_weight  = options->get("weight");
   m_vars    = options->getVars();
   m_noCheck = options->getNoCheck();
-  TFile *dummy = TFile::Open("dummy.root","recreate");
-  std::cout << "Building variablePool..." << sigtree << " " << bkgtree << std::endl;
+  const char *envVarContent = getenv("ROOTCOREBIN");
+  plotfolder = TString(envVarContent)+"/../Optimizer/plots";
+  TString commandString = "mkdir -p -m 755 "+plotfolder;
+  if(system(commandString.Data()) != 0) std::cout << "^[[31m" << commandString << " failed^[[0m" << std::endl;
+
+  TFile *dummy = TFile::Open(plotfolder+"/dummy.root","recreate");
   m_sigtree = sigtree->CopyTree(m_cut);
   m_bkgtree = bkgtree->CopyTree(m_cut);
   std::cout << "Building variablePool..." << std::endl;
 
   GetVarsFromTrees();
   std::cout << "End variablePool" << std::endl;
+  startVar();
   //AddFunctionVar("computeVar::Diff(jet_btag_weight[3],jet_btag_weight[2])");
   //AddFunctionVar("computeVar::BtagN(jet_btag_weight,3)");
   //AddFunctionVar("computeVar::BtagN(jet_MV1c_weight,3)");
@@ -99,7 +104,7 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
 
   TString hbkgname = "hbkg"+var;
   hbkgname = hbkgname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","").ReplaceAll(",","");
-  m_bkgtree->Draw(var+">>"+hbkgname+"(100,"+Form("%f",hsig->GetBinLowEdge(1))+","+Form("%f",hsig->GetBinLowEdge(hsig->GetNbinsX()))+")",m_cut+"*"+m_weight);
+  m_bkgtree->Draw(var+">>"+hbkgname+"(100,"+Form("%f",hsig->GetBinLowEdge(1))+","+Form("%f",hsig->GetBinLowEdge(hsig->GetNbinsX()+1))+")",m_cut+"*"+m_weight);
   TH1F *hbkg = (TH1F *) gDirectory->Get(hbkgname);
 
   //---- hack
@@ -175,7 +180,7 @@ void variablePool::GetVarsFromTrees(){
   TObjArray *leaves_array = m_bkgtree->GetListOfLeaves();
   for(int i=0; i<leaves_array->GetEntries(); i++){
     var_map[leaves_array->At(i)->GetName()] = ((TLeaf*)(leaves_array->At(i)))->GetTypeName();
-    std::cout << leaves_array->At(i)->GetName() << " " << ((TLeaf*)(leaves_array->At(i)))->GetTypeName() << std::endl;  
+    //std::cout << leaves_array->At(i)->GetName() << " " << ((TLeaf*)(leaves_array->At(i)))->GetTypeName() << std::endl;  
   }
 
   TString basetypes   = "int float double Int_t Float_t Double_t";
@@ -228,9 +233,12 @@ void variablePool::doPlot(TString var,TH1F *hsig, TH1F *hbkg){
   hsig = (TH1F *) hsig->DrawNormalized("same");
 
   c1.SetLogy(0);
-  c1.SaveAs("plots/"+var.ReplaceAll("[","").ReplaceAll("]","")+".png");
+  c1.SaveAs(plotfolder+"/"+var.ReplaceAll("[","").ReplaceAll("]","").ReplaceAll("$","")+".png");
   c1.SetLogy(1);
-  c1.SaveAs("plots/"+var.ReplaceAll("[","").ReplaceAll("]","")+"_logscale.png");
+  c1.SaveAs(plotfolder+"/"+var.ReplaceAll("[","").ReplaceAll("]","").ReplaceAll("$","")+"_logscale.png");
+
+  delete hbkg;
+  delete hsig;
 }
 
 // --- Get trees
@@ -267,23 +275,25 @@ bool variablePool::emptyMiddleBins(TH1F *h){
   return false;
 }
   
-std::vector<float> variablePool::GetVarStart(){
-  std::vector<float> mean;
+void variablePool::startVar(){
   TString var;
   for(unsigned int i=0;i<doubleVars.size(); i++){
     var = doubleVars.at(i);
-    mean.push_back((var_mean[var]+2*var_min[var])/3.);
+    var_start[var] = (var_mean[var]+(doubleVars.size()-1)*var_min[var])/doubleVars.size();
   }
-  return mean;
 
 }
-std::vector<float> variablePool::GetVarMin(){
-  std::vector<float> min;
+std::map<TString, double> variablePool::GetVarMin(){
+  return var_min;
+}
+
+std::vector<float> variablePool::GetVarStart(){
+  std::vector<float> start;
   TString var;
   for(unsigned int i=0;i<doubleVars.size(); i++){
     var = doubleVars.at(i);
-    min.push_back(lim_min[var]);//lim not var
+    start.push_back(var_start[var]);
   }
-  return min;
+  return start;
 
 }

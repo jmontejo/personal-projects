@@ -6,7 +6,7 @@
 #include "TString.h"
 #include "TTree.h"
 #include "TCanvas.h"
-#include "Options.h"
+#include "Optimizer/Options.h"
 
 class variablePool{
 
@@ -25,10 +25,11 @@ public:
   std::map<TString, double> var_max;
   std::map<TString, double> lim_min;
   std::map<TString, double> lim_max;
+  std::map<TString, double> var_start;
   TTree* getSigTree();
   TTree* getBkgTree();
   std::vector<float> GetVarStart();
-  std::vector<float> GetVarMin();
+  std::map<TString, double> GetVarMin();
 
 private:
   void AddVar(TString var,std::vector<TString> *vec);
@@ -36,6 +37,7 @@ private:
   void doPlot(TString var,TH1F *hsig, TH1F *hbkg);
   bool emptyMiddleBins(TH1F *h);
   int  getRebinN(TH1F *h);
+  void startVar();
 
   TTree *m_sigtree;
   TTree *m_bkgtree;
@@ -43,6 +45,7 @@ private:
   bool m_noCheck;
   std::vector<TString> m_vars;
   TCanvas c1;
+  TString plotfolder;
 
 };
 
