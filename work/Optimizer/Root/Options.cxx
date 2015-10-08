@@ -7,8 +7,10 @@
 Options::Options(TString jo){
 
   vars.clear();
+  bkgs.clear();
   noCheck = false;
   std::set<TString> var_set;
+  std::set<TString> bkg_set;
   TString key, value;
   std::ifstream infile(jo.Data());
   if(!infile.good()){
@@ -22,6 +24,9 @@ Options::Options(TString jo){
     if(key=="" || key.Contains("#")) continue;
     else if(key=="var"){
       var_set.insert(value);
+    }
+    else if(key=="bkg"){
+      bkgs.push_back(value);
     }
     else if(key=="noCheck"){
       if(noCheck!=false){
@@ -48,6 +53,9 @@ Options::Options(TString jo){
 
 std::vector<TString> Options::getVars(){
   return vars;
+}
+std::vector<TString> Options::getBkgs(){
+  return bkgs;
 }
 bool Options::getNoCheck(){
   return noCheck;

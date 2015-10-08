@@ -5,6 +5,7 @@
 #include "TMinuit.h"
 #include "TFile.h"
 #include "TTree.h"
+#include "TChain.h"
 #include "TROOT.h"
 #include "TCanvas.h"
 #include "TH1F.h"
@@ -63,44 +64,49 @@ gROOT->SetBatch(1);
 
 
   TString treename = options->get("tree");
-  TFile *bkgfile = TFile::Open(options->get("bkg"));
+	std::vector<TString> bkgpaths = options->getBkgs();
   TFile *sigfile = TFile::Open(options->get("signal"));
-  TTree *bkgtree;
-  TTree *sigtree;
+  TChain *bkgtree;
+  TChain *sigtree;
   if(treename=="sample"){
-    xAOD::Init(APP_NAME);
-    SH::SampleLocal *sample = (SH::SampleLocal *) bkgfile->Get(treename);
-    bkgtree = (TTree *) sample->makeTChain();
-    float xs = sample->getMetaDouble("xs");
-    TFile *bkgfile_hist = TFile::Open(options->get("bkg").ReplaceAll("output-ntuple","hist"));
-    SH::SampleHist *s_hist = (SH::SampleHist *) bkgfile_hist->Get(treename);
-    TH1F *cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
-    int n_tot = cutflow->GetBinContent(1);
-    if(n_tot < 1){
-      cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
-      n_tot = cutflow->GetBinContent(1);
-    }
-    bkgweight = xs/n_tot;
+		std::cout << "Sample reading is tmp broken after including multiple bkg" <<std::endl;
+		exit(1);
+    //xAOD::Init(APP_NAME);
+    //SH::SampleLocal *sample = (SH::SampleLocal *) bkgfile->Get(treename);
+    //bkgtree = (TTree *) sample->makeTChain();
+    //float xs = sample->getMetaDouble("xs");
+    //TFile *bkgfile_hist = TFile::Open(options->get("bkg").ReplaceAll("output-ntuple","hist"));
+    //SH::SampleHist *s_hist = (SH::SampleHist *) bkgfile_hist->Get(treename);
+    //TH1F *cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
+    //int n_tot = cutflow->GetBinContent(1);
+    //if(n_tot < 1){
+    //  cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
+    //  n_tot = cutflow->GetBinContent(1);
+    //}
+    //bkgweight = xs/n_tot;
 
-    sample = (SH::SampleLocal *) sigfile->Get(treename);
-    sigtree = (TTree *) sample->makeTChain();
-    xs = sample->getMetaDouble("xs");
-    TFile *sigfile_hist = TFile::Open(options->get("signal").ReplaceAll("output-ntuple","hist"));
-    s_hist = (SH::SampleHist *) sigfile_hist->Get(treename);
-    cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
-    n_tot = cutflow->GetBinContent(1);
-    if(n_tot < 1){
-      cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
-      n_tot = cutflow->GetBinContent(1);
-    }
-    sigweight = xs/n_tot;
-
+    //sample = (SH::SampleLocal *) sigfile->Get(treename);
+    //sigtree = (TTree *) sample->makeTChain();
+    //xs = sample->getMetaDouble("xs");
+    //TFile *sigfile_hist = TFile::Open(options->get("signal").ReplaceAll("output-ntuple","hist"));
+    //s_hist = (SH::SampleHist *) sigfile_hist->Get(treename);
+    //cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
+    //n_tot = cutflow->GetBinContent(1);
+    //if(n_tot < 1){
+    //  cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
+    //  n_tot = cutflow->GetBinContent(1);
+    //}
+    //sigweight = xs/n_tot;
   }
   else{
-    bkgtree = (TTree *) bkgfile->Get(treename);
-    sigtree = (TTree *) sigfile->Get(treename);
+    sigtree = (TChain *) sigfile->Get(treename);
+    bkgtree = new TChain(treename);
+		for(int b=0;b<bkgpaths.size();b++)
+			bkgtree->AddFile(bkgpaths.at(b));
   }
 
+	std::cout << sigtree << " " << bkgtree << std::endl;
+	std::cout << sigtree->GetEntries() << " " << bkgtree->GetEntries() << std::endl;
   pool = new variablePool(sigtree,bkgtree,options,testrun);
   pool->Print();
 
