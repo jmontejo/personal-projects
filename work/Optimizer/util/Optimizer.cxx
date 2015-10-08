@@ -15,6 +15,12 @@
 #include <SampleHandler/SampleHist.h>
 #include "xAODRootAccess/Init.h"
 
+#define SEEK_N 10
+#define GA_POOL_SIZE 10
+#define GA_MINIM_COUNT 10
+#define SEEK_N_TEST 3
+#define GA_POOL_SIZE_TEST 2
+#define GA_MINIM_COUNT_TEST 2
 
 const char* APP_NAME = "Optimizer";
 
@@ -39,8 +45,15 @@ int main(int argn, char *args[]){
 gROOT->SetBatch(1);
   
   if(argn < 2){
-    std::cout << "Usage: ./optimizer JobOptionFile [-n]" <<std::endl;
+    std::cout << "Usage: ./optimizer JobOptionFile [-t]" <<std::endl;
   }
+  bool testrun = false;
+  int testscale =1;
+  if(argn >= 3 && TString(args[2])=="-t")
+    testrun = true;
+  if(testrun && argn==4)
+    testscale=TString(args[3]).Atoi();
+    
   gInterpreter->GenerateDictionary("computeVar","computeVar.cxx");
   TString jofile = args[1];
   Options *options = new Options(jofile);
@@ -69,8 +82,6 @@ gROOT->SetBatch(1);
     }
     bkgweight = xs/n_tot;
 
-    std::cout << xs << " " << n_tot << std::endl;
-
     sample = (SH::SampleLocal *) sigfile->Get(treename);
     sigtree = (TTree *) sample->makeTChain();
     xs = sample->getMetaDouble("xs");
@@ -84,15 +95,13 @@ gROOT->SetBatch(1);
     }
     sigweight = xs/n_tot;
 
-    std::cout << xs << " " << n_tot << std::endl;
-
   }
   else{
     bkgtree = (TTree *) bkgfile->Get(treename);
     sigtree = (TTree *) sigfile->Get(treename);
   }
 
-  pool = new variablePool(sigtree,bkgtree,options);
+  pool = new variablePool(sigtree,bkgtree,options,testrun);
   pool->Print();
 
   const int N = (pool->functionVars.size() + pool->intVars.size() + pool->doubleVars.size());
@@ -105,15 +114,13 @@ gROOT->SetBatch(1);
 
   // Now ready for minimization step
   Double_t arglist[2];
-  arglist[0] = 10*N; //100*N
+  if(testrun)
+    arglist[0] = SEEK_N_TEST*testscale;
+  else
+  arglist[0] = SEEK_N*N; //100*N
   arglist[1] = 1.;
 
   Int_t ierflg = 0;
-//  std::cout << "------- SoverB -------" << std::endl;
-//  ierflg = 0;
-//  setStartingPoint(gMinuit);
-//  gMinuit->SetFCN(SoverB);
-//  gMinuit->mnexcm("SEEK", arglist ,2,ierflg);
   std::cout << "------- SoverSqrtB -------" << std::endl;
   ierflg = 0;
   setStartingPoint(gMinuit);
@@ -123,14 +130,19 @@ gROOT->SetBatch(1);
   PrintBestFit(gMinuit);
 
   //------------ Genetic
-  GeneticAlgorithm ga(10);
+  GeneticAlgorithm ga(GA_POOL_SIZE);
+  if (testrun)
+    ga.SetMaxPool(GA_POOL_SIZE_TEST*testscale);
   ga.SetFCN(N,SoverSqrtB);
   std::vector<float> start = pool->GetVarStart();
   //ga.SetVarStart(start);
   ga.SetInitPool(seekPool);
-  ga.Minimize(5);
-  std::map<TString, double> minvar= pool->GetVarMin();
-  ga.Analyze(minvar);
+  if(testrun)
+    ga.Minimize(GA_MINIM_COUNT_TEST*testscale);
+  else
+    ga.Minimize(GA_MINIM_COUNT);
+  std::map<TString, double> lim_min= pool->GetLimMin();
+  ga.Analyze(lim_min);
 
   // one can try to minimize on top of the best seek
   //arglist[0] = 100*N;
@@ -204,7 +216,7 @@ void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t if
   min_bkg = bkg_integral;
   std::vector<double> min_pars(par, par + sizeof(Double_t)*npar);
   seekPool[min_value] = std::vector<float>(min_pars.begin(), min_pars.end());
-    std::cout << "Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;
+    std::cout << "Improvement: Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;
   } 
   if(debug)
     std::cout << "Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;

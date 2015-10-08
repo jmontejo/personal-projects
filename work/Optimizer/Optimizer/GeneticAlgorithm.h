@@ -6,6 +6,7 @@ class GeneticAlgorithm{
 
 public:
   GeneticAlgorithm(int max);
+  void SetMaxPool(int n);
   void SetFCN(int n, void (*fcn)(Int_t &, Double_t *, Double_t &f, Double_t *, Int_t));
   void SetVarStart(std::vector<float> &start);
   void SetInitPool(  std::map<float,std::vector<float> > &initPool);

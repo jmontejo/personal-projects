@@ -9,6 +9,10 @@ GeneticAlgorithm::GeneticAlgorithm(int max){
   maxpool = max;
 }
 
+void GeneticAlgorithm::SetMaxPool(int max){
+  maxpool = max;
+}
+
 void GeneticAlgorithm::SetFCN(int n, void (*fcn)(Int_t &, Double_t *, Double_t &f, Double_t *, Int_t)){
   var_n = n;
   m_fcn = fcn;
@@ -45,14 +49,18 @@ void GeneticAlgorithm::Analyze(std::map<TString, double> &min){
   }
 
   std::cout <<std::endl << "----------------- RESULTS --------------" <<std::endl;
-  std::cout <<std::setw(20) << std::setfill(' ') << "Some header"<< std::endl;
+  std::cout <<std::setw(2+22+4) << std::setfill(' ') << "Vars / fig of merit    "; //four spaces for gev
+  for(auto it = chromosomePool.begin();it!=chromosomePool.end();it++){
+     std::cout <<  std::setw(9) << std::setfill(' ') << std::setprecision(3) << -it->first;
+  }
+  std::cout << std::endl;
   i=0;
   for(auto itvar = min.begin(); itvar!=min.end();itvar++){
     if(uselessvar.count(itvar->first))
       std::cout << "X-";
     else
       std::cout << "  ";
-    std::cout << std::setw(20) << std::setfill(' ') << itvar->first;
+    std::cout << std::setw(22) << std::setfill(' ') << itvar->first;
     float modulo = 0;
     TString gev;
     for(auto it = chromosomePool.begin();it!=chromosomePool.end();it++){
@@ -61,7 +69,7 @@ void GeneticAlgorithm::Analyze(std::map<TString, double> &min){
         gev    = (fabs(it->second.at(i))>1000 ? " 1e3": "    ");
         std::cout << gev;
       }
-       std::cout << std::setw(7) << std::setfill(' ') << std::setprecision(3) << it->second.at(i)/modulo;
+       std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << it->second.at(i)/modulo;
     }
     std::cout << std::endl;
     i++;

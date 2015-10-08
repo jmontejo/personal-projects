@@ -2,7 +2,7 @@ signal  /afs/cern.ch/work/j/jmontejo/stop1l-xaod/output/largeRjets/test_tN_800_5
 bkg     /afs/cern.ch/work/j/jmontejo/stop1l-xaod/output/largeRjets/powheg_ttbar_50ns/output-ntuple/mc15_13TeV:mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_SUSY5.e3698_s2608_s2183_r6630_r6264_p2375.root
 tree    sample
 
-cut     n_jet>=2
+cut     n_jet>=4
 weight  weight
 noCheck true
 #lumi in pb
@@ -10,7 +10,6 @@ lumi    20000
 #bkg uncertainty in percentage
 syst    20
 
-var n_jet
 var jet_pt[3]
 var jet_pt[0]-jet_pt[1]
 var jet_pt[1]-jet_pt[2]
@@ -34,17 +33,10 @@ var m_top
 var m_top_chi2
 var m_top_chi2_chi2
 var -dr_bjet_lep
-var dr_bjet_lep
 var ht_sig
 var amt2
 var mt2_tau
+var mt2_tau50
 var topness
-
-var fatjet_m[0]
-var fatjet_pt[0]
-var fatjet_toptag50[0]
-var Sum$(fatjet_toptag50)
-var fatjet_toptag80[0]
-var Sum$(fatjet_toptag80)
 var rcjet_m[0]
 var rcjet_pt[0]

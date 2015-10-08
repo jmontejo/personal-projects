@@ -6,23 +6,27 @@
 #include "Optimizer/computeVar.h"
 #include "Optimizer/variablePool.h"
 #include <iostream>
+#include <iomanip>
 #include <set>
 
 #define DEBUG 1
 
-variablePool::variablePool(TTree *sigtree, TTree *bkgtree, Options *options){
+variablePool::variablePool(TTree *sigtree, TTree *bkgtree, Options *options, bool skipPlots){
   m_cut     = options->get("cut");
   m_weight  = options->get("weight");
   m_vars    = options->getVars();
   m_noCheck = options->getNoCheck();
+  m_skipPlots = skipPlots;
   const char *envVarContent = getenv("ROOTCOREBIN");
   plotfolder = TString(envVarContent)+"/../Optimizer/plots";
   TString commandString = "mkdir -p -m 755 "+plotfolder;
   if(system(commandString.Data()) != 0) std::cout << "^[[31m" << commandString << " failed^[[0m" << std::endl;
 
   TFile *dummy = TFile::Open(plotfolder+"/dummy.root","recreate");
-  m_sigtree = sigtree->CopyTree(m_cut);
-  m_bkgtree = bkgtree->CopyTree(m_cut);
+  m_sigtree = sigtree;
+  m_bkgtree = bkgtree;
+  //m_sigtree = sigtree->CopyTree(m_cut);
+  //m_bkgtree = bkgtree->CopyTree(m_cut);
   std::cout << "Building variablePool..." << std::endl;
 
   GetVarsFromTrees();
@@ -126,7 +130,8 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
   //---- hack
   hsig->Scale(1./hsig->Integral());
   hbkg->Scale(1./hbkg->Integral());
-  doPlot(var,hsig,hbkg);
+  if(!m_skipPlots)
+    doPlot(var,hsig,hbkg);
 
 
   float minsig, maxsig, minbkg, maxbkg;
@@ -207,15 +212,22 @@ void variablePool::Print(){
 
   TString var;
   std::cout << "--- Variable Pool ---" << std::endl;
-  std::cout << "--- Functions: "<< functionVars.size() << std::endl;
-  for(unsigned int i=0;i<functionVars.size(); i++){
-    var = functionVars.at(i);
-    std::cout << var << "\t" << var_min[var] <<"\t" << var_max[var] << "\t| " << lim_min[var] <<"\t" << lim_max[var] << std::endl;
-  }
+//  std::cout << "--- Functions: "<< functionVars.size() << std::endl;
+//  for(unsigned int i=0;i<functionVars.size(); i++){
+//    var = functionVars.at(i);
+//    std::cout << var << "\t" << var_min[var] <<"\t" << var_max[var] << "\t| " << lim_min[var] <<"\t" << lim_max[var] << std::endl;
+//  }
   std::cout << "--- Doubles: "<< doubleVars.size() << std::endl;
   for(unsigned int i=0;i<doubleVars.size(); i++){
     var = doubleVars.at(i);
-    std::cout << var << "\t" << var_min[var] <<"\t" << var_max[var] << "\t| " << lim_min[var] <<"\t" << lim_max[var] << std::endl;
+    float modulo = var_max[var]>1000 ? 1000.: 1.;
+    TString gev  = var_max[var]>1000 ? " 1e3": "    ";
+    std::cout << std::setw(22) << std::setfill(' ') << var;
+    std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << lim_min[var]/modulo;
+    std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << var_min[var]/modulo;
+    std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << var_max[var]/modulo;
+    std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << lim_max[var]/modulo;
+    std::cout << std::endl;
   }
 
 }
@@ -285,6 +297,9 @@ void variablePool::startVar(){
 }
 std::map<TString, double> variablePool::GetVarMin(){
   return var_min;
+}
+std::map<TString, double> variablePool::GetLimMin(){
+  return lim_min;
 }
 
 std::vector<float> variablePool::GetVarStart(){

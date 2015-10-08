@@ -11,7 +11,7 @@
 class variablePool{
 
 public:
-  variablePool(TTree *sigtree, TTree *bkgtree, Options *options);
+  variablePool(TTree *sigtree, TTree *bkgtree, Options *options, bool skipPlots);
   std::vector<TString> functionVars;
   std::vector<TString> intVars;
   std::vector<TString> doubleVars;
@@ -30,6 +30,7 @@ public:
   TTree* getBkgTree();
   std::vector<float> GetVarStart();
   std::map<TString, double> GetVarMin();
+  std::map<TString, double> GetLimMin();
 
 private:
   void AddVar(TString var,std::vector<TString> *vec);
@@ -46,6 +47,7 @@ private:
   std::vector<TString> m_vars;
   TCanvas c1;
   TString plotfolder;
+  bool m_skipPlots;
 
 };
 
