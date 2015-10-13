@@ -31,6 +31,8 @@ public:
   std::vector<float> GetVarStart();
   std::map<TString, double> GetVarMin();
   std::map<TString, double> GetLimMin();
+  std::vector<float> GetLimMinVector();
+  std::vector<float> GetLimMaxVector();
 
 private:
   void AddVar(TString var,std::vector<TString> *vec);

@@ -19,13 +19,13 @@ PACKAGE_CXXFLAGS     =
 PACKAGE_OBJFLAGS     = 
 
 # additional linker flags to pass (for compiling the library):
-PACKAGE_LDFLAGS      = -lMinuit
+PACKAGE_LDFLAGS      = -lMinuit -lRooStats
 
 # additional linker flags to pass (for compiling binaries):
-PACKAGE_BINFLAGS     =  -lMinuit
+PACKAGE_BINFLAGS     =  -lMinuit -lRooStats
 
 # additional linker flags to pass (propagated to client libraries):
-PACKAGE_LIBFLAGS     =  -lMinuit
+PACKAGE_LIBFLAGS     =  -lMinuit -lRooStats
 
 # the list of packages we depend on:
 PACKAGE_DEP = SampleHandler xAODRootAccess

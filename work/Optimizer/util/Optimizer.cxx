@@ -15,24 +15,27 @@
 #include <SampleHandler/SampleLocal.h>
 #include <SampleHandler/SampleHist.h>
 #include "xAODRootAccess/Init.h"
+#include "RooStats/NumberCountingUtils.h"
 
 #define SEEK_N 10
-#define GA_POOL_SIZE 10
-#define GA_MINIM_COUNT 10
+#define GA_POOL_SIZE 20
+#define GA_MINIM_COUNT 20
 #define SEEK_N_TEST 3
 #define GA_POOL_SIZE_TEST 2
-#define GA_MINIM_COUNT_TEST 2
+#define GA_MINIM_COUNT_TEST 4
 
 const char* APP_NAME = "Optimizer";
 
 double (*f)();
 void SoverB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
 void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
-void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral );
+void BinomialExpZ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
+void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral, Double_t *bkg_ev=NULL);
 void setStartingPoint(TMinuit *gMinuit);
 void PrintBestFit(TMinuit *gMinuit);
+float DampMC(float bkg_ev);
 variablePool *pool;
-Double_t sig_integral, bkg_integral, min_sig, min_bkg, min_value=99999;
+Double_t sig_integral, bkg_integral, bkg_ev, min_sig, min_bkg, min_value=99999;
 std::map<float,std::vector<float> > seekPool;
 TGraph graph;
 int igraph=0;
@@ -105,8 +108,6 @@ gROOT->SetBatch(1);
 			bkgtree->AddFile(bkgpaths.at(b));
   }
 
-	std::cout << sigtree << " " << bkgtree << std::endl;
-	std::cout << sigtree->GetEntries() << " " << bkgtree->GetEntries() << std::endl;
   pool = new variablePool(sigtree,bkgtree,options,testrun);
   pool->Print();
 
@@ -126,12 +127,14 @@ gROOT->SetBatch(1);
   arglist[0] = SEEK_N*N; //100*N
   arglist[1] = 1.;
 
+  //std::cout << "------- SoverSqrtB -------" << std::endl;
+	//void (*theFcn)(Int_t &, Double_t *, Double_t &f, Double_t *, Int_t) = SoverSqrtB;
+  std::cout << "------- BinomialExpZ -------" << std::endl;
+	void (*theFcn)(Int_t &, Double_t *, Double_t &f, Double_t *, Int_t) = BinomialExpZ;
+
   Int_t ierflg = 0;
-  std::cout << "------- SoverSqrtB -------" << std::endl;
-  ierflg = 0;
   setStartingPoint(gMinuit);
-  //gMinuit->SetFCN(SoverB);
-  gMinuit->SetFCN(SoverSqrtB);
+  gMinuit->SetFCN(theFcn);
   gMinuit->mnexcm("SEEK", arglist ,2,ierflg);
   PrintBestFit(gMinuit);
 
@@ -139,9 +142,14 @@ gROOT->SetBatch(1);
   GeneticAlgorithm ga(GA_POOL_SIZE);
   if (testrun)
     ga.SetMaxPool(GA_POOL_SIZE_TEST*testscale);
-  ga.SetFCN(N,SoverSqrtB);
+  ga.SetFCN(N,theFcn);
   std::vector<float> start = pool->GetVarStart();
-  //ga.SetVarStart(start);
+  std::vector<float> min   = pool->GetLimMinVector();
+  std::vector<float> max   = pool->GetLimMaxVector();
+	//ga.Load();
+  ga.SetVarStart(start);
+  ga.SetLimMin(min);
+  ga.SetLimMax(max);
   ga.SetInitPool(seekPool);
   if(testrun)
     ga.Minimize(GA_MINIM_COUNT_TEST*testscale);
@@ -149,6 +157,7 @@ gROOT->SetBatch(1);
     ga.Minimize(GA_MINIM_COUNT);
   std::map<TString, double> lim_min= pool->GetLimMin();
   ga.Analyze(lim_min);
+  ga.Dump();
 
   // one can try to minimize on top of the best seek
   //arglist[0] = 100*N;
@@ -164,7 +173,7 @@ gROOT->SetBatch(1);
 }
 
 // --- Get integrals
-void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral ){
+void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral , Double_t *bkg_ev){
 
   TString evcut    = "1";
   int iN = 0;
@@ -188,14 +197,23 @@ void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_in
 
   TString signame = "hsig";
   signame = signame.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","");
-  sigtree->Draw("1 >>"+signame,evcut);
+  sigtree->Draw("1 >>"+signame,evcut,"goff");
   TH1F *hsig = (TH1F *) gDirectory->Get(signame);
   *sig_integral = lumi*sigweight*hsig->Integral();
   TString bkgname = "hbkg";
   bkgname = bkgname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","");
-  bkgtree->Draw("1 >>"+bkgname,evcut);
+  bkgtree->Draw("1 >>"+bkgname,evcut,"goff");
   TH1F *hbkg = (TH1F *) gDirectory->Get(bkgname);
-  *bkg_integral = lumi*bkgweight*hbkg->Integral();
+  *bkg_integral = lumi*bkgweight*hbkg->Integral(); //FIXME IntegralAndError
+	
+	if(bkg_ev)
+		*bkg_ev = hbkg->GetEffectiveEntries();
+	if(*bkg_integral == 0)
+		*bkg_ev = 1;
+//	delete hbkg;
+//	delete hsig;
+//	gDirectory->Clear();
+	gDirectory->DeleteAll();
 
 }
 
@@ -224,10 +242,35 @@ void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t if
   seekPool[min_value] = std::vector<float>(min_pars.begin(), min_pars.end());
     std::cout << "Improvement: Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;
   } 
-  if(debug)
+  if(debug){
     std::cout << "Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;
   graph.SetPoint(igraph,igraph,-f);
   igraph++;
+	}
+  
+}
+
+void BinomialExpZ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag){
+
+	f = 1;
+  getSB(npar,par,&sig_integral,&bkg_integral,&bkg_ev);
+  f = -	RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral+1, sqrt(bkgsyst*bkgsyst+1./bkg_ev))*DampMC(bkg_ev);
+  if (f<min_value){
+  min_value = f;
+  min_sig = sig_integral;
+  min_bkg = bkg_integral;
+  std::vector<double> min_pars(par, par + npar);
+  seekPool[min_value] = std::vector<float>(min_pars.begin(), min_pars.end());
+  	float realZ = RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral+1, bkgsyst);
+    std::cout << "Improvement: BinomialZ with MC stat and damping: (bkg/sig) " << sig_integral<<"/"<<bkg_integral<< " => " << -f << std::endl;
+    std::cout << "Improvement: real BinomialZ: " << realZ << std::endl;
+    std::cout << "effective MC events: " << bkg_ev << std::endl;
+  } 
+  if(debug){
+    std::cout << "Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;
+  graph.SetPoint(igraph,igraph,-f);
+  igraph++;
+	}
   
 }
 
@@ -250,5 +293,9 @@ void setStartingPoint(TMinuit *gMinuit){
 
 void PrintBestFit(TMinuit *gMinuit){
   gMinuit->mnprin(1,gMinuit->fAmin);
-  std::cout << "Sig/bkg: " << min_sig<<"/"<<min_bkg<< " -> " << -min_value << std::endl;
+  std::cout << "PrintBestFit - Sig/bkg: " << min_sig<<"/"<<min_bkg<< " -> " << -min_value << std::endl;
+}
+
+float DampMC(float bkg_ev){
+	return erf(bkg_ev-10)*0.5 + 0.5;
 }
