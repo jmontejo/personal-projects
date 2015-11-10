@@ -11,6 +11,7 @@
 
 GeneticAlgorithm::GeneticAlgorithm(int max){
 	maxpool = max;
+	rand.SetSeed(0);
 }
 
 void GeneticAlgorithm::SetMaxPool(int max){
@@ -39,42 +40,49 @@ void GeneticAlgorithm::SetInitPool(  std::map<float,std::vector<float> > &initPo
 void GeneticAlgorithm::Minimize(int n){
 	std::vector<float> chrom(var_n);
 
-	chrom.at(0) = 40;     //-klf_std_bestlikelihood           40       43     93.1     96.1
-	chrom.at(1) = 145;   //                  amt2           10       10      883      883
-	chrom.at(2) = 1e3;     // bjet_pt[0]-bjet_pt[1] 1e3        0        0      880      990
-	chrom.at(3) = 1e3;     //            bjet_pt[1] 1e3        0        0      456      513
-	chrom.at(4) = 0.5;   //      dphi_jet0_ptmiss            0     0.17     3.06     3.06
-	chrom.at(5) = 0.3;   //      dphi_jet1_ptmiss            0        0     3.14     3.14
-	chrom.at(6) = 0.1;     //      dphi_jet2_ptmiss            0        0     3.11     3.14
-	chrom.at(7) = 0.1;     //      dphi_jet3_ptmiss            0        0     3.14     3.14
-	chrom.at(8) = 75e3;  //           fatjet_m[0] 1e3        0        0      567      567
-	chrom.at(9) = 270e3;//          fatjet_pt[0] 1e3        0        0 1.72e+03 1.94e+03
-	chrom.at(10) = 1e3;    //                    ht 1e3        0        0 2.61e+03 2.61e+03
-	chrom.at(11) = 1e3;    //               ht_incl 1e3        0        0 2.79e+03 2.79e+03
-	chrom.at(12) = 10;   //                ht_sig        -17.8      -10     36.8     60.2
-	chrom.at(13) = 10e3; //   jet_pt[0]-jet_pt[1] 1e3        0        0 1.58e+03 1.58e+03
-	chrom.at(14) = 25e3; //   jet_pt[1]-jet_pt[2] 1e3        0        0      729      729
-	chrom.at(15) = 15e3; //   jet_pt[2]-jet_pt[3] 1e3        0        0      297      297
-	chrom.at(16) = 25e3; //             jet_pt[3] 1e3     18.2     18.2      244      257
-	chrom.at(17) = -90; //klf_noMET_bestlikelihood          -89      -89    -40.4    -40.4
-	chrom.at(18) = 25e3;    //                lep_pt 1e3        0        0      738      738
-	chrom.at(19) = 315e3;//                   met 1e3       60       60 1.47e+03 1.64e+03
-	chrom.at(20) = 3;    //               met_sig            3     4.97     32.6     38.5
-	chrom.at(21) = 175e3;//                    mt 1e3        0        0 1.26e+03 1.26e+03
-	chrom.at(22) = 10;    //               mt2_tau            0        0      420      756
-	chrom.at(23) = 10;    //             mt2_tau50            0        0      504      756
-	chrom.at(24) = 10e3;    //               mt2stop 1e3        0        0  2.3e+03  2.3e+03
-	chrom.at(25) = 10e3;    //     mt2stop_fit_noMET 1e3        0        0 2.25e+03 2.25e+03
-	chrom.at(26) = 10e3;    //       mt2stop_fit_std 1e3        0        0 1.84e+03 1.84e+03
-	chrom.at(27) = 7;    //               topness        -18.4      -15     15.6     15.6
-		chromosomePool[Evaluate(chrom)] = chrom;
+//	if(var_n==13){
+//	chrom.at(0) = -2.5;  //        -dr_bjet_lep        -5.67    -5.13    -0.27    -0.27
+//	chrom.at(1) = 175;  //                amt2 1e3     0.06     0.06     1.08     1.14
+//	chrom.at(2) = 140e3;  //  fatjet_R10_L0_m[0] 1e3        0        0      765      765
+//	chrom.at(3) = 300e3;  // fatjet_R10_L0_pt[0] 1e3        0        0 2.44e+03 2.74e+03
+//	chrom.at(4) = 15;  //              ht_sig          -14      -14       85       85
+//	chrom.at(5) = 120e3; // jet_pt[0]-jet_pt[1] 1e3        0        0 1.55e+03 1.63e+03
+//	chrom.at(6) = 80e3; // jet_pt[1]-jet_pt[2] 1e3        0        0 1.94e+03 1.94e+03
+//	chrom.at(7) = 50e3; // jet_pt[2]-jet_pt[3] 1e3        0        0      693      693
+//	chrom.at(8) = 25e3; //           jet_pt[3] 1e3        0        0      513      513
+//	chrom.at(9) = 350e3; //                 met 1e3       40       40 1.79e+03 1.79e+03
+//	chrom.at(10) = 200e3; //                  mt 1e3        0        0 2.61e+03 2.61e+03
+//	chrom.at(11) = 100; //             mt2_tau            0        0      952 1.01e+03
+//	chrom.at(12) = 1.5; //             n_bjet
+//	chromosomePool[Evaluate(chrom,1)] = chrom;
+//	std::cout << "Ben point: " << Evaluate(chrom) <<std::endl;
+//	}
+//	if(var_n==15){
+//	chrom.at(0) = -0.8;  //        -abs(met-met_cst)*pow(met,-1)
+//	chrom.at(1) = -2.5;  //        -dr_bjet_lep        -5.67    -5.13    -0.27    -0.27
+//	chrom.at(2) = -0.8;  //        -sqrt(pow(met_x-met_cst_x,2)+pow(met_y-met_cst_y,2))*pow(met,-1)
+//	chrom.at(2+1) = 175;  //                amt2 1e3     0.06     0.06     1.08     1.14
+//	chrom.at(2+2) = 140e3;  //  fatjet_R10_L0_m[0] 1e3        0        0      765      765
+//	chrom.at(2+3) = 300e3;  // fatjet_R10_L0_pt[0] 1e3        0        0 2.44e+03 2.74e+03
+//	chrom.at(2+4) = 15;  //              ht_sig          -14      -14       85       85
+//	chrom.at(2+5) = 120e3; // jet_pt[0]-jet_pt[1] 1e3        0        0 1.55e+03 1.63e+03
+//	chrom.at(2+6) = 80e3; // jet_pt[1]-jet_pt[2] 1e3        0        0 1.94e+03 1.94e+03
+//	chrom.at(2+7) = 50e3; // jet_pt[2]-jet_pt[3] 1e3        0        0      693      693
+//	chrom.at(2+8) = 25e3; //           jet_pt[3] 1e3        0        0      513      513
+//	chrom.at(2+9) = 350e3; //                 met 1e3       40       40 1.79e+03 1.79e+03
+//	chrom.at(2+10) = 200e3; //                  mt 1e3        0        0 2.61e+03 2.61e+03
+//	chrom.at(2+11) = 100; //             mt2_tau            0        0      952 1.01e+03
+//	chrom.at(2+12) = 1.5; //             n_bjet
+//	chromosomePool[Evaluate(chrom,1)] = chrom;
+//	std::cout << "Ben point: " << Evaluate(chrom) <<std::endl;
+//	}
+
 
 	for(int i=0;i<n;i++){
 		std::cout << "GeneticAlgorithm::Iterate " << i << std::endl;
 		chromosomePool[Evaluate(chrom)] = chrom;
 		Iterate(i>n*mutateabs_threshold && i%2==0);
 	}
-	Print();
 
 }
 void GeneticAlgorithm::Analyze(std::map<TString, double> &min){
@@ -170,7 +178,7 @@ void GeneticAlgorithm::Iterate(bool mutateAbs){
 		if(value < it->first){ //returns -f
 			chromosomePool.erase(it->first);
 		}
-		std::cout << "Mutate: " << value << std::endl;
+		//std::cout << "Mutate: " << -value << std::endl;
 		// double mutate
 		chrom = Mutate(it->second,0.9);
 		value = Evaluate(chrom);
@@ -179,17 +187,18 @@ void GeneticAlgorithm::Iterate(bool mutateAbs){
 			chromosomePool.erase(it->first);
 		}
 		//
-		std::cout << "Mutate: " << value << std::endl;
+		//std::cout << "Mutate: " << -value << std::endl;
 		for(it2 = std::next(it,1);it2!=original.end();it2++){
 			chrom = Combine(it->second, it2->second, rand.Integer(2*var_n-1)-var_n+1); //(-var_n,var_n)
 			value = Evaluate(chrom);
-			std::cout << "Combine: "<< value << std::endl;
+			//std::cout << "Combine: "<< -value << std::endl;
 			if(value < it->first){ //returns -f
 				chromosomePool[value] = chrom;
 				chromosomePool.erase(it->first);
 				chromosomePool.erase(it2->first);
 			}
 		}
+		//std::cout << rank;
 		rank++;
 	}
 
@@ -238,19 +247,19 @@ std::vector<float> GeneticAlgorithm::Average(std::vector<float> &c1, std::vector
 		chrom.at(i) = (c1.at(i)+c2.at(i))/2.;
 	return chrom;
 }
-float GeneticAlgorithm::Evaluate(std::vector<float> &c){
+float GeneticAlgorithm::Evaluate(std::vector<float> &c, int forceOutput){
 	Double_t ret;
 	Double_t c_array[c.size()];
 	std::copy(c.begin(), c.end(), c_array);
 	int size = c.size();
-	m_fcn(size, (Double_t *) NULL, ret, c_array, 0);
+	m_fcn(size, (Double_t *) NULL, ret, c_array, forceOutput);
 	return ret;
 }  
 void GeneticAlgorithm::Purge(){
 	std::map<float,std::vector<float> >::iterator it;
 	std::map<float,std::vector<float> >::iterator it2;
 	int presize = chromosomePool.size();
-	for(it=chromosomePool.begin();it!=chromosomePool.end() && chromosomePool.size()>maxpool;it++){
+	for(it=chromosomePool.begin();it!=chromosomePool.end() && chromosomePool.size()>maxpool && std::distance(chromosomePool.begin(),it)<maxpool;it++){
 		for(it2 = std::next(it,1);it2!=chromosomePool.end() && chromosomePool.size()>maxpool;it2++){
 			if(it==it2) continue;
 			float similarity = Similarity(it->second,it2->second);
@@ -276,9 +285,9 @@ float GeneticAlgorithm::Similarity(std::vector<float> &c1, std::vector<float> &c
 	if(equalcount > equal_threshold*c1.size()) return 0;
 	return sim;
 }
-void GeneticAlgorithm::Dump(){
+void GeneticAlgorithm::Dump(TString tag){
 	std::ofstream myfile;
-	myfile.open ("Optimizer/plots/ga_dump.txt");
+	myfile.open ("Optimizer/plots/ga_dump_"+tag+".txt");
 	for(auto it=chromosomePool.begin();it!=chromosomePool.end();it++){
 		for(int i=0;i<it->second.size();i++){
 			myfile << it->second.at(i) << "\t";
@@ -288,9 +297,9 @@ void GeneticAlgorithm::Dump(){
 	myfile.close();
 
 }
-void GeneticAlgorithm::Load(){
+void GeneticAlgorithm::Load(TString tag){
 	std::ifstream myfile;
-	myfile.open ("Optimizer/plots/ga_dump.txt",std::ios::in);
+	myfile.open ("Optimizer/plots/ga_dump_"+tag+".txt",std::ios::in);
 	std::string line;
 	while ( myfile.good() )
 	{

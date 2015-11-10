@@ -18,8 +18,8 @@
 #include "RooStats/NumberCountingUtils.h"
 
 #define SEEK_N 10
-#define GA_POOL_SIZE 20
-#define GA_MINIM_COUNT 20
+#define GA_POOL_SIZE 50
+#define GA_MINIM_COUNT 1
 #define SEEK_N_TEST 3
 #define GA_POOL_SIZE_TEST 2
 #define GA_MINIM_COUNT_TEST 4
@@ -39,6 +39,8 @@ Double_t sig_integral, bkg_integral, bkg_ev, min_sig, min_bkg, min_value=99999;
 std::map<float,std::vector<float> > seekPool;
 TGraph graph;
 int igraph=0;
+int evalCount=0;
+bool seekon=false;
 
 
 bool debug = 0;
@@ -57,6 +59,9 @@ gROOT->SetBatch(1);
     testrun = true;
   if(testrun && argn==4)
     testscale=TString(args[3]).Atoi();
+	bool seekrun = false;
+  if(argn >= 3 && TString(args[2])=="-s")
+    seekrun = true;
     
   gInterpreter->GenerateDictionary("computeVar","computeVar.cxx");
   TString jofile = args[1];
@@ -132,11 +137,16 @@ gROOT->SetBatch(1);
   std::cout << "------- BinomialExpZ -------" << std::endl;
 	void (*theFcn)(Int_t &, Double_t *, Double_t &f, Double_t *, Int_t) = BinomialExpZ;
 
+	
+	if(seekrun){
   Int_t ierflg = 0;
   setStartingPoint(gMinuit);
   gMinuit->SetFCN(theFcn);
+	seekon = true;
   gMinuit->mnexcm("SEEK", arglist ,2,ierflg);
+	seekon = false;
   PrintBestFit(gMinuit);
+	}
 
   //------------ Genetic
   GeneticAlgorithm ga(GA_POOL_SIZE);
@@ -146,18 +156,20 @@ gROOT->SetBatch(1);
   std::vector<float> start = pool->GetVarStart();
   std::vector<float> min   = pool->GetLimMinVector();
   std::vector<float> max   = pool->GetLimMaxVector();
-	//ga.Load();
+	if(seekrun)
+  ga.SetInitPool(seekPool);
+	else
+	ga.Load(options->get("tag"));
   ga.SetVarStart(start);
   ga.SetLimMin(min);
   ga.SetLimMax(max);
-  ga.SetInitPool(seekPool);
   if(testrun)
     ga.Minimize(GA_MINIM_COUNT_TEST*testscale);
   else
     ga.Minimize(GA_MINIM_COUNT);
   std::map<TString, double> lim_min= pool->GetLimMin();
+  ga.Dump(options->get("tag"));
   ga.Analyze(lim_min);
-  ga.Dump();
 
   // one can try to minimize on top of the best seek
   //arglist[0] = 100*N;
@@ -165,9 +177,10 @@ gROOT->SetBatch(1);
   //setStartingPoint(gMinuit);
   //gMinuit->mnexcm("MINIZE", arglist ,2,ierflg);
   //
-  TCanvas can("can");
-  graph.Draw();
-  can.SaveAs("graph.png");
+  //TCanvas can("can");
+  //graph.Draw();
+  //can.SaveAs("graph.png");
+  std::cout << "END: number of evaluations: "<<evalCount <<std::endl;
 
   return 0;
 }
@@ -210,10 +223,11 @@ void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_in
 		*bkg_ev = hbkg->GetEffectiveEntries();
 	if(*bkg_integral == 0)
 		*bkg_ev = 1;
-//	delete hbkg;
-//	delete hsig;
+	evalCount++;
+	delete hbkg;
+	delete hsig;
 //	gDirectory->Clear();
-	gDirectory->DeleteAll();
+//	gDirectory->DeleteAll();
 
 }
 
@@ -254,18 +268,29 @@ void BinomialExpZ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t 
 
 	f = 1;
   getSB(npar,par,&sig_integral,&bkg_integral,&bkg_ev);
-  f = -	RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral+1, sqrt(bkgsyst*bkgsyst+1./bkg_ev))*DampMC(bkg_ev);
+	if(bkg_integral)
+  	f = -	(1+RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral, sqrt(bkgsyst*bkgsyst+1./bkg_ev)))*DampMC(bkg_ev);
+	else
+		f = 9999;
   if (f<min_value){
   min_value = f;
   min_sig = sig_integral;
   min_bkg = bkg_integral;
-  std::vector<double> min_pars(par, par + npar);
-  seekPool[min_value] = std::vector<float>(min_pars.begin(), min_pars.end());
-  	float realZ = RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral+1, bkgsyst);
-    std::cout << "Improvement: BinomialZ with MC stat and damping: (bkg/sig) " << sig_integral<<"/"<<bkg_integral<< " => " << -f << std::endl;
+  	float realZ = RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral, bkgsyst);
+    std::cout << "Improvement: 1+BinomialZ with MC stat and damping: (sig/bkg) " << sig_integral<<"/"<<bkg_integral<< " => " << -f << std::endl;
     std::cout << "Improvement: real BinomialZ: " << realZ << std::endl;
     std::cout << "effective MC events: " << bkg_ev << std::endl;
   } 
+	if(iflag && !seekon){
+  	float realZ = RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral, bkgsyst);
+    std::cout << "FORCED OUTPUT: 1+BinomialZ with MC stat and damping: (sig/bkg) " << sig_integral<<"/"<<bkg_integral<< " => " << -f << std::endl;
+    std::cout << "FORCED OUTPUT: real BinomialZ: " << realZ << std::endl;
+    std::cout << "FORCED OUTPUT: effective MC events: " << bkg_ev << std::endl;
+	}
+	if(seekon && ((seekPool.size() < GA_POOL_SIZE) || (f<std::next(seekPool.begin(),GA_POOL_SIZE-1)->first) )){
+  	std::vector<double> min_pars(par, par + npar);
+  	seekPool[f] = std::vector<float>(min_pars.begin(), min_pars.end());
+	}
   if(debug){
     std::cout << "Sig/sqrt(bkg): " << sig_integral<<"/"<<sqrt(bkg_integral)<< " = " << -f << std::endl;
   graph.SetPoint(igraph,igraph,-f);

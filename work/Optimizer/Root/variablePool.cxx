@@ -22,11 +22,14 @@ variablePool::variablePool(TTree *sigtree, TTree *bkgtree, Options *options, boo
 	TString commandString = "mkdir -p -m 755 "+plotfolder;
 	if(system(commandString.Data()) != 0) std::cout << "^[[31m" << commandString << " failed^[[0m" << std::endl;
 
-	TFile *dummy = TFile::Open(plotfolder+"/dummy.root","recreate");
-	m_sigtree = sigtree;
-	m_bkgtree = bkgtree;
-	//m_sigtree = sigtree->CopyTree(m_cut);
-	//m_bkgtree = bkgtree->CopyTree(m_cut);
+	dummy = TFile::Open(plotfolder+"/dummy_"+options->get("tag")+".root","recreate");
+	//m_sigtree = sigtree;
+	//m_bkgtree = bkgtree;
+	m_sigtree = sigtree->CopyTree(m_cut);
+	m_bkgtree = bkgtree->CopyTree(m_cut);
+	std::cout << m_cut << m_sigtree << sigtree << std::endl;
+	std::cout << "Cut reduced signal tree    : " <<sigtree->GetEntries() << " -> " << m_sigtree->GetEntries() << std::endl;
+	std::cout << "Cut reduced background tree: " <<bkgtree->GetEntries() << " -> " << m_bkgtree->GetEntries() << std::endl;
 	std::cout << "Building variablePool..." << std::endl;
 
 	GetVarsFromTrees();
@@ -37,7 +40,10 @@ variablePool::variablePool(TTree *sigtree, TTree *bkgtree, Options *options, boo
 	//AddFunctionVar("computeVar::BtagN(jet_MV1c_weight,3)");
 	//AddFunctionVar("computeVar::BtagN(jet_btag_weight,2)+computeVar::BtagN(jet_btag_weight,3)");
 	//AddFunctionVar("computeVar::BtagN(jet_MV1c_weight,2)+computeVar::BtagN(jet_MV1c_weight,3)");
+}
 
+variablePool::~variablePool(){
+	dummy->Clear();
 }
 
 // --- Add function, double, int
@@ -110,12 +116,12 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
 
 	TString hsigname = "hsig"+var;
 	hsigname = hsigname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","").ReplaceAll(",","");
-	m_sigtree->Draw(var+">>"+hsigname+"(100)",m_cut+"*"+m_weight);
+	m_sigtree->Draw(var+">>"+hsigname+"(1000)",m_cut+"*"+m_weight);
 	TH1F *hsig = (TH1F *) gDirectory->Get(hsigname);
 
 	TString hbkgname = "hbkg"+var;
 	hbkgname = hbkgname.ReplaceAll(":","").ReplaceAll("(","").ReplaceAll(")","").ReplaceAll(",","");
-	m_bkgtree->Draw(var+">>"+hbkgname+"(100,"+Form("%f",hsig->GetBinLowEdge(1))+","+Form("%f",hsig->GetBinLowEdge(hsig->GetNbinsX()+1))+")",m_cut+"*"+m_weight);
+	m_bkgtree->Draw(var+">>"+hbkgname+"(1000,"+Form("%f",hsig->GetBinLowEdge(1))+","+Form("%f",hsig->GetBinLowEdge(hsig->GetNbinsX()+1))+")",m_cut+"*"+m_weight);
 	TH1F *hbkg = (TH1F *) gDirectory->Get(hbkgname);
 
 	//---- hack

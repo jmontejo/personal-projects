@@ -15,8 +15,8 @@ public:
   void Analyze(std::map<TString, double> &min);
   void Minimize(int n);
   void Print();
-	void Load();
-	void Dump();
+	void Load(TString tag);
+	void Dump(TString tag);
 
 private:
   std::map<float,std::vector<float> > chromosomePool;
@@ -29,7 +29,7 @@ private:
   std::vector<float> Combine(std::vector<float> &c1, std::vector<float> &c2, int swappoint);
   std::vector<float> Average(std::vector<float> &c1, std::vector<float> &c2);
   void (*m_fcn)(Int_t &, Double_t *, Double_t &f, Double_t *, Int_t);
-  float Evaluate(std::vector<float> &c);
+  float Evaluate(std::vector<float> &c, int forceOutput=0);
   TRandom3 rand;
   int var_n, maxpool;
 	std::vector<float> m_min, m_max;

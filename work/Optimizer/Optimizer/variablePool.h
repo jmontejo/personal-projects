@@ -12,6 +12,7 @@ class variablePool{
 
 public:
   variablePool(TTree *sigtree, TTree *bkgtree, Options *options, bool skipPlots);
+  ~variablePool();
   std::vector<TString> functionVars;
   std::vector<TString> intVars;
   std::vector<TString> doubleVars;
@@ -42,6 +43,7 @@ private:
   int  getRebinN(TH1F *h);
   void startVar();
 
+	TFile *dummy;
   TTree *m_sigtree;
   TTree *m_bkgtree;
   TString m_cut, m_weight;
