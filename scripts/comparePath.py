@@ -245,7 +245,7 @@ if __name__ == "__main__":
   if columns < 0:
     sh_rows, sh_columns = os.popen('stty size', 'r').read().split()
     sh_columns = int(sh_columns)
-    if sh_columns > 0: columns = sh_columns/2
+    if sh_columns > 0: columns = (sh_columns-1)/2
     else: columns = 60
   #--
   try:
@@ -273,7 +273,7 @@ if __name__ == "__main__":
   full         = options.full
   all          = options.all
   skipmatch    = options.skipmatch
-  missing      = options.missing
+  missing      = options.missing  or options.missingonly
   missingonly  = options.missingonly
   extension    = options.extension
   excepted     = options.excepted
