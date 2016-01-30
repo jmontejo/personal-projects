@@ -2,18 +2,23 @@ from optparse import OptionParser
 import sys,os,subprocess
 import ROOT as root
 from random import randint
+import re
 
-def compareTree(tree1, tree2, file1, file2, showcrazy):
+def compareTree(tree1, tree2, file1, file2, options):
 
   if tree1.GetEntries() != tree2.GetEntries():
     print "Different number of entries:",
     print file1,":",tree1.GetEntries()
     print file2,":",tree2.GetEntries()
+    if tree2.GetEntries() < tree1.GetEntries():
+      tmp   = tree2
+      tree2 = tree1
+      tree1 = tmp
   else:
     print "Same number of entries"
 
-  branches1 = set([x.GetName() for x in tree1.GetListOfBranches()])
-  branches2 = set([x.GetName() for x in tree2.GetListOfBranches()])
+  branches1 = set([x.GetName() for x in tree1.GetListOfBranches() if not options.skip or not re.search(options.skip,x.GetName())])
+  branches2 = set([x.GetName() for x in tree2.GetListOfBranches() if not options.skip or not re.search(options.skip,x.GetName())])
 
   if branches1 != branches2:
     print "Difference in branches:"
@@ -38,24 +43,36 @@ def compareTree(tree1, tree2, file1, file2, showcrazy):
 
   if   "EventNumber" in branches2: index = "EventNumber"
   elif "eventNumber" in branches2: index = "eventNumber"
+  else:
+    for b in branches2:
+      if re.search(".vent.*umber", b):
+        index = b
+        break
+    else:
+      print "Could not build index, no event number in the file"
+      return
+
   tree2.BuildIndex(index,"mc_channel_number")
   crazyset = set()
   limit = min(tree1.GetEntries(),tree2.GetEntries())
-  for i in range(min(10,limit)):
-    i = randint(0,limit)
+  for i in range(min(options.nevents,limit)):
+    while True:
+      i = randint(0,limit)
+      tree1.GetEntry(i)
+      ret = tree2.GetEntryWithIndex(getattr(tree1,index),getattr(tree1,"mc_channel_number"))
+      if ret!=-1: break
     print "Event",i,"of",tree1.GetEntries()
-    tree1.GetEntry(i)
-    tree2.GetEntryWithIndex(getattr(tree1,index),getattr(tree1,"mc_channel_number"))
-    for v in common:
+    maxlength = len(max(common, key=len))
+    for v in sorted(common):
       v1 = getattr(tree1,v)
       vtype = type(v1)
       if vtype is int or vtype is long or vtype is float:
         v2 = getattr(tree2,v)
-        if v1 != v2:
-          if (v1 < 1e-10 or v2 < 1e-10 or v1 > 1e10 or v2 > 1e10) and not showcrazy: 
+        if abs(v1 - v2) > options.threshold:
+          if (v1 < 1e-10 or v2 < 1e-10 or v1 > 1e10 or v2 > 1e10) and not options.showcrazy: 
             crazyset.add(v)
             continue
-          print v, v1, v2
+          print "{0:{1}}:{2:15n} {3:15n}".format(v,maxlength+1,v1,v2)
   if crazyset:
     print "Hidden (crazy) differences: ",crazyset
 
@@ -66,6 +83,20 @@ if __name__ == "__main__":
                     dest="tree", 
                     help="Specify tree name",
                     default="")
+  parser.add_option("-T", "--tree2", 
+                    dest="tree2", 
+                    help="Specify second tree name if different from the first",
+                    default="")
+  parser.add_option("-S", "--skip", 
+                    dest="skip", 
+                    help="Skip branches matching this patter. Wildcards are allowed.",
+                    default="")
+  parser.add_option("--threshold", 
+                    help="Numerical threshold to consider values as different. Default 1e-9",
+                    default=1e-9)
+  parser.add_option("-n", "--nevents", type="int",
+                    help="Number of events to scan for differences, default 10.",
+                    default=10)
   parser.add_option ("-v","--verbose", 
                      help="Turn on verbose printout. Default is False", 
                      dest="verbose", 
@@ -123,12 +154,14 @@ if __name__ == "__main__":
     print "Couldn't find a TTree in the file, please check"
     print [x.GetName() for x in rfile1.GetListOfKeys()]
     sys.exit(3)
+  if not options.tree2:
+    options.tree2 = options.tree
 
   tree1 = rfile1.Get(path+options.tree)
-  tree2 = rfile2.Get(path+options.tree)
+  tree2 = rfile2.Get(path+options.tree2)
   if not tree2:
     print "Couldn't find TTree", path+options.tree, "in file",file2
     sys.exit(4)
 
 
-  compareTree(tree1,tree2, file1, file2,option.showcrazy)
+  compareTree(tree1,tree2, file1, file2, options)
