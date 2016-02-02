@@ -39,6 +39,9 @@ if __name__ == "__main__":
       os.system("mv %s %s" %(old,old_bak))
       if options.clean:
         os.system("rm %s" % old_bak)
+    else: #remove broken symlinks
+      os.system("rm -f %s" %old)
+
     if len(new_)>1:
       precmd = new_[1]
       os.system(precmd)

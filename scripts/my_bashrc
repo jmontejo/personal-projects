@@ -37,6 +37,8 @@ case `hostname` in
     alias ls='ls -G --color=auto'
     alias allow="sudo $MYSVN/scripts/blockWebs.py -a"
     alias block="sudo $MYSVN/scripts/blockWebs.py -b"
+    alias mountafs="sshfs jmontejo@lxplus.cern.ch:/afs/cern.ch/work/j/jmontejo/ /afs/cern.ch/work/j/jmontejo/ && sshfs jmontejo@lxplus.cern.ch:/afs/cern.ch/user/j/jmontejo/ /afs/cern.ch/user/j/jmontejo/"
+    alias umountafs="umount /afs/cern.ch/work/j/jmontejo/ ; umount /afs/cern.ch/user/j/jmontejo/"
     source /Users/JMontejo/Documents/root_5.34.26/bin/thisroot.sh
     #source /Users/JMontejo/Downloads/root/bin/thisroot.sh 
     if python -c "from socket import gethostname; print gethostname()" | grep -q cern; then
@@ -69,7 +71,7 @@ alias at304='ssh -Y jmontejo@at304.pic.es'
 alias at305='ssh -Y jmontejo@at305.pic.es'
 alias at306='ssh -Y jmontejo@at306.pic.es'
 alias at307='ssh -Y jmontejo@at307.pic.es'
-alias lxplus='ssh -Y jmontejo@lxplus.cern.ch'
+alias lxplus='LANG=C ssh -Y jmontejo@lxplus.cern.ch'
 alias lxplus5='ssh -Y jmontejo@lxplus5.cern.ch'
 alias nifae06='ssh -Y jmontejo@nifae06.cern.ch'
 
