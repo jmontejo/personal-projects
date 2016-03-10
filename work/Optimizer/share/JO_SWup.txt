@@ -14,7 +14,7 @@ bkg			export/default/powheg_singletop/mc15_13TeV.410014.PowhegPythiaEvtGen_P2012
 bkg			export/default/powheg_singletop/mc15_13TeV.410025.PowhegPythiaEvtGen_P2012_SingleTopSchan_noAllHad_top.DAOD_SUSY5.root
 bkg			export/default/powheg_singletop/mc15_13TeV.410026.PowhegPythiaEvtGen_P2012_SingleTopSchan_noAllHad_antitop.DAOD_SUSY5.root
 bkg			export/default/powheg_ttbar/mc15_13TeV.407012.PowhegPythiaEvtGen_P2012CT10_ttbarMET200_hdamp172p5_nonAH.DAOD_SUSY5.root
-bkg			export/default/powheg_ttbar/mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.DAOD_SUSY5.root
+#bkg			export/default/powheg_ttbar/mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.DAOD_SUSY5.root
 bkg			export/default/sherpa_diboson/mc15_13TeV.361063.Sherpa_CT10_llll.DAOD_SUSY5.root
 bkg			export/default/sherpa_diboson/mc15_13TeV.361064.Sherpa_CT10_lllvSFMinus.DAOD_SUSY5.root
 bkg			export/default/sherpa_diboson/mc15_13TeV.361065.Sherpa_CT10_lllvOFMinus.DAOD_SUSY5.root
@@ -50,23 +50,23 @@ lumi    3500
 #bkg uncertainty in percentage
 syst    30
 
-var jet_pt[0]
-var jet_pt[1]
-var jet_pt[2]
-var jet_pt[3]
-var lep_pt
-var met
-var fatjet_R12_L0_pt[0]
-var fatjet_R12_L0_m[0]
-var dphi_jet0_ptmiss
-var dphi_jet1_ptmiss
-var dphi_jet2_ptmiss
-var dphi_jet3_ptmiss
-var mt
-var ht
-var met_sig
-var -dr_bjet_lep
-var ht_sig
-var amt2
-var mt2_tau
-var topness
+var jet_pt[0]							5e3
+var jet_pt[1]							5e3
+var jet_pt[2]							5e3
+var jet_pt[3]							5e3
+var lep_pt								5e3
+var met										10e3
+var fatjet_R12_L0_pt[0]		10e3
+var fatjet_R12_L0_m[0]		10e3
+var dphi_jet0_ptmiss			0.1
+var dphi_jet1_ptmiss 			0.1
+var dphi_jet2_ptmiss 			0.1
+var dphi_jet3_ptmiss 			0.1
+var mt										10e3
+var ht										10e3
+var met_sig								1
+var -dr_bjet_lep					0.1
+var ht_sig								1
+var amt2									5
+var mt2_tau								5
+var topness								1

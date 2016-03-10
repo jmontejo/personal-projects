@@ -2,36 +2,44 @@
 #include<map>
 #include<vector>
 
+typedef std::vector<int> 	 coded_chrom;
+typedef std::vector<float> extern_chrom;
+
 class GeneticAlgorithm{
 
 public:
   GeneticAlgorithm(int max);
   void SetMaxPool(int n);
   void SetFCN(int n, void (*fcn)(Int_t &, Double_t *, Double_t &f, Double_t *, Int_t));
-  void SetVarStart(std::vector<float> &start);
-  void SetLimMin(std::vector<float> &min);
-  void SetLimMax(std::vector<float> &max);
-  void SetInitPool(  std::map<float,std::vector<float> > &initPool);
-  void Analyze(std::map<TString, double> &min);
+  void SetVarStart(extern_chrom &start);
+	void SetVarSteps(std::vector<std::pair<float, int> > &var_step);
+  void SetVarMin(extern_chrom &min);
+  void SetVarMax(extern_chrom &max);
+  void SetInitPool(  std::map<float,extern_chrom > &initPool);
+  void Analyze(std::vector<TString> &name, std::vector<float> &min);
   void Minimize(int n);
   void Print();
 	void Load(TString tag);
 	void Dump(TString tag);
 
 private:
-  std::map<float,std::vector<float> > chromosomePool;
-  void InitPool(std::vector<float> &start, int ini);
+  std::map<float,coded_chrom > chromosomePool;
+  void InitPool(extern_chrom &start, int ini);
   void Iterate(bool mutateAbs);
   void Purge();
-  float Similarity(std::vector<float> &c1, std::vector<float> &c2);
-  std::vector<float> Mutate(std::vector<float> &original, float frac);
-  std::vector<float> MutateAbs(std::vector<float> &original);
-  std::vector<float> Combine(std::vector<float> &c1, std::vector<float> &c2, int swappoint);
-  std::vector<float> Average(std::vector<float> &c1, std::vector<float> &c2);
+  float Similarity(coded_chrom &c1, coded_chrom &c2);
+  coded_chrom Mutate(coded_chrom &original, float frac);
+  coded_chrom Combine(coded_chrom &c1, coded_chrom &c2, int swappoint);
+  coded_chrom Average(coded_chrom &c1, coded_chrom &c2);
   void (*m_fcn)(Int_t &, Double_t *, Double_t &f, Double_t *, Int_t);
-  float Evaluate(std::vector<float> &c, int forceOutput=0);
+  float Evaluate(coded_chrom &c, int forceOutput=0);
   TRandom3 rand;
   int var_n, maxpool;
-	std::vector<float> m_min, m_max;
+	extern_chrom m_min, m_max;
+	std::vector<std::pair<float, int> > m_var_step;
+	int Code(int i, float v);
+	float Decode(int i, int v);
+	extern_chrom Decode(coded_chrom coded);
+	coded_chrom Code(extern_chrom ex);
 
 };

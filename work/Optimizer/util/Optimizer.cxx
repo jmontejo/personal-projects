@@ -21,7 +21,7 @@
 #define GA_POOL_SIZE 50
 #define GA_MINIM_COUNT 1
 #define SEEK_N_TEST 3
-#define GA_POOL_SIZE_TEST 2
+#define GA_POOL_SIZE_TEST 4
 #define GA_MINIM_COUNT_TEST 4
 
 const char* APP_NAME = "Optimizer";
@@ -30,12 +30,12 @@ double (*f)();
 void SoverB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
 void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
 void BinomialExpZ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag);
-void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral, Double_t *bkg_ev=NULL);
+void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral, Double_t *bkg_effev=NULL, Double_t *bkg_ev=NULL);
 void setStartingPoint(TMinuit *gMinuit);
 void PrintBestFit(TMinuit *gMinuit);
-float DampMC(float bkg_ev);
+float DampMC(float bkg_effev);
 variablePool *pool;
-Double_t sig_integral, bkg_integral, bkg_ev, min_sig, min_bkg, min_value=99999;
+Double_t sig_integral, bkg_integral, bkg_ev, bkg_effev, min_sig, min_bkg, min_value=99999;
 std::map<float,std::vector<float> > seekPool;
 TGraph graph;
 int igraph=0;
@@ -66,6 +66,7 @@ gROOT->SetBatch(1);
   gInterpreter->GenerateDictionary("computeVar","computeVar.cxx");
   TString jofile = args[1];
   Options *options = new Options(jofile);
+	std::cout << "Parsed options" <<std::endl;
   weight = options->get("weight");
   bkgsyst = options->get("syst").Atof()/100.;
   lumi = options->get("lumi").Atof();
@@ -154,22 +155,25 @@ gROOT->SetBatch(1);
     ga.SetMaxPool(GA_POOL_SIZE_TEST*testscale);
   ga.SetFCN(N,theFcn);
   std::vector<float> start = pool->GetVarStart();
-  std::vector<float> min   = pool->GetLimMinVector();
-  std::vector<float> max   = pool->GetLimMaxVector();
+  std::vector<std::pair<float, int> > steps = pool->GetVarStep();
+  std::vector<float> min   = pool->GetVarMin();
+  std::vector<float> max   = pool->GetVarMax();
+  std::vector<TString> name= pool->GetVarName();
+  ga.SetVarMin(min);
+  ga.SetVarMax(max);
+	ga.SetVarSteps(steps);
 	if(seekrun)
   ga.SetInitPool(seekPool);
 	else
 	ga.Load(options->get("tag"));
   ga.SetVarStart(start);
-  ga.SetLimMin(min);
-  ga.SetLimMax(max);
   if(testrun)
     ga.Minimize(GA_MINIM_COUNT_TEST*testscale);
   else
     ga.Minimize(GA_MINIM_COUNT);
-  std::map<TString, double> lim_min= pool->GetLimMin();
+  std::vector<float> lim_min= pool->GetLimMin();
   ga.Dump(options->get("tag"));
-  ga.Analyze(lim_min);
+  ga.Analyze(name,lim_min);
 
   // one can try to minimize on top of the best seek
   //arglist[0] = 100*N;
@@ -186,7 +190,7 @@ gROOT->SetBatch(1);
 }
 
 // --- Get integrals
-void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral , Double_t *bkg_ev){
+void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_integral , Double_t *bkg_effev, Double_t *bkg_ev){
 
   TString evcut    = "1";
   int iN = 0;
@@ -220,9 +224,13 @@ void getSB(Int_t &npar,  Double_t *par, Double_t *sig_integral, Double_t *bkg_in
   *bkg_integral = lumi*bkgweight*hbkg->Integral(); //FIXME IntegralAndError
 	
 	if(bkg_ev)
-		*bkg_ev = hbkg->GetEffectiveEntries();
-	if(*bkg_integral == 0)
+		*bkg_ev = hbkg->GetEntries();
+	if(bkg_effev)
+		*bkg_effev = hbkg->GetEffectiveEntries();
+	if(*bkg_integral == 0){
+		*bkg_effev = 1;
 		*bkg_ev = 1;
+	}
 	evalCount++;
 	delete hbkg;
 	delete hsig;
@@ -267,9 +275,9 @@ void SoverSqrtB(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t if
 void BinomialExpZ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t iflag){
 
 	f = 1;
-  getSB(npar,par,&sig_integral,&bkg_integral,&bkg_ev);
+  getSB(npar,par,&sig_integral,&bkg_integral,&bkg_effev,&bkg_ev);
 	if(bkg_integral)
-  	f = -	(1+RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral, sqrt(bkgsyst*bkgsyst+1./bkg_ev)))*DampMC(bkg_ev);
+  	f = -	(1+RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral, sqrt(bkgsyst*bkgsyst+1./bkg_effev)))*DampMC(bkg_effev);
 	else
 		f = 9999;
   if (f<min_value){
@@ -279,13 +287,14 @@ void BinomialExpZ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *par, Int_t 
   	float realZ = RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral, bkgsyst);
     std::cout << "Improvement: 1+BinomialZ with MC stat and damping: (sig/bkg) " << sig_integral<<"/"<<bkg_integral<< " => " << -f << std::endl;
     std::cout << "Improvement: real BinomialZ: " << realZ << std::endl;
-    std::cout << "effective MC events: " << bkg_ev << std::endl;
+    std::cout << "effective MC events: " << bkg_effev << std::endl;
+    std::cout << "real MC events     : " << bkg_ev << std::endl;
   } 
 	if(iflag && !seekon){
   	float realZ = RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral, bkgsyst);
     std::cout << "FORCED OUTPUT: 1+BinomialZ with MC stat and damping: (sig/bkg) " << sig_integral<<"/"<<bkg_integral<< " => " << -f << std::endl;
     std::cout << "FORCED OUTPUT: real BinomialZ: " << realZ << std::endl;
-    std::cout << "FORCED OUTPUT: effective MC events: " << bkg_ev << std::endl;
+    std::cout << "FORCED OUTPUT: effective MC events: " << bkg_effev << std::endl;
 	}
 	if(seekon && ((seekPool.size() < GA_POOL_SIZE) || (f<std::next(seekPool.begin(),GA_POOL_SIZE-1)->first) )){
   	std::vector<double> min_pars(par, par + npar);
@@ -306,12 +315,12 @@ void setStartingPoint(TMinuit *gMinuit){
   TString var;
   for(unsigned int i=0;i<pool->functionVars.size(); i++){
     var = pool->functionVars.at(i);
-    gMinuit->mnparm(iN  , var, pool->var_start[var],(pool->var_start[var]-pool->var_min[var])/1.01, pool->var_min[var],pool->var_max[var],ierflg);
+    gMinuit->mnparm(iN  , var, pool->var_start.at(i),(pool->var_start.at(i)-pool->var_min.at(i))/1.01, pool->var_min.at(i),pool->var_max.at(i),ierflg);
     iN += 1;
   }
   for(unsigned int i=0;i<pool->doubleVars.size(); i++){
     var = pool->doubleVars.at(i);
-    gMinuit->mnparm(iN  , var, pool->var_start[var],(pool->var_start[var]-pool->var_min[var])/1.01, pool->var_min[var],pool->var_max[var],ierflg);
+    gMinuit->mnparm(iN  , var, pool->var_start.at(i),(pool->var_start.at(i)-pool->var_min.at(i))/1.01, pool->var_min.at(i),pool->var_max.at(i),ierflg);
     iN += 1;
   }
 }
@@ -321,6 +330,6 @@ void PrintBestFit(TMinuit *gMinuit){
   std::cout << "PrintBestFit - Sig/bkg: " << min_sig<<"/"<<min_bkg<< " -> " << -min_value << std::endl;
 }
 
-float DampMC(float bkg_ev){
-	return erf(bkg_ev-10)*0.5 + 0.5;
+float DampMC(float bkg_effev){
+	return erf(bkg_effev-100)*0.5 + 0.5; //Veto less than 100 MC events
 }

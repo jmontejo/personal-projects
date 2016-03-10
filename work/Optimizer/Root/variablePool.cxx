@@ -8,17 +8,20 @@
 #include <iostream>
 #include <iomanip>
 #include <set>
+#include <utility>
 
 #define DEBUG 1
 
 variablePool::variablePool(TTree *sigtree, TTree *bkgtree, Options *options, bool skipPlots){
-	m_cut     = options->get("cut");
-	m_weight  = options->get("weight");
-	m_vars    = options->getVars();
-	m_noCheck = options->getNoCheck();
+	m_cut     	= options->get("cut");
+	m_weight  	= options->get("weight");
+	m_vars    	= options->getVars();
+	m_vars_set  = std::set<TString>(m_vars.begin(),m_vars.end());
+	m_vars_step = options->getVarsSteps();
+	m_noCheck 	= options->getNoCheck();
 	m_skipPlots = skipPlots;
 	const char *envVarContent = getenv("ROOTCOREBIN");
-	plotfolder = TString(envVarContent)+"/../Optimizer/plots";
+	plotfolder 	= TString(envVarContent)+"/../Optimizer/plots";
 	TString commandString = "mkdir -p -m 755 "+plotfolder;
 	if(system(commandString.Data()) != 0) std::cout << "^[[31m" << commandString << " failed^[[0m" << std::endl;
 
@@ -34,7 +37,8 @@ variablePool::variablePool(TTree *sigtree, TTree *bkgtree, Options *options, boo
 
 	GetVarsFromTrees();
 	std::cout << "End variablePool" << std::endl;
-	startVar();
+	fillVarStart();
+	fillVarStep();
 	//AddFunctionVar("computeVar::Diff(jet_btag_weight[3],jet_btag_weight[2])");
 	//AddFunctionVar("computeVar::BtagN(jet_btag_weight,3)");
 	//AddFunctionVar("computeVar::BtagN(jet_MV1c_weight,3)");
@@ -59,7 +63,7 @@ void variablePool::AddFunctionVar(TString var){
 	if(!m_noCheck){
 		bool didWarn = false;
 		for(int i=0;i<tokens->GetEntries();i++)
-			if(var_min.find( ((TObjString *) tokens->At(i))->GetString() ) == var_min.end()){
+			if(!m_vars_set.count( ((TObjString *) tokens->At(i))->GetString() )){
 				didWarn = true;
 				std::cout << "Function uses a variable that is not in the variable pool: " << ((TObjString *) tokens->At(i))->GetString() << std::endl;
 				continue;
@@ -158,26 +162,23 @@ void variablePool::AddVar(TString var,std::vector<TString> *vec){
 			minbkg = hbkg->GetBinLowEdge(i);
 			break;
 		}
-	for(int i=hbkg->GetNbinsX();i>0;i--)
-		if(hbkg->GetBinContent(i)!=0){
+	maxbkg = hbkg->GetBinLowEdge(hbkg->GetNbinsX()+1);
+	for(int i=0;i<hbkg->GetNbinsX();i++)
+		if(hbkg->Integral(i,-1)/hbkg->Integral(0,-1)<0.05){
 			maxbkg = hbkg->GetBinLowEdge(i);
 			break;
 		}
-	for(int i=hsig->GetNbinsX();i>0;i--)
-		if(hsig->GetBinContent(i)!=0){
+	maxsig = hsig->GetBinLowEdge(hsig->GetNbinsX()+1);
+	for(int i=0;i<hsig->GetNbinsX();i++)
+		if(hsig->Integral(i,-1)/hsig->Integral(0,-1)<0.1){
 			maxsig = hsig->GetBinLowEdge(i);
 			break;
 		}
-	var_min[var] = std::max(minsig,minbkg);
-	var_max[var] = std::min(maxsig,maxbkg);
-	lim_min[var] = std::min(minsig,minbkg);
-	lim_max[var] = std::max(maxsig,maxbkg);
-	var_mean[var] = hsig->GetMean();
-	//if (var.Contains("jet_pt[")){
-	//  int index = var.Index("[");
-	//  int ptcut = 40000-5000*TString(var(index+1,1)).Atoi();
-	//  var_mean[var] = std::max(ptcut,26000);
-	//}
+	var_min.push_back( std::max(minsig,minbkg) );
+	var_max.push_back( std::min(maxsig,maxbkg) );
+	lim_min.push_back( std::min(minsig,minbkg) );
+	lim_max.push_back( std::max(maxsig,maxbkg) );
+	var_mean.push_back( hsig->GetMean() );
 
 	delete hsig;
 	delete hbkg;
@@ -202,7 +203,7 @@ void variablePool::GetVarsFromTrees(){
 	}
 
 	TString basetypes   = "int float double Int_t Float_t Double_t";
-	TString vectortypes = "vector<float> vector<double> vector<Float_t> vector<Double_t>";
+	TString vectortypes = "vector<float> vector<float> vector<Float_t> vector<Double_t>";
 
 	bool didWarn = false;
 	for(unsigned int i=0;i<m_vars.size();i++){
@@ -232,23 +233,23 @@ void variablePool::GetVarsFromTrees(){
 // --- Print content
 void variablePool::Print(){
 
-	TString var;
 	std::cout << "--- Variable Pool ---" << std::endl;
 	//  std::cout << "--- Functions: "<< functionVars.size() << std::endl;
 	//  for(unsigned int i=0;i<functionVars.size(); i++){
 	//    var = functionVars.at(i);
-	//    std::cout << var << "\t" << var_min[var] <<"\t" << var_max[var] << "\t| " << lim_min[var] <<"\t" << lim_max[var] << std::endl;
+	//    std::cout << var << "\t" << var_min.at(i) <<"\t" << var_max.at(i) << "\t| " << lim_min.at(i) <<"\t" << lim_max.at(i) << std::endl;
 	//  }
 	std::cout << "--- Doubles: "<< doubleVars.size() << std::endl;
 	for(unsigned int i=0;i<doubleVars.size(); i++){
-		var = doubleVars.at(i);
-		float modulo = var_max[var]>1000 ? 1000.: 1.;
-		TString gev  = var_max[var]>1000 ? " 1e3": "    ";
-		std::cout << std::setw(22) << std::setfill(' ') << var << gev;
-		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << lim_min[var]/modulo;
-		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << var_min[var]/modulo;
-		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << var_max[var]/modulo;
-		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << lim_max[var]/modulo;
+		float modulo = var_max.at(i)>1000 ? 1000.: 1.;
+		TString gev  = var_max.at(i)>1000 ? " 1e3": "    ";
+		std::cout << std::setw(22) << std::setfill(' ') << m_vars.at(i) << gev;
+		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << lim_min.at(i)/modulo;
+		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << var_min.at(i)/modulo;
+		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << var_max.at(i)/modulo;
+		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << lim_max.at(i)/modulo;
+		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << var_step.at(i).first/modulo;
+		std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << var_step.at(i).second;
 		std::cout << std::endl;
 	}
 
@@ -309,48 +310,38 @@ bool variablePool::emptyMiddleBins(TH1F *h){
 	return false;
 }
 
-void variablePool::startVar(){
-	TString var;
+void variablePool::fillVarStep(){
 	for(unsigned int i=0;i<doubleVars.size(); i++){
-		var = doubleVars.at(i);
-		var_start[var] = (var_mean[var]+(doubleVars.size()-1)*var_min[var])/doubleVars.size();
+		int steps = int(fabs(var_max.at(i)-var_min.at(i))/m_vars_step.at(i));
+		float step =m_vars_step.at(i);
+		if(steps<2 || steps>1000)
+			std::cout <<"WARNING weird number of steps: " <<m_vars.at(i)<<" " << steps << " step size: " << step <<std::endl;
+		var_step.push_back( std::make_pair(step,steps) ); 
 	}
-
 }
-std::map<TString, double> variablePool::GetVarMin(){
+void variablePool::fillVarStart(){
+	for(unsigned int i=0;i<doubleVars.size(); i++){
+		var_start.push_back( (var_mean.at(i)+(doubleVars.size()-1)*var_min.at(i))/doubleVars.size() );
+	}
+}
+std::vector<float> variablePool::GetVarMin(){
 	return var_min;
 }
-std::map<TString, double> variablePool::GetLimMin(){
+std::vector<float> variablePool::GetLimMin(){
 	return lim_min;
 }
-
+std::vector<float> variablePool::GetVarMax(){
+	return var_max;
+}
+std::vector<float> variablePool::GetLimMax(){
+	return lim_max;
+}
 std::vector<float> variablePool::GetVarStart(){
-	std::vector<float> start;
-	TString var;
-	for(unsigned int i=0;i<doubleVars.size(); i++){
-		var = doubleVars.at(i);
-		start.push_back(var_start[var]);
-	}
-	return start;
-
+	return var_start;
 }
-
-std::vector<float> variablePool::GetLimMinVector(){
-	std::vector<float> min;
-	TString var;
-	for(unsigned int i=0;i<doubleVars.size(); i++){
-		var = doubleVars.at(i);
-		min.push_back(var_min[var]);
-	}
-	return min;
+std::vector<TString> variablePool::GetVarName(){
+	return m_vars;
 }
-
-std::vector<float> variablePool::GetLimMaxVector(){
-	std::vector<float> max;
-	TString var;
-	for(unsigned int i=0;i<doubleVars.size(); i++){
-		var = doubleVars.at(i);
-		max.push_back(var_max[var]);
-	}
-	return max;
+std::vector<std::pair<float, int> > variablePool::GetVarStep(){
+	return var_step;
 }

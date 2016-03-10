@@ -22,23 +22,30 @@ void GeneticAlgorithm::SetFCN(int n, void (*fcn)(Int_t &, Double_t *, Double_t &
 	var_n = n;
 	m_fcn = fcn;
 }
-void GeneticAlgorithm::SetVarStart(std::vector<float> &start){
+void GeneticAlgorithm::SetVarStart(extern_chrom &start){
 	InitPool(start,maxpool);
 }
-void GeneticAlgorithm::SetLimMin(std::vector<float> &min){
+void GeneticAlgorithm::SetVarSteps(std::vector<std::pair<float, int> > &var_step){
+	m_var_step = var_step;
+}
+void GeneticAlgorithm::SetVarMin(extern_chrom &min){
 	m_min = min;
 }
-void GeneticAlgorithm::SetLimMax(std::vector<float> &max){
+void GeneticAlgorithm::SetVarMax(extern_chrom &max){
 	m_max = max;
 }
-void GeneticAlgorithm::SetInitPool(  std::map<float,std::vector<float> > &initPool){
-	for(std::map<float,std::vector<float> >::iterator it = initPool.begin();it!=initPool.end();it++){
-		chromosomePool[it->first] = it->second;
+void GeneticAlgorithm::SetInitPool(  std::map<float,extern_chrom > &initPool){
+	std::cout <<"SetInitPool"<<std::endl;
+	for(std::map<float,extern_chrom >::iterator it = initPool.begin();it!=initPool.end();it++){
+		chromosomePool[it->first] = Code(it->second);
+		//for(int c=0;c<it->second.size();c++)
+		//	std::cout << c << " " << chromosomePool[it->first].at(c) << " ";
+		//std::cout << std::endl;
 	}
 	Purge();
 }
 void GeneticAlgorithm::Minimize(int n){
-	std::vector<float> chrom(var_n);
+	coded_chrom chrom(var_n);
 
 //	if(var_n==13){
 //	chrom.at(0) = -2.5;  //        -dr_bjet_lep        -5.67    -5.13    -0.27    -0.27
@@ -54,7 +61,7 @@ void GeneticAlgorithm::Minimize(int n){
 //	chrom.at(10) = 200e3; //                  mt 1e3        0        0 2.61e+03 2.61e+03
 //	chrom.at(11) = 100; //             mt2_tau            0        0      952 1.01e+03
 //	chrom.at(12) = 1.5; //             n_bjet
-//	chromosomePool[Evaluate(chrom,1)] = chrom;
+//	chromosomePool[Evaluate(chrom)] = chrom;
 //	std::cout << "Ben point: " << Evaluate(chrom) <<std::endl;
 //	}
 //	if(var_n==15){
@@ -73,68 +80,70 @@ void GeneticAlgorithm::Minimize(int n){
 //	chrom.at(2+10) = 200e3; //                  mt 1e3        0        0 2.61e+03 2.61e+03
 //	chrom.at(2+11) = 100; //             mt2_tau            0        0      952 1.01e+03
 //	chrom.at(2+12) = 1.5; //             n_bjet
-//	chromosomePool[Evaluate(chrom,1)] = chrom;
+//	chromosomePool[Evaluate(chrom)] = chrom;
 //	std::cout << "Ben point: " << Evaluate(chrom) <<std::endl;
 //	}
 
 
 	for(int i=0;i<n;i++){
 		std::cout << "GeneticAlgorithm::Iterate " << i << std::endl;
-		chromosomePool[Evaluate(chrom)] = chrom;
 		Iterate(i>n*mutateabs_threshold && i%2==0);
 	}
 
 }
-void GeneticAlgorithm::Analyze(std::map<TString, double> &min){
+
+void GeneticAlgorithm::Analyze(std::vector<TString> &name, std::vector<float> &min){
 	std::set<TString> uselessvar;
 	std::set<TString> uselessvar1st;
-	int i=0;
-	for(auto itvar = min.begin(); itvar!=min.end();itvar++){
+	
+	for(int i=0;i<name.size();i++){
 		bool useless = true;
 		bool useless1st = true;
-		//    std::map<float,std::vector<float> >::iterator it = chromosomePool.begin();
+		//    std::map<float,coded_chrom >::iterator it = chromosomePool.begin();
 		for(auto it = chromosomePool.begin();it!=chromosomePool.end() && useless;it++){
-			if(it->second.at(i) > itvar->second){
+			if(Decode(i,it->second.at(i)) > min.at(i)){
 				useless = false;
 			}
-			if(it->second.at(i) > itvar->second && it == chromosomePool.begin()){
+			if(Decode(i,it->second.at(i)) > min.at(i) && it == chromosomePool.begin()){
 				useless1st = false;
 			}
 		}
 		if (useless)
-			uselessvar.insert(itvar->first);
+			uselessvar.insert(name.at(i));
 		if (useless1st)
-			uselessvar1st.insert(itvar->first);
-		i++;
+			uselessvar1st.insert(name.at(i));
 	}
 
-	std::cout <<std::endl << "----------------- RESULTS --------------" <<std::endl;
+	std::cout <<std::endl << "----------------- TOP 10 RESULTS ------------" <<std::endl;
 	std::cout <<std::setw(2+22+4) << std::setfill(' ') << "Vars / fig of merit    "; //four spaces for gev
-	for(auto it = chromosomePool.begin();it!=chromosomePool.end();it++){
+	int c=0;
+	for(auto it = chromosomePool.begin();it!=chromosomePool.end() && c<10;it++){
 		std::cout <<  std::setw(9) << std::setfill(' ') << std::setprecision(3) << -it->first;
+		c++;
 	}
 	std::cout << std::endl;
-	i=0;
-	for(auto itvar = min.begin(); itvar!=min.end();itvar++){
-		if(uselessvar.count(itvar->first))
+	for(int i=0;i<name.size();i++){
+		if(uselessvar.count(name.at(i)))
 			std::cout << "X ";
-		else if(uselessvar.count(itvar->first))
+		else if(uselessvar.count(name.at(i)))
 			std::cout << "x ";
 		else
 			std::cout << "  ";
-		std::cout << std::setw(22) << std::setfill(' ') << itvar->first;
+		std::cout << std::setw(22) << std::setfill(' ') << name.at(i);
 		float modulo = 0;
 		TString gev;
-		for(auto it = chromosomePool.begin();it!=chromosomePool.end();it++){
+		c=0;
+		for(auto it = chromosomePool.begin();it!=chromosomePool.end() && c<10;it++){
+			float value = Decode(i,it->second.at(i));
 			if(!modulo){
-				modulo = (fabs(it->second.at(i))>1000 ? 1000.: 1.);
-				gev    = (fabs(it->second.at(i))>1000 ? " 1e3": "    ");
+				modulo = (fabs(value)>1000 ? 1000.: 1.);
+				gev    = (fabs(value)>1000 ? " 1e3": "    ");
 				std::cout << gev;
 			}
-			std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << it->second.at(i)/modulo;
+			std::cout << std::setw(9) << std::setfill(' ') << std::setprecision(3) << value/modulo;
+			c++;
 		}
 		std::cout << std::endl;
-		i++;
 	}
 
 
@@ -144,54 +153,43 @@ void GeneticAlgorithm::Analyze(std::map<TString, double> &min){
 void GeneticAlgorithm::Print(){
 
 	std::cout << "GeneticAlgorithm::Print "<< chromosomePool.size() << std::endl;
-	std::map<float,std::vector<float> >::iterator it = chromosomePool.begin();
+	std::map<float,coded_chrom >::iterator it = chromosomePool.begin();
 	for(;it!=chromosomePool.end();it++){
 		std::cout << it->first << std::endl;
 		for(int v=0;v<var_n;v++)
-			std::cout <<"\t" << it->second.at(v);
+			std::cout <<"\t" << Decode(v,it->second.at(v));
 		std::cout << std::endl;
 	}   
 }
-void GeneticAlgorithm::InitPool(std::vector<float> &start, int ini){
-	std::vector<float> chrom(var_n);
+void GeneticAlgorithm::InitPool(extern_chrom &start, int ini){
+	coded_chrom chrom(var_n);
 	while(chromosomePool.size() < ini){
 		for(int v=0;v<var_n;v++){
-			chrom.at(v) = rand.Gaus(start.at(v),start.at(v)/2.);
+			chrom.at(v) = Code(v,rand.Gaus(start.at(v),start.at(v)/2.));
 		}
 		chromosomePool[Evaluate(chrom)] = chrom;
 	}
 }
 void GeneticAlgorithm::Iterate(bool mutateAbs){
-	std::vector<float> chrom(var_n);
-	std::map<float,std::vector<float> > original(chromosomePool);
-	std::map<float,std::vector<float> >::iterator it = original.begin();
-	std::map<float,std::vector<float> >::iterator it2;
+	coded_chrom chrom(var_n);
+	std::map<float,coded_chrom > original(chromosomePool);
+	std::map<float,coded_chrom >::iterator it = original.begin();
+	std::map<float,coded_chrom >::iterator it2;
 	float value;
 	int rank=1;
 	for(;it!=original.end();it++){
-		if(mutateAbs)
-			chrom = MutateAbs(it->second);
-		else
-			chrom = Mutate(it->second,rank/chromosomePool.size());
+		chrom = Mutate(it->second,float(rank*0.5)/original.size());
 		value = Evaluate(chrom);
+		//std::cout << "@@@@@@@@@ Mutate: " << rank << " " << -value << std::endl;
 		chromosomePool[value] = chrom;
 		if(value < it->first){ //returns -f
 			chromosomePool.erase(it->first);
 		}
-		//std::cout << "Mutate: " << -value << std::endl;
-		// double mutate
-		chrom = Mutate(it->second,0.9);
-		value = Evaluate(chrom);
-		chromosomePool[value] = chrom;
-		if(value < it->first){ //returns -f
-			chromosomePool.erase(it->first);
-		}
-		//
-		//std::cout << "Mutate: " << -value << std::endl;
 		for(it2 = std::next(it,1);it2!=original.end();it2++){
-			chrom = Combine(it->second, it2->second, rand.Integer(2*var_n-1)-var_n+1); //(-var_n,var_n)
+			int swap = rand.Integer(2*var_n-1)-var_n+1;
+			chrom = Combine(it->second, it2->second, swap); //(-var_n,var_n)
 			value = Evaluate(chrom);
-			//std::cout << "Combine: "<< -value << std::endl;
+			//std::cout << "Combine: "<< -value << "  " << swap << std::endl;
 			if(value < it->first){ //returns -f
 				chromosomePool[value] = chrom;
 				chromosomePool.erase(it->first);
@@ -204,60 +202,49 @@ void GeneticAlgorithm::Iterate(bool mutateAbs){
 
 	Purge();
 }
-std::vector<float> GeneticAlgorithm::Mutate(std::vector<float> &original, float frac){
-	std::vector<float> chrom(original);
+coded_chrom GeneticAlgorithm::Mutate(coded_chrom &original, float frac){
+	coded_chrom chrom(original);
 	for(int i=0;i<chrom.size();i++)
-		if(rand.Uniform()<frac)
-		chrom.at(i) *= rand.Gaus(.99,0.4*frac);
-	return chrom;
-}
-std::vector<float> GeneticAlgorithm::MutateAbs(std::vector<float> &original){
-	std::vector<float> chrom(original);
-	for(int i=0;i<chrom.size();i++)
-		if(rand.Uniform()<(1./var_n)){
-			float frac = rand.Uniform(2);
-			if(frac<1)
-				chrom.at(i) = m_min.at(i)*(1-frac)+chrom.at(i)*frac;
-			else{
-				frac -= 1;
-				chrom.at(i) = m_max.at(i)*(1-frac)+chrom.at(i)*frac;
-			}
+		if(rand.Uniform()<frac){
+			chrom.at(i) = rand.Binomial(m_var_step.at(i).second,float(chrom.at(i))/m_var_step.at(i).second);
+			//chrom.at(i) = rand.Poisson(std::max(1,chrom.at(i)));
 		}
 	return chrom;
 }
-std::vector<float> GeneticAlgorithm::Combine(std::vector<float> &c1, std::vector<float> &c2, int swappoint){
+coded_chrom GeneticAlgorithm::Combine(coded_chrom &c1, coded_chrom &c2, int swappoint){
 	if(swappoint<0){
 	swappoint = abs(swappoint);
-	std::vector<float> chrom(c1);
+	coded_chrom chrom(c1);
 	for(int i=0;i<swappoint+1;i++){
 		chrom.at(i) = c2.at(i);
 	}
 	return chrom;
 	}
 	else{
-	std::vector<float> chrom(c2);
+	coded_chrom chrom(c2);
 	for(int i=0;i<swappoint;i++)
 		chrom.at(i) = c1.at(i);
 	return chrom;
 	}
 }
-std::vector<float> GeneticAlgorithm::Average(std::vector<float> &c1, std::vector<float> &c2){
-	std::vector<float> chrom(c1);
+coded_chrom GeneticAlgorithm::Average(coded_chrom &c1, coded_chrom &c2){
+	coded_chrom chrom(c1);
 	for(int i=0;i<chrom.size();i++)
 		chrom.at(i) = (c1.at(i)+c2.at(i))/2.;
 	return chrom;
 }
-float GeneticAlgorithm::Evaluate(std::vector<float> &c, int forceOutput){
+float GeneticAlgorithm::Evaluate(coded_chrom &c, int forceOutput){
 	Double_t ret;
 	Double_t c_array[c.size()];
-	std::copy(c.begin(), c.end(), c_array);
+	extern_chrom ec = Decode(c);
+	std::copy(ec.begin(), ec.end(), c_array);
 	int size = c.size();
 	m_fcn(size, (Double_t *) NULL, ret, c_array, forceOutput);
 	return ret;
 }  
 void GeneticAlgorithm::Purge(){
-	std::map<float,std::vector<float> >::iterator it;
-	std::map<float,std::vector<float> >::iterator it2;
+	std::map<float,coded_chrom >::iterator it;
+	std::map<float,coded_chrom >::iterator it2;
 	int presize = chromosomePool.size();
 	for(it=chromosomePool.begin();it!=chromosomePool.end() && chromosomePool.size()>maxpool && std::distance(chromosomePool.begin(),it)<maxpool;it++){
 		for(it2 = std::next(it,1);it2!=chromosomePool.end() && chromosomePool.size()>maxpool;it2++){
@@ -271,14 +258,14 @@ void GeneticAlgorithm::Purge(){
 	}
 	std::cout << "Purge: " << presize << " -> " << chromosomePool.size() << std::endl;
 	if(chromosomePool.size()>maxpool)
-		chromosomePool = std::map<float,std::vector<float> >(chromosomePool.begin(),std::next(chromosomePool.begin(),maxpool));
+		chromosomePool = std::map<float,coded_chrom >(chromosomePool.begin(),std::next(chromosomePool.begin(),maxpool));
 }
-float GeneticAlgorithm::Similarity(std::vector<float> &c1, std::vector<float> &c2){
+float GeneticAlgorithm::Similarity(coded_chrom &c1, coded_chrom &c2){
 	float sim=0;
 	int equalcount = 0;
 	for(int i=0;i<c1.size();i++){
 		if ((c1.at(i)+c2.at(i))>0)
-			sim += sqrt(fabs(c1.at(i)-c2.at(i)))/(c1.at(i)+c2.at(i));
+			sim += sqrt(fabs(c1.at(i)-c2.at(i)))/(m_var_step.at(i).second);
 		if (fabs(c1.at(i)-c2.at(i)) < 1e-6) 
 			equalcount++;
 	}
@@ -290,7 +277,7 @@ void GeneticAlgorithm::Dump(TString tag){
 	myfile.open ("Optimizer/plots/ga_dump_"+tag+".txt");
 	for(auto it=chromosomePool.begin();it!=chromosomePool.end();it++){
 		for(int i=0;i<it->second.size();i++){
-			myfile << it->second.at(i) << "\t";
+			myfile << Decode(i,it->second.at(i)) << "\t";
 		}
 		myfile << std::endl;
 	}
@@ -298,13 +285,14 @@ void GeneticAlgorithm::Dump(TString tag){
 
 }
 void GeneticAlgorithm::Load(TString tag){
+	std::cout << "Load" <<std::endl;
 	std::ifstream myfile;
 	myfile.open ("Optimizer/plots/ga_dump_"+tag+".txt",std::ios::in);
 	std::string line;
 	while ( myfile.good() )
 	{
 		getline (myfile,line);
-		std::vector<float> chrom(var_n);
+		coded_chrom chrom(var_n);
 		std::istringstream iss(line);
 		int i=0;
 		while(iss)
@@ -312,10 +300,33 @@ void GeneticAlgorithm::Load(TString tag){
 			std::string sub;
 			iss >> sub;
 			if(sub=="" || sub=="\t" || sub=="\n") break;
-			chrom.at(i) = TString(sub).Atof();
+			chrom.at(i) = Code(i,TString(sub).Atof());
 			i++;
 		}
 		chromosomePool[Evaluate(chrom)] = chrom;
 	}
 	myfile.close();
+}
+
+int GeneticAlgorithm::Code(int i, float v){
+	//std::cout << "Code  : "<< i << " " << v << " ->  "<< int((v-m_min.at(i))/m_var_step.at(i).first) <<std::endl;
+	return std::max(0,int((v-m_min.at(i))/m_var_step.at(i).first));	
+}
+float GeneticAlgorithm::Decode(int i, int v){
+	//std::cout << "Decode: "<< i << " " << v << " ->  "<< m_min.at(i)+v*m_var_step.at(i).first <<std::endl;
+	return m_min.at(i)+v*m_var_step.at(i).first;
+}
+
+extern_chrom GeneticAlgorithm::Decode(coded_chrom coded){
+	extern_chrom ex(coded.size());
+	for(int i=0; i<coded.size(); i++)
+		ex.at(i) = Decode(i,coded.at(i));
+	return ex;
+}
+
+coded_chrom GeneticAlgorithm::Code(extern_chrom ex){
+	coded_chrom coded(ex.size());
+	for(int i=0; i<ex.size(); i++)
+		coded.at(i) = Code(i,ex.at(i));
+	return coded;
 }

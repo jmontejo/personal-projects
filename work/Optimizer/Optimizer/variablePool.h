@@ -1,7 +1,7 @@
 #ifndef variablePool_H
 #define variablePool_H
 
-#include <map>
+#include <set>
 #include <vector>
 #include "TString.h"
 #include "TTree.h"
@@ -21,19 +21,22 @@ public:
   void AddDoubleVar(TString var);
   void AddIntVar(TString var);
   void Print();
-  std::map<TString, double> var_mean;
-  std::map<TString, double> var_min;
-  std::map<TString, double> var_max;
-  std::map<TString, double> lim_min;
-  std::map<TString, double> lim_max;
-  std::map<TString, double> var_start;
   TTree* getSigTree();
   TTree* getBkgTree();
+  std::vector<TString> GetVarName();
   std::vector<float> GetVarStart();
-  std::map<TString, double> GetVarMin();
-  std::map<TString, double> GetLimMin();
-  std::vector<float> GetLimMinVector();
-  std::vector<float> GetLimMaxVector();
+  std::vector<std::pair<float, int> > GetVarStep();
+  std::vector<float> GetVarMin();
+  std::vector<float> GetLimMin();
+  std::vector<float> GetVarMax();
+  std::vector<float> GetLimMax();
+  std::vector<float> var_mean;
+  std::vector<float> var_min;
+  std::vector<float> var_max;
+  std::vector<float> lim_min;
+  std::vector<float> lim_max;
+  std::vector<float> var_start;
+  std::vector<std::pair<float, int> > var_step;
 
 private:
   void AddVar(TString var,std::vector<TString> *vec);
@@ -41,7 +44,8 @@ private:
   void doPlot(TString var,TH1F *hsig, TH1F *hbkg);
   bool emptyMiddleBins(TH1F *h);
   int  getRebinN(TH1F *h);
-  void startVar();
+  void fillVarStart();
+  void fillVarStep();
 
 	TFile *dummy;
   TTree *m_sigtree;
@@ -49,6 +53,8 @@ private:
   TString m_cut, m_weight;
   bool m_noCheck;
   std::vector<TString> m_vars;
+  std::set<TString> m_vars_set;
+  std::vector<float> m_vars_step;
   TCanvas c1;
   TString plotfolder;
   bool m_skipPlots;

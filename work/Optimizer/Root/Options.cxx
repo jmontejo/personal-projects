@@ -11,19 +11,29 @@ Options::Options(TString jo){
   noCheck = false;
   std::set<TString> var_set;
   std::set<TString> bkg_set;
-  TString key, value;
+  TString key, value, token;
   std::ifstream infile(jo.Data());
   if(!infile.good()){
     std::cout << "Problem reading "<<jo <<std::endl;
     exit(2);
   }
   std::string line;
+  std::vector<TString> tokens;
   while(getline(infile,line)){
-    std::istringstream ss(line);
-    ss  >> key >> value;
+		tokens.clear();
+    std::istringstream iss(line);
+    while (iss){ iss>> token; tokens.push_back(token); }
+		if(tokens.size()<2 || tokens.at(0).BeginsWith("#")) continue;
+    key = tokens.at(0);
+		value = tokens.at(1);
     if(key=="" || key.Contains("#")) continue;
     else if(key=="var"){
-      var_set.insert(value);
+			if(tokens.size()!=3){
+				std::cout << "Badly formed var:step : "<<line <<std::endl;
+				exit(2);
+			}
+  		vars.push_back(value);
+  		steps.push_back(tokens.at(2).Atof());
     }
     else if(key=="bkg"){
       bkgs.push_back(value);
@@ -46,13 +56,14 @@ Options::Options(TString jo){
     }
   }
 
-  for(std::set<TString>::iterator it=var_set.begin(); it!=var_set.end(); it++)
-    vars.push_back(*it);
 
 }
 
 std::vector<TString> Options::getVars(){
   return vars;
+}
+std::vector<float> Options::getVarsSteps(){
+  return steps;
 }
 std::vector<TString> Options::getBkgs(){
   return bkgs;
