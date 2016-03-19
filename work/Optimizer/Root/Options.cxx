@@ -8,7 +8,6 @@ Options::Options(TString jo){
 
   vars.clear();
   bkgs.clear();
-  noCheck = false;
   std::set<TString> var_set;
   std::set<TString> bkg_set;
   TString key, value, token;
@@ -35,17 +34,15 @@ Options::Options(TString jo){
   		vars.push_back(value);
   		steps.push_back(tokens.at(2).Atof());
     }
+    else if(key=="alg"){
+			if(tokens.size()!=3){
+				std::cout << "Badly formed Algorithm, alg name options:optx "<< line <<std::endl;
+				exit(2);
+			}
+  		algorithms[value] = tokens.at(2);
+    }
     else if(key=="bkg"){
       bkgs.push_back(value);
-    }
-    else if(key=="noCheck"){
-      if(noCheck!=false){
-        std::cout << "Duplicated key: noCheck" <<std::endl;
-        exit(1);
-      }
-      noCheck = false;
-      if (value=="true" || value=="True")
-        noCheck = true;
     }
     else{
       if(options.find(key) != options.end() ){
@@ -56,7 +53,10 @@ Options::Options(TString jo){
     }
   }
 
+}
 
+void Options::set(TString key, TString value){
+  options[key] = value;
 }
 
 std::vector<TString> Options::getVars(){
@@ -68,8 +68,8 @@ std::vector<float> Options::getVarsSteps(){
 std::vector<TString> Options::getBkgs(){
   return bkgs;
 }
-bool Options::getNoCheck(){
-  return noCheck;
+std::map<TString, TString> Options::getAlgorithms(){
+  return algorithms;
 }
 TString Options::get(TString key){
   if(options.find(key) == options.end() ){

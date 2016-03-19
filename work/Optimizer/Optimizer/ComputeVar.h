@@ -1,8 +1,8 @@
-#ifndef computeVar_H
-#define computeVar_H
+#ifndef ComputeVar_H
+#define ComputeVar_H
 #include <vector>
 
-class computeVar{
+class ComputeVar{
 
 public:
   static double MTW(double var);

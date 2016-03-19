@@ -1,5 +1,5 @@
-#ifndef variablePool_H
-#define variablePool_H
+#ifndef VariablePool_H
+#define VariablePool_H
 
 #include <set>
 #include <vector>
@@ -7,19 +7,15 @@
 #include "TTree.h"
 #include "TCanvas.h"
 #include "Optimizer/Options.h"
+#include "Optimizer/Variable.h"
 
-class variablePool{
+class VariablePool{
 
 public:
-  variablePool(TTree *sigtree, TTree *bkgtree, Options *options, bool skipPlots);
-  ~variablePool();
-  std::vector<TString> functionVars;
-  std::vector<TString> intVars;
-  std::vector<TString> doubleVars;
-  void AddFunctionVar(TString var);
-  void AddVectorVar(TString var);
-  void AddDoubleVar(TString var);
-  void AddIntVar(TString var);
+  VariablePool(TTree *sigtree, TTree *bkgtree, Options *options);
+  ~VariablePool();
+  std::vector<Variable> variables;
+	int GetN(){return variables.size();};
   void Print();
   TTree* getSigTree();
   TTree* getBkgTree();
@@ -39,7 +35,7 @@ public:
   std::vector<std::pair<float, int> > var_step;
 
 private:
-  void AddVar(TString var,std::vector<TString> *vec);
+  void AddVar(TString var, float step);
   void GetVarsFromTrees();
   void doPlot(TString var,TH1F *hsig, TH1F *hbkg);
   bool emptyMiddleBins(TH1F *h);
@@ -51,7 +47,7 @@ private:
   TTree *m_sigtree;
   TTree *m_bkgtree;
   TString m_cut, m_weight;
-  bool m_noCheck;
+  bool m_noCheck, m_doPlots;
   std::vector<TString> m_vars;
   std::set<TString> m_vars_set;
   std::vector<float> m_vars_step;
