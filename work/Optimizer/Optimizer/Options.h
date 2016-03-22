@@ -12,7 +12,7 @@ class Options{
     std::vector<TString> getVars();
     std::vector<float> getVarsSteps();
     std::vector<TString> getBkgs();
-    std::map<TString, TString> getAlgorithms();
+    std::vector<std::pair<TString, TString> > getAlgorithms();
     TString get(TString key);
     void set(TString key, TString value);
     bool getNoCheck();
@@ -22,7 +22,7 @@ class Options{
     std::vector<float> steps;
     std::vector<TString> bkgs;
     std::map<TString, TString> options;
-    std::map<TString, TString> algorithms;
+    std::vector<std::pair<TString, TString> >algorithms;
 
 };
 #endif

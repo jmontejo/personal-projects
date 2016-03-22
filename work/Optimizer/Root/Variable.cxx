@@ -1,6 +1,6 @@
 #include "Optimizer/Variable.h"
 #include <iostream>
-//#include <math>
+#include <cmath>
 
 Variable::Variable(TString name, TH1F *hsig, TH1F *hbkg, float step, int total){
 	this->name = name;
@@ -14,7 +14,7 @@ Variable::Variable(TString name, TH1F *hsig, TH1F *hbkg, float step, int total){
 		}
 	fmax = hbkg->GetBinLowEdge(hbkg->GetNbinsX()+1);
 	for(int i=0;i<hbkg->GetNbinsX();i++)
-		if(hbkg->Integral(i,-1)/hbkg->Integral(0,-1)<0.05){
+		if(hbkg->Integral(i,-1)/hbkg->Integral(0,-1)<0.1){
 			fmax = hbkg->GetBinLowEdge(i);
 			break;
 		}
@@ -24,6 +24,7 @@ Variable::Variable(TString name, TH1F *hsig, TH1F *hbkg, float step, int total){
 	float range = fmax-fmin;
 	this->step = getStep(range,step);
 	imax = ceil(range/this->step);
+	fimin = fmin - fmod(fmin,step);
 }
 
 float Variable::getStep(float range, float step){
@@ -41,11 +42,12 @@ float Variable::getStep(float range, float step){
 
 int Variable::i_getMax()		{ return imax; }
 int Variable::i_getStart()	{ return f2i(start); }
-int Variable::f2i(float f)	{ return floor(std::min(std::max(f-fmin,float(0.)),fmax)/step); }
+int Variable::f2i(float f, bool ceil)	{ return floor(std::min(std::max(f-fimin,float(0.)),fmax)/step)+1*ceil; }
 float Variable::f_getMax()	{ return fmax; }
 float Variable::f_getMin()	{ return fmin; }
+float Variable::f_getMinFi(){ return fimin; }
 float Variable::f_getStart(){ return start; }
-float Variable::i2f(int i)	{	return std::min(fmin+i*step,fmax); }
+float Variable::i2f(int i)	{	return std::min(fimin+i*step,fmax); }
 
 void Variable::Print(){
     float modulo = fmax>1000 ? 1000.: 1.;

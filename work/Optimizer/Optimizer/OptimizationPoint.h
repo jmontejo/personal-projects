@@ -1,18 +1,21 @@
 #ifndef OPTIMIZATIONPOINT_H
 #define OPTIMIZATIONPOINT_H
 
-#include "TString.h"
 #include <vector>
-#include <map>
+#include "Optimizer/VariablePool.h"
 
 class OptimizationPoint{
 
   public:
-    OptimizationPoint(std::vector<float> cuts, float metric);
-
-  private:
-		std::vector<float> cuts;
-		float metric;
+    OptimizationPoint();
+    OptimizationPoint(std::vector<double> cuts, float metric, float sig, float bkg);
+    OptimizationPoint(Double_t *pars, int n, float metric);
+		std::vector<double> cuts;
+		float metric, sig, bkg;
+		static void SetVariablePool(VariablePool *vars);
+	private:
+		static VariablePool *vars;
+		std::vector<bool> BestOffset(std::vector<bool> offsets, int index, float &metric);
 
 };
 

@@ -42,6 +42,7 @@ private:
   int  getRebinN(TH1F *h);
   void fillVarStart();
   void fillVarStep();
+  void ComputeCorrelations();
 
 	TFile *dummy;
   TTree *m_sigtree;

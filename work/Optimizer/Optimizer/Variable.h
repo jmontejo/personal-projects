@@ -11,17 +11,19 @@ public:
 	int 	i_getMax();
 //	int 	i_getMean();
 	int 	i_getStart();
-	int 	f2i(float f);
+	int 	f2i(float f, bool ceil=false);
 	float f_getMin();
+	float f_getMinFi();
 	float f_getMax();
 //	float f_getMean();
 	float f_getStart();
 	float i2f(int i);
 	void Print();
+	float step;
 
 private:
 	TH1F *hsig, *hbkg;
-	float fmin, fmax, fmean, start, step;
+	float fmin, fmax, fmean, start, fimin;
 	int imax;
 	float getStep(float range, float step);
 

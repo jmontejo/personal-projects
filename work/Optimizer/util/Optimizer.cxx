@@ -2,6 +2,7 @@
 #include "Optimizer/ComputeVar.h"
 #include "Optimizer/VariablePool.h"
 #include "Optimizer/GeneticAlgorithm.h"
+#include "Optimizer/OptimizationPoint.h"
 #include "Optimizer/Algorithm.h"
 #include "TMinuit.h"
 #include "TFile.h"
@@ -11,6 +12,7 @@
 #include "TCanvas.h"
 #include "TH1F.h"
 #include "TGraph.h"
+#include "TMultiGraph.h"
 #include "TInterpreter.h"
 #include <cmath>
 #include <SampleHandler/SampleLocal.h>
@@ -113,6 +115,7 @@ gROOT->SetBatch(1);
 
   pool = new VariablePool(sigtree,bkgtree,options);
   pool->Print();
+	OptimizationPoint::SetVariablePool(pool);
 
 	std::vector<Algorithm *> algorithms;
 	auto alg_jo = options->getAlgorithms();
@@ -120,12 +123,30 @@ gROOT->SetBatch(1);
 		algorithms.push_back(Algorithm::GetAlgorithm((*alg).first,(*alg).second,pool));
 	}
 
+	TCanvas c;
+  TMultiGraph *mg = new TMultiGraph();
+  mg->SetTitle("Peformance graphs");
 	for(int i=0;i<algorithms.size();i++){
 		auto alg = algorithms.at(i);
 		std::cout << "Running Algorithm: " << alg->name <<std::endl;
-		alg->SetParameters("weight*xs_weight",1000,0.20);
+		alg->SetParameters(weight,lumi,bkgsyst);
 		alg->Execute();
+		c.cd();
+		auto g = alg->getGraph();
+		g->SetLineColor(i+1);
+		g->SetMarkerColor(i+1);
+		g->SetMarkerStyle(20);
+		mg->Add(g);
+		auto gr = alg->getGraphRounded();
+		gr->SetLineColor(i+1);
+		gr->SetLineStyle(2);
+		gr->SetMarkerColor(i+1);
+		gr->SetMarkerStyle(22);
+		mg->Add(gr);
 	}
+	mg->Draw("ALP");
+	c.SetLogx();
+	c.SaveAs("perfgraph.png");
 
 //
 //

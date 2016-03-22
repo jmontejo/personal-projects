@@ -6,10 +6,10 @@
 #include <vector>
 #include <map>
 
-class SeekAlgorithm: public Algorithm{
+class MinimizerAlgorithm: public Algorithm{
 
 	public:
-    SeekAlgorithm(std::vector<TString> options, VariablePool *vars);
+    MinimizerAlgorithm(std::vector<TString> options, VariablePool *vars);
   	void Execute();
 
 };

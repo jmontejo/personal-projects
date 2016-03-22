@@ -2,6 +2,7 @@
 #include "TLeaf.h"
 #include "TROOT.h"
 #include "TH1F.h"
+#include "TH2F.h"
 #include "TCanvas.h"
 #include "Optimizer/ComputeVar.h"
 #include "Optimizer/VariablePool.h"
@@ -38,7 +39,13 @@ VariablePool::VariablePool(TTree *sigtree, TTree *bkgtree, Options *options){
 		float 	step		= m_vars_step.at(i);
 		AddVar(varname,step);
 	}
+	if(m_doPlots)
+		ComputeCorrelations();
 	std::cout << "End VariablePool" << std::endl;
+	if(m_doPlots){
+		std::cout << "Plots done, exiting" <<std::endl;
+		exit(0);
+	}
 }
 
 VariablePool::~VariablePool(){
@@ -158,4 +165,42 @@ std::vector<TString> VariablePool::GetVarName(){
 }
 std::vector<std::pair<float, int> > VariablePool::GetVarStep(){
 	return var_step;
+}
+
+void VariablePool::ComputeCorrelations(){
+	int n = variables.size();
+	float corr_sig;
+	float corr_bkg;
+	TH2F *matrix_sig = new TH2F("matrix_sig","matrix_sig",n,-0.5,n-0.5,n,-0.5,n-0.5);
+	TH2F *matrix_bkg = new TH2F("matrix_bkg","matrix_bkg",n,-0.5,n-0.5,n,-0.5,n-0.5);
+	for(int i=0;i<n;i++)
+		for(int j=i;j<n;j++){
+			if(i==j){
+				corr_sig = 1;
+				corr_bkg = 1;
+			}
+			else{
+				m_sigtree->Draw(variables.at(i).name+":"+variables.at(j).name+Form(">> hsig2D%d%d",i,j),m_cut+"*"+m_weight);
+				TH2F *hsig = (TH2F *) gDirectory->Get(Form("hsig2D%d%d",i,j));
+				corr_sig = hsig->GetCorrelationFactor();
+				m_bkgtree->Draw(variables.at(i).name+":"+variables.at(j).name+Form(">> hbkg2D%d%d",i,j),m_cut+"*"+m_weight);
+				TH2F *hbkg = (TH2F *) gDirectory->Get(Form("hbkg2D%d%d",i,j));
+				corr_bkg = hbkg->GetCorrelationFactor();
+			}
+			matrix_sig->SetBinContent(i+1,j+1,corr_sig);
+			matrix_bkg->SetBinContent(i+1,j+1,corr_bkg);
+			if(fabs(corr_sig-corr_bkg)>0.1)
+				std::cout << "Exploitable correlation: " << (variables.at(i).name+":"+variables.at(j).name) << Form(" %f:%f\t%f",corr_sig,corr_bkg,fabs(corr_sig-corr_bkg)) <<std::endl;
+			if(i!=j && (fabs(corr_sig)>0.6 || fabs(corr_bkg)>0.6))
+				std::cout << "Highly correlated vars: " << (variables.at(i).name+":"+variables.at(j).name) << Form(" %f:%f",corr_sig,corr_bkg) <<std::endl;
+	}
+	if(m_doPlots){
+		c1.cd();
+		c1.SetLogy(0);
+		matrix_sig->Draw("colz");
+		c1.SaveAs(plotfolder+"/corrmatrix_sig.png");
+		matrix_bkg->Draw("colz");
+		c1.SaveAs(plotfolder+"/corrmatrix_bkg.png");
+	}
+
 }

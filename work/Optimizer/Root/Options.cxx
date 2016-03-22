@@ -39,7 +39,7 @@ Options::Options(TString jo){
 				std::cout << "Badly formed Algorithm, alg name options:optx "<< line <<std::endl;
 				exit(2);
 			}
-  		algorithms[value] = tokens.at(2);
+  		algorithms.push_back(std::pair<TString, TString>(value, tokens.at(2)));
     }
     else if(key=="bkg"){
       bkgs.push_back(value);
@@ -68,7 +68,7 @@ std::vector<float> Options::getVarsSteps(){
 std::vector<TString> Options::getBkgs(){
   return bkgs;
 }
-std::map<TString, TString> Options::getAlgorithms(){
+std::vector<std::pair<TString, TString> >Options::getAlgorithms(){
   return algorithms;
 }
 TString Options::get(TString key){

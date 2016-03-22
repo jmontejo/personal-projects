@@ -1,0 +1,161 @@
+#Expect 1 signal and N backgrouns
+bkg			export/default/madgraph_ttV/mc15_13TeV.410066.MadGraphPythia8EvtGen_A14NNPDF23LO_ttW_Np0.DAOD_SUSY5.root
+bkg			export/default/madgraph_ttV/mc15_13TeV.410067.MadGraphPythia8EvtGen_A14NNPDF23LO_ttW_Np1.DAOD_SUSY5.root
+bkg			export/default/madgraph_ttV/mc15_13TeV.410068.MadGraphPythia8EvtGen_A14NNPDF23LO_ttW_Np2.DAOD_SUSY5.root
+bkg			export/default/madgraph_ttV/mc15_13TeV.410073.MadGraphPythia8EvtGen_A14NNPDF23LO_ttZnnqq_Np0.DAOD_SUSY5.root
+bkg			export/default/madgraph_ttV/mc15_13TeV.410074.MadGraphPythia8EvtGen_A14NNPDF23LO_ttZnnqq_Np1.DAOD_SUSY5.root
+bkg			export/default/madgraph_ttV/mc15_13TeV.410075.MadGraphPythia8EvtGen_A14NNPDF23LO_ttZnnqq_Np2.DAOD_SUSY5.root
+bkg			export/default/powheg_singletop/mc15_13TeV.407019.PowhegPythiaEvtGen_P2012CT10_Wt_inclusive_top_MET200.DAOD_SUSY5.root
+bkg			export/default/powheg_singletop/mc15_13TeV.407021.PowhegPythiaEvtGen_P2012CT10_Wt_inclusive_tbar_MET200.DAOD_SUSY5.root
+bkg			export/default/powheg_singletop/mc15_13TeV.410011.PowhegPythiaEvtGen_P2012_singletop_tchan_lept_top.DAOD_SUSY5.root
+bkg			export/default/powheg_singletop/mc15_13TeV.410012.PowhegPythiaEvtGen_P2012_singletop_tchan_lept_antitop.DAOD_SUSY5.root
+bkg			export/default/powheg_singletop/mc15_13TeV.410013.PowhegPythiaEvtGen_P2012_Wt_inclusive_top.DAOD_SUSY5.root
+bkg			export/default/powheg_singletop/mc15_13TeV.410014.PowhegPythiaEvtGen_P2012_Wt_inclusive_antitop.DAOD_SUSY5.root
+bkg			export/default/powheg_singletop/mc15_13TeV.410025.PowhegPythiaEvtGen_P2012_SingleTopSchan_noAllHad_top.DAOD_SUSY5.root
+bkg			export/default/powheg_singletop/mc15_13TeV.410026.PowhegPythiaEvtGen_P2012_SingleTopSchan_noAllHad_antitop.DAOD_SUSY5.root
+bkg			export/default/powheg_ttbar/mc15_13TeV.407012.PowhegPythiaEvtGen_P2012CT10_ttbarMET200_hdamp172p5_nonAH.DAOD_SUSY5.root
+bkg			export/default/powheg_ttbar/mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361063.Sherpa_CT10_llll.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361064.Sherpa_CT10_lllvSFMinus.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361065.Sherpa_CT10_lllvOFMinus.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361066.Sherpa_CT10_lllvSFPlus.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361067.Sherpa_CT10_lllvOFPlus.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361068.Sherpa_CT10_llvv.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361069.Sherpa_CT10_llvvjj_ss_EW4.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361070.Sherpa_CT10_llvvjj_ss_EW6.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361071.Sherpa_CT10_lllvjj_EW6.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361072.Sherpa_CT10_lllljj_EW6.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361073.Sherpa_CT10_ggllll.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361077.Sherpa_CT10_ggllvv.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361081.Sherpa_CT10_WplvWmqq.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361082.Sherpa_CT10_WpqqWmlv.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361083.Sherpa_CT10_WlvZqq.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361084.Sherpa_CT10_WqqZll.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361085.Sherpa_CT10_WqqZvv.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361086.Sherpa_CT10_ZqqZll.DAOD_SUSY5.root
+bkg			export/default/sherpa_diboson/mc15_13TeV.361088.Sherpa_CT10_lvvv.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361300.Sherpa_CT10_Wenu_Pt0_70_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361301.Sherpa_CT10_Wenu_Pt0_70_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361302.Sherpa_CT10_Wenu_Pt0_70_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361303.Sherpa_CT10_Wenu_Pt70_140_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361304.Sherpa_CT10_Wenu_Pt70_140_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361305.Sherpa_CT10_Wenu_Pt70_140_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361306.Sherpa_CT10_Wenu_Pt140_280_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361307.Sherpa_CT10_Wenu_Pt140_280_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361308.Sherpa_CT10_Wenu_Pt140_280_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361309.Sherpa_CT10_Wenu_Pt280_500_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361310.Sherpa_CT10_Wenu_Pt280_500_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361311.Sherpa_CT10_Wenu_Pt280_500_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361312.Sherpa_CT10_Wenu_Pt500_700_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361313.Sherpa_CT10_Wenu_Pt500_700_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361314.Sherpa_CT10_Wenu_Pt500_700_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361315.Sherpa_CT10_Wenu_Pt700_1000_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361316.Sherpa_CT10_Wenu_Pt700_1000_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361317.Sherpa_CT10_Wenu_Pt700_1000_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361318.Sherpa_CT10_Wenu_Pt1000_2000_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361319.Sherpa_CT10_Wenu_Pt1000_2000_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361320.Sherpa_CT10_Wenu_Pt1000_2000_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361321.Sherpa_CT10_Wenu_Pt2000_E_CMS_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361322.Sherpa_CT10_Wenu_Pt2000_E_CMS_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361323.Sherpa_CT10_Wenu_Pt2000_E_CMS_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361324.Sherpa_CT10_Wmunu_Pt0_70_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361325.Sherpa_CT10_Wmunu_Pt0_70_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361326.Sherpa_CT10_Wmunu_Pt0_70_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361327.Sherpa_CT10_Wmunu_Pt70_140_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361328.Sherpa_CT10_Wmunu_Pt70_140_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361329.Sherpa_CT10_Wmunu_Pt70_140_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361330.Sherpa_CT10_Wmunu_Pt140_280_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361331.Sherpa_CT10_Wmunu_Pt140_280_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361332.Sherpa_CT10_Wmunu_Pt140_280_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361333.Sherpa_CT10_Wmunu_Pt280_500_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361334.Sherpa_CT10_Wmunu_Pt280_500_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361335.Sherpa_CT10_Wmunu_Pt280_500_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361336.Sherpa_CT10_Wmunu_Pt500_700_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361337.Sherpa_CT10_Wmunu_Pt500_700_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361338.Sherpa_CT10_Wmunu_Pt500_700_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361339.Sherpa_CT10_Wmunu_Pt700_1000_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361340.Sherpa_CT10_Wmunu_Pt700_1000_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361341.Sherpa_CT10_Wmunu_Pt700_1000_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361342.Sherpa_CT10_Wmunu_Pt1000_2000_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361343.Sherpa_CT10_Wmunu_Pt1000_2000_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361344.Sherpa_CT10_Wmunu_Pt1000_2000_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361345.Sherpa_CT10_Wmunu_Pt2000_E_CMS_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361346.Sherpa_CT10_Wmunu_Pt2000_E_CMS_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361347.Sherpa_CT10_Wmunu_Pt2000_E_CMS_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361348.Sherpa_CT10_Wtaunu_Pt0_70_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361349.Sherpa_CT10_Wtaunu_Pt0_70_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361350.Sherpa_CT10_Wtaunu_Pt0_70_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361351.Sherpa_CT10_Wtaunu_Pt70_140_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361352.Sherpa_CT10_Wtaunu_Pt70_140_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361353.Sherpa_CT10_Wtaunu_Pt70_140_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361354.Sherpa_CT10_Wtaunu_Pt140_280_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361355.Sherpa_CT10_Wtaunu_Pt140_280_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361356.Sherpa_CT10_Wtaunu_Pt140_280_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361357.Sherpa_CT10_Wtaunu_Pt280_500_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361358.Sherpa_CT10_Wtaunu_Pt280_500_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361359.Sherpa_CT10_Wtaunu_Pt280_500_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361360.Sherpa_CT10_Wtaunu_Pt500_700_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361361.Sherpa_CT10_Wtaunu_Pt500_700_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361362.Sherpa_CT10_Wtaunu_Pt500_700_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361363.Sherpa_CT10_Wtaunu_Pt700_1000_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361364.Sherpa_CT10_Wtaunu_Pt700_1000_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361365.Sherpa_CT10_Wtaunu_Pt700_1000_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361366.Sherpa_CT10_Wtaunu_Pt1000_2000_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361367.Sherpa_CT10_Wtaunu_Pt1000_2000_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361368.Sherpa_CT10_Wtaunu_Pt1000_2000_BFilter.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361369.Sherpa_CT10_Wtaunu_Pt2000_E_CMS_CVetoBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361370.Sherpa_CT10_Wtaunu_Pt2000_E_CMS_CFilterBVeto.DAOD_SUSY5.root
+bkg			export/default/sherpa_Wjets/mc15_13TeV.361371.Sherpa_CT10_Wtaunu_Pt2000_E_CMS_BFilter.DAOD_SUSY5.root
+#signal	export/default/stop_tN_700_1/mc15_13TeV.387179.MadGraphPythia8EvtGen_A14NNPDF23LO_TT_directTT_700_1.DAOD_SUSY5.root
+#signal	export/default/stop_tN_700_50/mc15_13TeV.387180.MadGraphPythia8EvtGen_A14NNPDF23LO_TT_directTT_700_50.DAOD_SUSY5.root
+signal	export/default/stop_tN_750_1/mc15_13TeV.387188.MadGraphPythia8EvtGen_A14NNPDF23LO_TT_directTT_750_1.DAOD_SUSY5.root
+
+
+tree  export
+tag 	new
+doPlots false
+round false
+
+#no spaces in cut!!!
+#cut     n_jet>=4
+#cut      (xe_trigger*(met>200e3)*(mt>100e3)*(amt2>100)*(n_jet>=4)*(n_bjet>=1))
+#cut      (xe_trigger*(met>200e3)*(mt>100e3)*(amt2>100)*(n_jet>=4)*(n_bjet>=1)*(((mT2tauLooseTau_GeV>=0)?mT2tauLooseTau_GeV:300)>80))
+cut      (xe_trigger*(met>200e3)*(mt>100e3)*(n_jet>=4)*(n_bjet>=1)*(((mT2tauLooseTau_GeV>=0)?mT2tauLooseTau_GeV:300)>80))
+weight  (xs_weight*weight)
+noCheck true
+#lumi in pb
+lumi    3200
+#bkg uncertainty in percentage
+syst    30
+
+var jet_pt[0]							5e3
+var jet_pt[0]-jet_pt[1]							5e3
+var jet_pt[1]-jet_pt[2]							5e3
+var jet_pt[2]-jet_pt[3]							5e3
+#var lep_pt								5e3
+var met										10e3
+var Alt$(fatjet_R12_L0_pt[0],0)		10e3
+var Alt$(fatjet_R12_L0_m[0],0)		10e3
+var mt										10e3
+#var -dr_bjet_lep					0.1
+var ht_sig								1
+var amt2									5
+var topness								1
+var dphi_jet0_ptmiss			0.1
+#var dphi_jet1_ptmiss			0.1
+#var dphi_jet2_ptmiss			0.1
+#var dphi_jet3_ptmiss			0.1
+#var mT2tauLooseTau_GeV		5
+#var -mT2tauLooseTau_GeV		5
+var m_top_chi2						10
+var -m_top_chi2						10
+#var dphi_met_fatjet1_R12_L0	0.1
+
+#alg Minimizer Minuit2:Scan:1000000
+alg Minimizer Genetic:.:100
+#alg Minimizer Minuit2:Scan:1000000
+#alg Minimizer Minuit2:Simplex:1000000
+#alg Minimizer Minuit2:Migrad:1000000
+#alg Minimizer Genetic:.:100
+#alg DampedScan DampedScan:.:0.5
+#alg DampedScan DampedScan:.:0.9
