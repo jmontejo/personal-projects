@@ -16,6 +16,8 @@ case `hostname` in
     ;;
   *lxplus* | *nifae* ) # ------- lxplus
     export MYSVN="/afs/cern.ch/user/j/jmontejo/work/atlas-jmontejo/projects"
+		#add texlive styles
+		export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
     #export AtlasSetup=/afs/cern.ch/atlas/software/dist/AtlasSetup
     #alias asetup='source $AtlasSetup/scripts/asetup.sh'
     #source /afs/cern.ch/atlas/offline/external/GRID/DA/panda-client/latest/etc/panda/panda_setup.sh
@@ -86,10 +88,11 @@ alias lsd='ls -d -- */'
 alias valgrind='valgrind --suppressions=$ROOTSYS/etc/valgrind-root.supp'
 alias work='source $MYSVN/scripts/mystart.sh '
 #the empty space at the end is needed
-alias dq2-ls='if  ! which localSetupDQ2Client &> /dev/null ; then echo "Need ATLAS setup: work"; else echo "Setting up dq2"; localSetupDQ2Client --quiet --skipConfirm ; fi; dq2-ls $@ ' #after localSetupDQ2Client the alias is overriden
-alias dq2-get='if  ! which localSetupDQ2Client &> /dev/null ; then echo "Need ATLAS setup: work"; else echo "Setting up dq2"; localSetupDQ2Client --quiet --skipConfirm ; fi; dq2-get $@ ' #after localSetupDQ2Client the alias is overriden
-alias ami='if  ! which localSetupPyAMI &> /dev/null ; then echo "Need ATLAS setup: work"; else echo "Setting up ami"; unalias ami; localSetupPyAMI --quiet ; fi; ami $@ '
-alias checkAMI='echo "Please use: ami dataset info"'
+alias dq2-ls='arg="$@" ; if  ! which localSetupDQ2Client &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else  localSetupDQ2Client; dq2-ls $arg ; fi; '
+alias dq2-get='arg="$@" ; if  ! which localSetupDQ2Client &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else  localSetupDQ2Client; dq2-get $arg ; fi; '
+alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
+alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; rucio $arg ; fi; '
+alias checkAMI='echo "Please use: ami dataset info show"'
 
 #my new commands
 alias comparePath='python $MYSVN/scripts/comparePath.py'

@@ -128,7 +128,11 @@ if __name__=="__main__":
       if follow and (copy or link) and os.path.islink(item):
         item = os.path.abspath(os.path.join(os.path.dirname(item),os.readlink(item)))
 
-      if copy:   shutil.copy(item,out)
+      if copy:
+				if os.path.isdir(item):
+					shutil.copytree(item,out)
+				else:
+					shutil.copy(item,out)
       elif link: os.symlink(os.path.abspath(item), out)
       else:      shutil.move(item,out)
 

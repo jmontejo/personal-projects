@@ -1,6 +1,7 @@
-set shiftwidth=2
+syntax on
 set tabstop=2
-set expandtab
+"set expandtab
+set shiftwidth=2
 set diffopt+=iwhite
 au BufNewFile,BufRead *.log set filetype=conf
 map <C-j> <C-U>
@@ -15,7 +16,7 @@ set mouse=v
 hi Normal ctermbg=NONE
 set diffexpr=DiffW()
   function DiffW()
-    let opt = ""
+    let opt = "-d "
      if &diffopt =~ "icase"
        let opt = opt . "-i "
      endif
@@ -29,3 +30,17 @@ set diffexpr=DiffW()
 if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
    set fileencodings=utf-8,latin1
 endif
+
+"execute pathogen#infect()
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_cpp_include_dirs = ['includes', 'headers', 'RootCoreBin/include']
+"let g:syntastic_cpp_check_header = 0
+"let g:syntastic_cpp_remove_include_errors = 1
+"

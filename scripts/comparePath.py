@@ -314,7 +314,7 @@ if __name__ == "__main__":
 
   exceptExtension = [excepted]
   if no_binary:
-    exceptBinaries = [".root",".so",".o",".d",".a",".0",".la"]
+    exceptBinaries = [".root",".so",".o",".d",".a",".0",".la",".pyc"]
     exceptExtension.extend(exceptBinaries)
 
   theDiff = pathDiff(path1,path2,extension,exceptExtension,key,keyveto,folderveto,all,no_binary_ext,maxlevel)

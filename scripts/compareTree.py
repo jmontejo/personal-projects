@@ -37,7 +37,8 @@ def compareTree(tree1, tree2, file1, file2, options):
       else:
         print "Crap, no way of getting leaf?",key,val
 
-  common = [c for c in common if "vector" not in  tree1.GetLeaf(c).GetTypeName()]
+	if options.novectors:
+  	common  = [c for c in common if "vector" not in  tree1.GetLeaf(c).GetTypeName()]
   ##common = [c for c in common if "vector" not in  tree1.GetLeaf(branchesmap[c]).GetTypeName()]
   #print common
 
@@ -55,14 +56,16 @@ def compareTree(tree1, tree2, file1, file2, options):
   tree2.BuildIndex(index,"mc_channel_number")
   crazyset = set()
   limit = min(tree1.GetEntries(),tree2.GetEntries())
-  for i in range(min(options.nevents,limit)):
+  options.nevents = min(options.nevents,limit)
+  print "Started scan"
+  for i in range(options.nevents):
     while True:
       i = randint(0,limit)
       tree1.GetEntry(i)
       ret = tree2.GetEntryWithIndex(getattr(tree1,index),getattr(tree1,"mc_channel_number"))
       if ret!=-1: break
-    print "Event",i,"of",tree1.GetEntries()
     maxlength = len(max(common, key=len))
+    firstVar = True
     for v in sorted(common):
       v1 = getattr(tree1,v)
       vtype = type(v1)
@@ -72,7 +75,17 @@ def compareTree(tree1, tree2, file1, file2, options):
           if (v1 < 1e-10 or v2 < 1e-10 or v1 > 1e10 or v2 > 1e10) and not options.showcrazy: 
             crazyset.add(v)
             continue
+          if firstVar: print "-------- %s: %s"%(index,getattr(tree1,index))
           print "{0:{1}}:{2:15n} {3:15n}".format(v,maxlength+1,v1,v2)
+          firstVar = False
+      else:
+        v2 = getattr(tree2,v)
+        if v1!=v2:
+          if firstVar: print "-------- %s: %s"%(index,getattr(tree1,index))
+          print v, [x for x in v1], [x for x in v2]
+          #print "{0:{1}}:{2:15n} {3:15n}".format(v,maxlength+1,v1,v2)
+          firstVar = False
+  print "Scanned %d events"% options.nevents
   if crazyset:
     print "Hidden (crazy) differences: ",crazyset
 
@@ -100,6 +113,11 @@ if __name__ == "__main__":
   parser.add_option ("-v","--verbose", 
                      help="Turn on verbose printout. Default is False", 
                      dest="verbose", 
+                     action="store_true", 
+                     default=False) 
+  parser.add_option ("-V","--no-vectors", 
+                     help="Don't print differences in vector variables", 
+                     dest="novectors", 
                      action="store_true", 
                      default=False) 
   parser.add_option ("-s","--show-crazy", 
