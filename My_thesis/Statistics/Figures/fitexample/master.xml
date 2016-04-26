@@ -1,0 +1,12 @@
+<!DOCTYPE Combination  SYSTEM 'HistFactorySchema.dtd'>
+<Combination OutputFilePrefix="toy">
+  	<Input>channel_A.xml</Input>
+		<Input>channel_B.xml</Input>
+
+  
+  <Measurement Name="fit" Lumi="1" LumiRelErr="0.02" Mode="comb" ExportOnly="true">
+    <POI>SigXsecOverSM</POI>
+        <ParamSetting Const="True">Lumi</ParamSetting>
+        <ParamSetting Const="False">alpha_Luminosity</ParamSetting>
+  </Measurement>
+</Combination>

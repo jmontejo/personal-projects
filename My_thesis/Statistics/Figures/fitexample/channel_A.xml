@@ -1,0 +1,20 @@
+<!DOCTYPE Channel SYSTEM 'HistFactorySchema.dtd'>
+<Channel Name="A">
+
+  <Data HistoName="hist" InputFile="Data_A.root"/>
+  
+  <StatErrorConfig RelErrorThreshold="0.000001" ConstraintType="Poisson" />
+  <Sample Name="Bkg1"  InputFile="Bkg1_A.root" HistoName="hist" NormalizeByTheory="False">
+    <StatError Activate="False"/>    
+    <OverallSys Name="Normalization_A"  Low="0.5" High="1.5"/>
+    <OverallSys Name="Luminosity"  Low="0.999" High="1.001"/>
+  </Sample>
+
+  <Sample Name="Signal"  InputFile="Signal.root" HistoName="hist" NormalizeByTheory="False">
+    <StatError Activate="False"/>    
+    <NormFactor Name="SigXsecOverSM" Val="1" Low="-20." High="50." Const="True"/>
+    <OverallSys Name="Luminosity"  Low="0.999" High="1.001"/>
+  </Sample>
+
+</Channel>
+

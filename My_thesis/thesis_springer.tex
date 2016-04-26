@@ -1,0 +1,177 @@
+\documentclass[a4paper,11pt,twoside]{report}
+
+\newif\ifFullThesis
+\FullThesistrue % comment out to compile only the working chapter
+
+\usepackage{setspace}
+\usepackage[percent]{overpic}
+\usepackage{wrapfig}
+\usepackage{cite}
+\usepackage[margin=1.3in]{geometry} %1.3 looks nice
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{morefloats}
+\usepackage{atlasphysics}
+\usepackage{datetime}
+\usepackage{rotating}  % do rotate figures
+\usepackage{booktabs}  % ??
+\usepackage{varioref}
+\usepackage{units}     % nice 7 TeV as $\unit[7]{TeV}$
+\usepackage{graphicx}  % to include figures easily
+\usepackage{graphics}  % std
+\usepackage[breaklinks=true]{hyperref}  % working URLs
+\usepackage{breakurl}   % break URLs at the end of the line
+\usepackage{verbatim}   % for verbatim stuff
+\usepackage{amssymb}    % for fancy equations
+\usepackage{amsmath}    % for fancy equations
+\usepackage{tabularx}   % table on whole page, and rotated
+\usepackage[usenames,dvipsnames]{color} % ?
+\usepackage{siunitx}
+\usepackage{latexsym}   % ?
+\usepackage{feynmf}     % for feynman graphs
+\usepackage{srcltx}     % in .dvi file Ctrl+click + .bashrc: EDITOR=vim => :D
+\usepackage{multirow}
+\usepackage{textcomp} % Estel:)
+\usepackage{lineno}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage[export]{adjustbox}% http://ctan.org/pkg/adjustbox
+%\usepackage[square,numbers,sectionbib]{natbib}
+\usepackage{chapterbib}
+\hyphenation{ATLAS Che-ren-kov}
+%remove dots in ToC
+%\usepackage[titles]{tocloft}
+%\renewcommand{\cftdot}{}
+
+\makeatletter
+\DeclareRobustCommand*{\bfseries}{%
+    \not@math@alphabet\bfseries\mathbf
+      \fontseries\bfdefault\selectfont
+        \boldmath
+      }
+      \makeatother
+
+\setcounter{secnumdepth}{3}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\DeclareGraphicsExtensions{.eps,.pdf,.jpg,.jpeg}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\makeatletter % necessary for using \@chapapp
+\renewcommand{\chaptermark}[1]{\markboth{\@chapapp\ \thechapter}{}}
+\makeatother
+
+\fancyhead[RE]{\itshape\nouppercase{\leftmark}}
+\fancyhead[LO]{\itshape\nouppercase{\rightmark}}
+\fancyhead[LE,RO]{\thepage}
+
+\begin{document}
+
+%--- Information for the pdf composition
+\hypersetup{
+  pdfauthor = {Javier Montejo Berlingen},
+  pdftitle = {PhD Thesis }}
+
+  \title{PhD Thesis: \\ Search for new physics in $\ttbar$ final states with additional heavy flavour jets, with the ATLAS experiment at the LHC}
+  \author{Javier Montejo Berlingen}
+  \date{\today \\ \currenttime}
+
+\ifFullThesis
+%--- Start including chapters
+\include{Title/Title_springer}
+\pagestyle{empty}
+\cleardoublepage
+\pagestyle{empty}
+\include{IntroOutro/ForewordAurelio}
+\pagestyle{empty}
+\cleardoublepage
+\pagestyle{empty}
+\include{IntroOutro/ListOfPublications}
+\pagestyle{empty}
+\cleardoublepage
+
+%--- Add table of contents, list of figures and list of tables.
+\fi
+
+\pagestyle{fancy}
+
+%--- Start roman numbers
+\pagenumbering{roman}
+\setcounter{page}{1}
+\tableofcontents
+\cleardoublepage   %%% makes sure every chapter starts on an odd page
+\pagestyle{fancy}
+  \pagenumbering{arabic}
+  \setcounter{page}{1}
+  \ifFullThesis
+
+%--- Start arabic numbers
+
+  \include{IntroOutro/Introduction_springer}
+  \cleardoublepage
+  \include{Theory/Theory_springer}
+  \cleardoublepage
+  \include{ATLASdetector/ATLASdetector_springer}
+  \cleardoublepage
+  \include{MCsimulation/MCsimulation_springer}
+  \cleardoublepage
+  \include{Objects/Objects_springer}
+  \cleardoublepage
+  \include{Modeling/Modeling_springer}
+  \cleardoublepage
+  \include{Statistics/Statistics_springer}
+  \cleardoublepage
+  \include{Analysis/Analysis_springer}
+  \cleardoublepage
+  \include{IntroOutro/Conclusions_springer}
+  \cleardoublepage
+
+%--- Add appendices
+  \appendix
+  \include{TileTimingPerformance/TileTimingPerformance_springer}
+  \cleardoublepage
+  \include{Appendices/HFmodeling}
+  \cleardoublepage
+  \include{Appendices/Separation}
+  \cleardoublepage
+  \include{Appendices/PostfitPlots}
+  \cleardoublepage
+  \include{Appendices/Glossary}
+  \cleardoublepage
+
+  \else
+
+%%%%%%%%%%%%%%%% CHAPTER IN WORK
+%\include{IntroOutro/Introduction}
+%\include{Theory/Theory}
+%\include{ATLASdetector/ATLASdetector}
+%\include{TileTimingPerformance/TileTimingPerformance}
+%\include{MCsimulation/MCsimulation}
+%\include{Objects/Objects}
+%\include{Modeling/Modeling}
+%\include{Statistics/Statistics}
+%\include{Analysis/Analysis}
+%\include{IntroOutro/Conclusions}
+%\include{Appendices/HFmodeling}
+%\include{Appendices/Separation}
+\include{Appendices/PostfitPlots}
+%\cleardoublepage
+%%%%%%%%%%%%%%%% CHAPTER IN WORK
+  \fi
+
+
+%--- Add chapters with no number
+
+% \phantomsection
+% \addcontentsline{toc}{chapter}{Bibliography}
+% \bibliographystyle{Bibliography/atlasnote}
+% \bibliography{Bibliography/myBib}
+% \cleardoublepage
+% \include{Acknowledgement/Acknowledgement}
+% \cleardoublepage
+
+  \end{document}

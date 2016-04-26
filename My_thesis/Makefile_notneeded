@@ -1,0 +1,48 @@
+#!/bin/bash
+FILE=thesis
+FILE2=thesis_springer
+#COMPILATION=latex
+COMPILATION=pdflatex #-interaction=nonstopmode
+
+all: $(FILE).tex
+#	./prepBib.sh
+	${COMPILATION} ${FILE}.tex
+#	feynmf ${FILE}.tex
+	bibtex ${FILE}
+	${COMPILATION} ${FILE}.tex
+	${COMPILATION} ${FILE}.tex
+#	rm -rf */*.pdf
+
+quick: $(FILE).tex
+	${COMPILATION} ${FILE}.tex
+
+spell: 
+	for f in `ls */*.tex`; do aspell -c -t ${f} ; done
+
+ps: $(FILE).dvi
+	dvips ${FILE}.dvi
+
+#pdf: $(FILE).dvi
+#	dvipdf ${FILE}.dvi
+pdf: $(FILE).tex
+	${COMPILATION} ${FILE}.tex
+	bibtex ${FILE}
+	${COMPILATION} ${FILE}.tex
+	${COMPILATION} ${FILE}.tex
+
+clean:
+	rm -rf *.aux */*.aux *.dvi *.out *.lot *.log *.lof *blg *.bbl *.toc *~
+clean_all:
+	rm -rf *.aux */*.aux */*/*-eps-converted-to.pdf *.pdf *.dvi *.out *.lot *.log *.lof *blg *.bbl *.toc *~
+
+springer: $(FILE2).tex
+	${COMPILATION} ${FILE2}.tex
+	bibtex ${FILE2}
+	for auxfile in */*.aux; do bibtex `echo $${auxfile} | sed s/.aux//g`; done
+	${COMPILATION} ${FILE2}.tex
+	${COMPILATION} ${FILE2}.tex
+
+dvi: all
+
+#make springer -i -f Makefile_notneeded && open thesis_springer.pdf
+
