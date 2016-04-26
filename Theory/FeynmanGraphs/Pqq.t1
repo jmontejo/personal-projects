@@ -1,0 +1,5 @@
+% Pqq.t1 -- generated from Pqq.mp
+\fmfL(-6,31,r){$f_{q}(x)$}%
+\fmfL(59.54779,-4.68521,lt){$f_{g}(x-y)$}%
+\fmfL(59.54779,66.68521,lb){$f_{q}(y)$}%
+\fmfL(43.19975,31,l){$P_{qq}(z) = \frac {4}{3}\frac {1+z^2}{1-z}$}%

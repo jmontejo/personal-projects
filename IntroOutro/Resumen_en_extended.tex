@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage[margin=1.3in]{geometry} %1.3 looks nice
+\usepackage[breaklinks=true]{hyperref}  % working URLs
+\usepackage{units}     % nice 7 TeV as $\unit[7]{TeV}$
+\newcommand\fourtop{{\ensuremath{t\bar{t}t\bar{t}}}}
+\def\ttH{\ensuremath{t\bar{t}H}}
+\def\ttbar{\ensuremath{t\bar{t}}}
+\def\bbbar{\ensuremath{b\bar{b}}}
+\def\ttbb{\ensuremath{t\bar{t}+b\bar{b}}}
+\def\xsec{cross section} % by Estel
+\def\stoptwo{\ensuremath{\tilde{t}_2}}
+\def\stopone{\ensuremath{\tilde{t}_1}}
+\def\pt{\ensuremath{p_{\mathrm{T}}}} % Subscript roman not italic (EE)
+\def\gev{\ifmmode {\mathrm{\ Ge\kern -0.1em V}}\else
+                   \textrm{Ge\kern -0.1em V}\fi}%
+\def\tev{\ifmmode {\mathrm{\ Te\kern -0.1em V}}\else
+                   \textrm{Te\kern -0.1em V}\fi}%
+\def\pp{\ensuremath{pp}}
+\def\neutralino{\ensuremath{\mathchoice%
+      {\displaystyle\raise.4ex\hbox{$\displaystyle\tilde\chi^0_1$}}%
+         {\textstyle\raise.4ex\hbox{$\textstyle\tilde\chi^0_1$}}%
+       {\scriptstyle\raise.3ex\hbox{$\scriptstyle\tilde\chi^0_1$}}%
+ {\scriptscriptstyle\raise.3ex\hbox{$\scriptscriptstyle\tilde\chi^0_1$}}}}
+\begin{document}
+\section*{\huge{Javier Montejo Berlingen}}
+\section*{Search for new physics in \ttbar\ final states with additional heavy-flavor jets with the ATLAS detector}
+\vspace{0.5cm}
+
+This dissertation presents searches in \ttbar\ final states with additional heavy-flavor jets using $\unit[20.3]{fb^{-1}}$ of \pp\ collision data at 
+$\sqrt{s} = \unit[8]{\tev}$, recorded with the ATLAS experiment at the LHC. 
+Exploiting this final state, three analyses are presented that address the
+instability of the Higgs boson mass from different perspectives.
+\newline
+
+The discovery of the Higgs boson in July 2012 by the ATLAS and CMS experiments was a milestone for high-energy physics, as the last missing piece of the Standard Model (SM) was found.
+Nonetheless, the mass of the Higgs boson, comparable to the electroweak energy scale, is still a puzzle difficult to explain. Radiative corrections are expected to raise the Higgs boson mass by 16 orders of magnitude, from the electroweak scale to the Planck scale. This issue,
+arising from the huge difference between the electroweak and the Planck scale is known as the hierarchy problem.
+The largest contribution to the radiative corrections arises from the coupling to the top quark. The large mass of the top quark and its coupling of order unity to the Higgs boson makes it a very special particle, or the only ``natural'' one. Since its discovery at Tevatron, the top quark has been studied extensively and its properties have been measured in detail.
+However, a measurement of the top-Higgs Yukawa coupling is not yet available.
+The top Yukawa coupling is the only coupling to the Higgs boson that can be accessed directly, in particular through the measurement of the production \xsec\ of a Higgs boson in association with a top-antitop pair, \ttH. Its production \xsec\ is two orders of magnitude below the dominant gluon fusion process, and no evidence for this process has been observed yet. The dominant decay of the Higgs boson with a mass of \unit[125]{\gev} is through a pair of $b$-quarks, producing a final state of \ttbar\ with additional heavy-flavor jets.
+
+The first of the analyses aims to study the \ttH\ process and to measure its production rate, from which the top Yukawa coupling can be extracted. Neural networks are used to discriminate the \ttH\ signal from the background, where the most discriminant variable stems from the matrix element method.
+No evidence for the \ttH\ process is found, and a \unit[95]{\%} confidence level (CL) upper limit is set, excluding a signal 3.6 times larger than predicted by the SM. Performing a signal-plus-background fit the best fitted value for the signal strength is found to be: $\mu= 1.2 \pm 1.3$. 
+\newline
+
+One of the proposed solutions to the hierarchy problem is the introduction of supersymmetry. The introduction of new partners for the SM particles, with spin differing by $1/2$, would cancel the radiative contributions to the Higgs mass, giving an explanation for its value at the electroweak scale. At the same time, supersymmetric models can provide a good candidate for dark matter. Bosonic top-quark partners have been extensively searched for at the LHC, and although a wide range of the allowed masses for supersymmetric partners' masses was excluded, some low-mass regions remain uncovered.
+
+A search for bosonic top partners is presented targeting one of the ``gaps'' where supersymmetric particles have not been excluded. A search for the heavier stop, \stoptwo, is performed targeting models where the \stopone\ is light and the mass difference to the neutralino is close to the top mass. No excess over the background expectation is found and \unit[95]{\%} CL upper limits are set for different masses in the  $m_{\stoptwo}-m_{\neutralino}$ plane. For representative values of the masses exclusion limits are set as a function
+of the $\stoptwo$ branching ratios.
+\newline
+
+Although supersymmetry is a very elegant way of addressing the hierarchy problem, it is definitely not the only one. Non-supersymmetric extensions of the SM provide different ways of addressing the hierarchy problem. Some of the options are the introduction of additional dimensions, compositeness or new strong sectors. A common feature arising from such models is the prediction of fermionic top partners, which also stabilize the Higgs boson mass. Such partners, or vector-like quarks, can decay through flavor-changing-neutral-currents into a top quark and a Higgs boson. 
+Another signature that can arise from these models is the production of four-top quark final states. The decay of this \fourtop\ state produces a spectacular signature that is rarely produced in the SM.
+
+A search for vector-like top partners and four-top-quark production is presented, addressing several models that predict such signatures. The analysis of events with high jet and $b$-tag multiplicity, as well as multiple high-\pt\ objects allows increasing the sensitivity of the search. No excess over the background expectation is found and \unit[95]{\%} CL upper limits are set on the mass and allowed branching ratios of the vector-like top partners.
+The same search is also used to establish limits on models predicting four-top-quark final states. Exclusion limits are set on SM $\fourtop$ production, $\fourtop$ production via an effective field theory model with a four-top contact interaction, sgluon pair production and Kaluza-Klein modes production. 
+\newline
+
+The main challenge for the presented analyses lies in the precise modeling of the background, in particular \ttbb. Since no measurements have been performed yet on the \ttbar\ production with additional heavy-flavor jets, the analyses have to rely on Monte Carlo (MC) simulation for the background. Recent developments in MC simulation have improved the description of the background, and a great effort is invested in porting the state-of-the-art predictions into the analyses. The systematic uncertainties on the modeling of the \ttbb\ background constitute the main source of sensitivity degradation.
+In order to reduce the impact of the systematic uncertainties, the analyses use a profile likelihood fit to reduce in-situ the leading uncertainties. A detailed statistical analysis is performed in order to test for the presence of a signal in the observed data.
+\newline
+
+The analyses presented constitute the most sensitive searches to date in their respective channels.
+\end{document}

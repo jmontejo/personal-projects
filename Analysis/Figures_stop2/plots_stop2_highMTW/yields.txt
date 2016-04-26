@@ -1,0 +1,2 @@
+Channel	 Non-t#bar{t}	 Single_top	 Diboson	 Z+jets	 W+jets	 t#bar{t}H	 t#bar{t}V	 t#bar{t}+b#bar{b}	 t#bar{t}+c#bar{c}	 t#bar{t}+light_jets	 #tilde{t_{2}}(500)_#tilde{#chi_{1}}(20)	 Total_bkg. 	 Data
+ELEMUON_6jetin4btagin_NOMINAL	 -0.43 $\pm$ 0.60	 0.41 $\pm$ 0.09	 0.03 $\pm$ 0.02	 0.04 $\pm$ 0.02	 0.17 $\pm$ 0.05	 1.27 $\pm$ 0.02	 0.73 $\pm$ 0.03	 16.74 $\pm$ 1.07	 4.26 $\pm$ 0.18	 2.45 $\pm$ 0.06	 12.16 $\pm$ 0.77	 25.67 $\pm$ 1.24 	 --
