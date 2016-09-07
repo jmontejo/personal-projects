@@ -155,4 +155,14 @@ alias pwd='python $MYSVN/scripts/my_pwd.py'
 alias cp='python $MYSVN/scripts/my_cp.py'
 alias dccp='$MYSVN/scripts/my_dccp.py'
 alias redo='my_redo '
+my_chain(){
+	cmd='root -l $MYSVN/scripts/chain.cxx('$#
+	for i in $@; do
+		#cmd=$cmd','$i
+		cmd=$cmd',"'$i'"'
+	done
+	cmd=$cmd')'
+	$cmd
+}
+alias chain='my_chain '
 
