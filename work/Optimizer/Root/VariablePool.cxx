@@ -13,7 +13,7 @@
 
 #define DEBUG 1
 
-VariablePool::VariablePool(TTree *sigtree, TTree *bkgtree, Options *options){
+VariablePool::VariablePool(TTree *sigtree, TChain *bkgtree, Options *options){
 	m_cut     	= options->get("cut");
 	m_weight  	= options->get("weight");
 	m_vars    	= options->getVars();
@@ -26,10 +26,11 @@ VariablePool::VariablePool(TTree *sigtree, TTree *bkgtree, Options *options){
 	TString commandString = "mkdir -p -m 755 "+plotfolder;
 	if(system(commandString.Data()) != 0) std::cout << "^[[31m" << commandString << " failed^[[0m" << std::endl;
 
+	std::cout << "Skimming signal tree..." << std::endl;
 	dummy = TFile::Open(plotfolder+"/dummy_"+options->get("tag")+".root","recreate");
 	m_sigtree = sigtree->CopyTree(m_cut);
+	std::cout << "Skimming bkg tree (can take long)..." << std::endl;
 	m_bkgtree = bkgtree->CopyTree(m_cut);
-	std::cout << m_cut << m_sigtree << sigtree << std::endl;
 	std::cout << "Cut reduced signal tree    : " <<sigtree->GetEntries() << " -> " << m_sigtree->GetEntries() << std::endl;
 	std::cout << "Cut reduced background tree: " <<bkgtree->GetEntries() << " -> " << m_bkgtree->GetEntries() << std::endl;
 	std::cout << "Building VariablePool..." << std::endl;

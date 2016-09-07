@@ -5,6 +5,7 @@
 #include <vector>
 #include "TString.h"
 #include "TTree.h"
+#include "TChain.h"
 #include "TCanvas.h"
 #include "Optimizer/Options.h"
 #include "Optimizer/Variable.h"
@@ -12,7 +13,7 @@
 class VariablePool{
 
 public:
-  VariablePool(TTree *sigtree, TTree *bkgtree, Options *options);
+  VariablePool(TTree *sigtree, TChain *bkgchain, Options *options);
   ~VariablePool();
   std::vector<Variable> variables;
 	int GetN(){return variables.size();};

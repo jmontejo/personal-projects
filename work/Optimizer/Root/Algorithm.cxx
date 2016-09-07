@@ -13,6 +13,7 @@ OptimizationPoint Algorithm::best_point_rounded;
 
 Algorithm::Algorithm(VariablePool *vars){
 	debug = false;
+	round = false;
 	this->vars = vars;
 	N = vars->GetN();
 	functor =  new ROOT::Math::Functor(this,&Algorithm::BinomialExpZ,N); 
@@ -42,16 +43,16 @@ Algorithm* Algorithm::GetAlgorithm(TString name, TString options, VariablePool *
 }
 
 float Algorithm::DampMC(float bkg_effev){
-	return erf(bkg_effev-100)*0.5 + 0.5; //Veto less than 100 MC events
+	return erf(bkg_effev/100.-1)*0.5 + 0.5; //Veto less than 100 MC events, starts to be notizable at 200 (x 0.92)
 }
 
 bool Algorithm::checkMetric(float val, float sig, float bkg, float bkg_effev, const Double_t *par){
 	//std::cout << "checking metric: " << val << " " << max_value <<std::endl;
 	if (val <= max_value) return false;
 	std::vector<double> max_pars(par, par + sizeof(Double_t)*N);
-	return checkMetric(val,sig,bkg,bkg_effev,max_pars);
+	return checkMetric(val,sig,bkg,bkg_effev,max_pars,par);
 }
-bool Algorithm::checkMetric(float val, float sig, float bkg, float bkg_effev, std::vector<double> max_pars){
+bool Algorithm::checkMetric(float val, float sig, float bkg, float bkg_effev, std::vector<double> max_pars, const Double_t *par){
 	if (val <= max_value) return false;
 	max_value = val;
 	max_sig = sig;
@@ -64,9 +65,16 @@ bool Algorithm::checkMetric(float val, float sig, float bkg, float bkg_effev, st
 	timer.Continue();
 	perfgraph->SetPoint(perfgraph->GetN(),time,val);
 	std::cout << perfgraph->GetN() << " " << time << " "<<val <<std::endl;
-	float realZ = RooStats::NumberCountingUtils::BinomialExpZ(sig, bkg, bkgsyst);
-	std::cout << "Improvement: 1+BinomialZ with MC stat and damping: (sig/bkg) " << sig<<"/"<<bkg<< " => " << val << std::endl;
+	float realZ = RooStats::NumberCountingUtils::BinomialExpZ(sig, bkg, sqrt(bkgsyst*bkgsyst+1./bkg_effev));
+	float displayZ = realZ;
+	if(displayweight!="" && par){
+		Double_t dissig, disbkg, disbkg_effev;
+		getSB(par,&dissig,&disbkg,&disbkg_effev,true);
+		displayZ = RooStats::NumberCountingUtils::BinomialExpZ(dissig, disbkg, sqrt(bkgsyst*bkgsyst+1./bkg_effev));
+	}
+	std::cout << "Improvement: 1+BinomialZ with MC stat damping: (sig/bkg) " << sig<<"/"<<bkg<< " => " << val << std::endl;
 	std::cout << "Improvement: real BinomialZ: " << realZ << std::endl;
+	std::cout << "Improvement: display BinomialZ: " << displayZ << std::endl;
 	std::cout << "Improvement: effective events: " << bkg_effev << std::endl;
 	return true;
 }
@@ -101,15 +109,28 @@ float Algorithm::BinomialExpZ(const Double_t *par){
 
 }
 
+float Algorithm::BinomialExpZdisplay(const Double_t *par){
+	float f = 1;
+	Double_t sig_integral, bkg_integral, bkg_effev;
+	getSB(par,&sig_integral,&bkg_integral,&bkg_effev,true);
+	if(bkg_integral>0)
+		f = RooStats::NumberCountingUtils::BinomialExpZ(sig_integral, bkg_integral, sqrt(bkgsyst*bkgsyst+1./bkg_effev));
+	return f;
+
+}
+
 // --- Get integrals
-void Algorithm::getSB(const Double_t *par, Double_t *sig_integral, Double_t *bkg_integral , Double_t *bkg_effev){
+void Algorithm::getSB(const Double_t *par, Double_t *sig_integral, Double_t *bkg_integral , Double_t *bkg_effev, bool do_displayweight){
 
 	TString evcut    = "1";
 	for(unsigned int i=0;i<vars->GetN(); i++){
 		auto var = vars->variables.at(i);
 		evcut += Form("*(%s > %g)",var.name.Data(),par[i]);
 	}
-	evcut += "*"+weight;
+	if (do_displayweight)
+		evcut += "*"+displayweight;
+	else
+		evcut += "*"+weight;
 	if(debug)
 		std::cout << evcut << std::endl;
 
@@ -151,12 +172,13 @@ void Algorithm::setStartingPoint(bool usePrevBest){
 	}
 }
 
-void Algorithm::SetParameters(TString weight, float lumi, float bkgsyst, float bkgweight, float sigweight){
+void Algorithm::SetParameters(TString weight, float lumi, float bkgsyst, float bkgweight, float sigweight, TString displayweight){
 	this->weight		= weight;	
 	this->lumi 			= lumi;	
 	this->bkgsyst 	= bkgsyst;	
 	this->bkgweight = bkgweight;	
 	this->sigweight = sigweight;	
+	this->displayweight		= displayweight;	
 }
 
 void Algorithm::PrintBestPoint(){
@@ -164,10 +186,12 @@ void Algorithm::PrintBestPoint(){
 	std::cout << Form("metric/sig/bkg     : %f %f %f",best_point.metric,best_point.sig,best_point.bkg) <<std::endl;
 	for(int i=0; i<N; i++)
 		std::cout << Form("%s\t\t%f",vars->variables.at(i).name.Data(),best_point.cuts.at(i)) <<std::endl;
-	std::cout << "Rounded ---------- : " <<name << std::endl;
-	std::cout << Form("metric/sig/bkg     : %f %f %f",best_point_rounded.metric,best_point_rounded.sig,best_point_rounded.bkg) <<std::endl;
-	for(int i=0; i<N; i++)
-		std::cout << Form("%s\t\t%f",vars->variables.at(i).name.Data(),best_point_rounded.cuts.at(i)) <<std::endl;
+	if(round){
+		std::cout << "Rounded ---------- : " <<name << std::endl;
+		std::cout << Form("metric/sig/bkg     : %f %f %f",best_point_rounded.metric,best_point_rounded.sig,best_point_rounded.bkg) <<std::endl;
+		for(int i=0; i<N; i++)
+			std::cout << Form("%s\t\t%f",vars->variables.at(i).name.Data(),best_point_rounded.cuts.at(i)) <<std::endl;
+	}
 }
 
 void Algorithm::Round(const OptimizationPoint &p){
@@ -186,6 +210,8 @@ void Algorithm::Round(const OptimizationPoint &p){
 			pars[k] = varf;
 		}
 		metric = -BinomialExpZ(pars);
+		//metric = BinomialExpZdisplay(pars); //since we check against the non-display metric this doesn't make sense
+																					//unless the display metric is better
 		if(metric > best_rounded){
 			best_rounded = metric;
 			best_point_rounded = OptimizationPoint(pars,vars->GetN(),metric);
@@ -204,28 +230,3 @@ void Algorithm::Round(const OptimizationPoint &p){
 	std::cout << "End Round" <<std::endl;
 }
 
-std::vector<bool> Algorithm::BestOffset(const OptimizationPoint &p, std::vector<bool> &offsets0, int index, float &metric){
-	if(index < vars->GetN()){
-		float metric0, metric1;
-		std::vector<bool> offsets1 = offsets0;
-		offsets1.at(index) = true;
-		offsets0 = BestOffset(p, offsets0, index+1, metric0);
-		offsets1 = BestOffset(p, offsets1, index+1, metric1);
-		if(metric0>=metric1){
-			metric = metric0;
-			return offsets0;
-		}
-		metric = metric1;
-		return offsets1;
-	}
-	const int N =vars->GetN();
-	Double_t pars[N];
-	for(int i=0;i<vars->GetN();i++){
-		int vari = vars->variables.at(i).f2i(p.cuts.at(i),offsets0.at(i));
-		float varf = vars->variables.at(i).i2f(vari);
-		pars[i] = varf;
-	}
-	metric = -BinomialExpZ(pars);
-	return offsets0;
-
-}

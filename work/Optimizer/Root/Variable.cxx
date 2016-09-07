@@ -24,7 +24,7 @@ Variable::Variable(TString name, TH1F *hsig, TH1F *hbkg, float step, int total){
 	float range = fmax-fmin;
 	this->step = getStep(range,step);
 	imax = ceil(range/this->step);
-	fimin = fmin - fmod(fmin,step);
+	fimin = fmin - fmod(fmin,this->step);
 }
 
 float Variable::getStep(float range, float step){

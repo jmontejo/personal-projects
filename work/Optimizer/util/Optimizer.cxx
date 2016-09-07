@@ -32,6 +32,8 @@ double (*f)();
 void PrintBestFit(TMinuit *gMinuit);
 float DampMC(float bkg_effev);
 TString GetTreeName(TString treename, TString filepath);
+TChain* GetTreeFromSample(TString samplename);
+TChain* GetTreeFromSampleList(std::vector<TString> bkgpaths);
 VariablePool *pool;
 Double_t sig_integral, bkg_integral, bkg_ev, bkg_effev, min_sig, min_bkg, min_value=99999;
 std::map<float,std::vector<float> > seekPool;
@@ -42,8 +44,8 @@ bool seekon=false;
 
 
 bool debug = 0;
-TString weight;
-float bkgweight=1., sigweight=1., lumi=1., bkgsyst=0.;
+TString weight, displayweight;
+float lumi=1., bkgsyst=0.;
 
 int main(int argn, char *args[]){
 gROOT->SetBatch(1);
@@ -67,6 +69,7 @@ gROOT->SetBatch(1);
 	if(testrun) options->set("doPlots","false");
 	std::cout << "Parsed options" <<std::endl;
   weight = options->get("weight");
+  displayweight = options->get("displayweight");
   bkgsyst = options->get("syst").Atof()/100.;
   lumi = options->get("lumi").Atof();
 
@@ -74,46 +77,23 @@ gROOT->SetBatch(1);
   TString treename = options->get("tree");
 	std::vector<TString> bkgpaths = options->getBkgs();
   TFile *sigfile = TFile::Open(options->get("signal"));
-  TChain *bkgtree;
+  TChain *bkgchain;
   TChain *sigtree;
   if(treename=="sample"){
-		std::cout << "Sample reading is tmp broken after including multiple bkg" <<std::endl;
-		exit(1);
-    //xAOD::Init(APP_NAME);
-    //SH::SampleLocal *sample = (SH::SampleLocal *) bkgfile->Get(treename);
-    //bkgtree = (TTree *) sample->makeTChain();
-    //float xs = sample->getMetaDouble("xs");
-    //TFile *bkgfile_hist = TFile::Open(options->get("bkg").ReplaceAll("output-ntuple","hist"));
-    //SH::SampleHist *s_hist = (SH::SampleHist *) bkgfile_hist->Get(treename);
-    //TH1F *cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
-    //int n_tot = cutflow->GetBinContent(1);
-    //if(n_tot < 1){
-    //  cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
-    //  n_tot = cutflow->GetBinContent(1);
-    //}
-    //bkgweight = xs/n_tot;
-
-    //sample = (SH::SampleLocal *) sigfile->Get(treename);
-    //sigtree = (TTree *) sample->makeTChain();
-    //xs = sample->getMetaDouble("xs");
-    //TFile *sigfile_hist = TFile::Open(options->get("signal").ReplaceAll("output-ntuple","hist"));
-    //s_hist = (SH::SampleHist *) sigfile_hist->Get(treename);
-    //cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
-    //n_tot = cutflow->GetBinContent(1);
-    //if(n_tot < 1){
-    //  cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
-    //  n_tot = cutflow->GetBinContent(1);
-    //}
-    //sigweight = xs/n_tot;
+    xAOD::Init(APP_NAME);
+    sigtree  = GetTreeFromSample(options->get("signal"));
+    bkgchain = GetTreeFromSampleList(bkgpaths);
   }
   else{
     sigtree = (TChain *) sigfile->Get(GetTreeName(treename,sigfile->GetName()));
-    bkgtree = new TChain(treename);
-		for(int b=0;b<bkgpaths.size();b++)
-			bkgtree->AddFile(bkgpaths.at(b),TTree::kMaxEntries,GetTreeName(treename,bkgpaths.at(b)));
+    bkgchain = new TChain(treename);
+		for(int b=0;b<bkgpaths.size();b++){
+			bkgchain->AddFile(bkgpaths.at(b),-1,GetTreeName(treename,bkgpaths.at(b)));
+			//bkgchain->AddFile(bkgpaths.at(b),TTree::kMaxEntries,GetTreeName(treename,bkgpaths.at(b)));
+		}
   }
 
-  pool = new VariablePool(sigtree,bkgtree,options);
+  pool = new VariablePool(sigtree,bkgchain,options);
   pool->Print();
 	OptimizationPoint::SetVariablePool(pool);
 
@@ -129,7 +109,7 @@ gROOT->SetBatch(1);
 	for(int i=0;i<algorithms.size();i++){
 		auto alg = algorithms.at(i);
 		std::cout << "Running Algorithm: " << alg->name <<std::endl;
-		alg->SetParameters(weight,lumi,bkgsyst);
+		alg->SetParameters(weight,lumi,bkgsyst,1.,1.,displayweight);
 		alg->Execute();
 		c.cd();
 		auto g = alg->getGraph();
@@ -199,3 +179,64 @@ TString GetTreeName(TString treename, TString filepath){
 	treename =  filepath(where,filepath.Length())+"_Nom";
 	return treename;
 }
+
+TChain* GetTreeFromSample(TString samplename){
+  TFile *file = TFile::Open(samplename);
+  SH::SampleLocal *sample = (SH::SampleLocal *) file->Get("sample");
+  TChain *chain = sample->makeTChain();
+  float xs = sample->getMetaDouble("xs");
+  TFile *file_hist = TFile::Open(samplename.ReplaceAll("output-ntuple","hist"));
+  SH::SampleHist *s_hist = (SH::SampleHist *) file_hist->Get("sample");
+  TH1F *cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
+  int n_tot = cutflow->GetBinContent(1);
+  if(n_tot < 1){
+    cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
+    n_tot = cutflow->GetBinContent(1);
+  }
+  float weight = xs/n_tot;
+	TChain *newchain = (TChain*) chain->CloneTree(0); 
+	newchain->Branch("xs_weight", &weight, "xs_weight/F"); 
+	for( int i=0; i < chain->GetEntries(); i++){ 
+		chain->GetEntry(i); 
+		newchain->Fill();
+	}
+	return newchain;
+} 
+
+TChain* GetTreeFromSampleList(std::vector<TString> bkgpaths){
+	TTree *newchain;
+	float xs_weight;
+	TFile *dummy = TFile::Open("dummy.root","recreate");
+	for(int b=0;b<bkgpaths.size();b++){
+  	TFile *file = TFile::Open(bkgpaths.at(b));
+  	SH::SampleLocal *sample = (SH::SampleLocal *) file->Get("sample");
+  	TChain *chain = sample->makeTChain();
+		if(b==0){
+			dummy->cd();
+			newchain = chain->CloneTree(0);
+			newchain->Branch("xs_weight", &xs_weight, "xs_weight/F"); 
+		}
+  	float xs = sample->getMetaDouble("xs");
+  	TFile *file_hist = TFile::Open(bkgpaths.at(b).ReplaceAll("output-ntuple","hist"));
+  	SH::SampleHist *s_hist = (SH::SampleHist *) file_hist->Get("sample");
+  	TH1F *cutflow = (TH1F *) s_hist->readHist("DerivationStat_Weights");
+  	int n_tot = cutflow->GetBinContent(1);
+  	if(n_tot < 1){
+  	  cutflow = (TH1F *) s_hist->readHist("passedWeights_el_Preselection");
+  	  n_tot = cutflow->GetBinContent(1);
+  	}
+  	float xs_weight = xs/n_tot;
+		std::cout << bkgpaths.at(b) << std::endl;
+		std::cout << xs << " " << n_tot << std::endl;
+		for( int i=0; i < chain->GetEntries(); i++){ 
+			chain->GetEntry(i); 
+			newchain->Fill();
+		}
+		std::cout << newchain->GetEntries() << std::endl;
+		file->Close();
+		delete chain;
+	}
+	newchain->SetDirectory(0);
+	newchain->AutoSave("SaveSelf");
+	return ((TChain *) newchain);
+} 
