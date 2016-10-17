@@ -125,7 +125,7 @@ class Directory:
                           '</html>'])
     def findImages(self):
         "Find the images in this directory"
-        imgExtensions = ["pdf","png", "jpg", "gif"]
+        imgExtensions = [".png", ".jpg", ".gif"]
         imgFiles = []
         for ext in imgExtensions:
             files = os.listdir(self.getBasePath())

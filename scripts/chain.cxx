@@ -26,7 +26,7 @@ int chain(int count, ...)
   TIter nextkey( test->GetListOfKeys() );
   TKey *key=0;
   while ( (key = (TKey*)nextkey())) {
-	 	//cout << key->GetName() <<endl;
+	 	cout << key->GetName() <<endl;
      TObject *obj = key->ReadObj();
      if ( obj->IsA()->InheritsFrom( TTree::Class() ) ) {
 	 		treename = key->GetName();
@@ -38,6 +38,7 @@ int chain(int count, ...)
 	TChain *chain = new TChain(treename);
 	for(int i=0;i<files.size();i++){
 		chain->AddFile(files[i]);
-		//cout << i << " " << files[i] << " " << chain->GetEntries() <<endl;
+		cout << i << " " << files[i] << " " << chain->GetEntries() <<endl;
 	}
+	cout << "Your chain is ready with name: " << treename << endl;
 }
