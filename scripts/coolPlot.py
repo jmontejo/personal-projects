@@ -12,7 +12,7 @@ def mycolor(h):
 
 class coolPlot(object):
 
-	def __init__(self, name, histolist, titlelist=None, ref=0,canvas=None,normalized=False,folder="plots/mine/",binning=None,yields=False, rebin=0,log=False,yrange=None,yrangeratio=None,plotratio=True,formats=("png",), legendTitle=None, sideline=0, additionals=[], delete=False, sbratio=False):
+	def __init__(self, name, histolist, titlelist=None, ref=0,canvas=None,normalized=False,folder="plots/mine/",binning=None,yields=False, rebin=0,log=False,yrange=None,yrangeratio=None,plotratio=True,formats=("png",), legendTitle=None, sideline=0, additionals=[], delete=False, sbratio=False,ratiofunction=""):
 
 		todel = []
 		if not canvas:
@@ -35,7 +35,7 @@ class coolPlot(object):
 		if rebin>1:
 			for hist in copylist:
 				hist.Rebin(rebin)
-		plotratio = len(copylist)>1 and (plotratio or sbratio)
+		plotratio = (len(copylist)>1 and (plotratio)) or sbratio  or ratiofunction
 		if ref:
 			href = copylist.pop(ref)
 			copylist.insert(0,href)
@@ -74,7 +74,8 @@ class coolPlot(object):
 			toppad.SetFrameBorderMode(0)
 			canvas.cd()
 
-		legend = root.TLegend( 0.6,0.5,0.9,0.9)
+		legend = root.TLegend( 0.2,0.65,0.9,0.9)
+		#legend = root.TLegend( 0.6,0.5,0.9,0.9)
 		todel.append(legend)
 		legend.SetFillStyle(0)
 		legend.SetLineColor(0)
@@ -92,8 +93,10 @@ class coolPlot(object):
 			if h==0: same=""
 			if len(copylist)>1:
 				histo.SetLineColor(mycolor(h))
-			histo.Draw("hist,"+same)
-			#histo.Draw("FUNC,same")
+			histo.Draw(same)
+			if ratiofunction:
+				histo.GetFunction(ratiofunction).SetLineColor(mycolor(h))
+			histo.Draw("FUNC,same")
 			legend.AddEntry(histo)
 			if yields:
 				if normalized:
@@ -105,6 +108,7 @@ class coolPlot(object):
 		if len(copylist)>1 or legendTitle:
 			if legendTitle: legend.SetHeader(legendTitle)
 			legend.Draw("same")
+		
 		if log:
 			toppad.SetLogy(1)
 		if sideline:
@@ -122,7 +126,7 @@ class coolPlot(object):
 				x.Draw("same")
 			
 			
-		if plotratio or sbratio:
+		if plotratio:
 			bottompad.cd()
 			if sbratio:
 				total = None
@@ -131,9 +135,10 @@ class coolPlot(object):
 					else: total.Add(histo)
 			cumratio = 0
 			for h,histo in enumerate(copylist):
-				if h==0: continue
+				if h==0 and not ratiofunction: continue
 				same = "same"
-				if h==1: same=""
+				isfirst = (h==0 and     ratiofunction) or (h==1 and not ratiofunction)
+				if isfirst: same=""
 				ratio = histo.Clone()
 				if sbratio:
 					best = 0
@@ -145,17 +150,20 @@ class coolPlot(object):
 							best = ssqrtb
 						ratio.SetBinContent(b, ssqrtb)
 					cumratio += best/initial
+				elif ratiofunction:
+					f = ratio.GetFunction(ratiofunction)
+					f.SetBit(root.TF1.kNotDraw)
+					ratio.Divide(f)
 				else:
 					ratio.Divide(copylist[0])
 				ratio = ratio.DrawCopy(same)
-				if h==1:
+				if isfirst:
 					if yrangeratio:
 						ratio.GetYaxis().SetRangeUser(yrangeratio[0],yrangeratio[1])
 					else:
 						ratio.GetYaxis().SetRangeUser(0.45,1.55)
 				ratio.GetYaxis().SetTitle("")
 				ratio.GetXaxis().SetTitleOffset(4)
-			print "Average improvement:",cumratio/(len(copylist)-1)
 			line = root.TLine(ratio.GetBinLowEdge(1),1,ratio.GetBinLowEdge(ratio.GetNbinsX()+1),1)
 			line.SetLineColor(root.kGray)
 			line.Draw("same")
