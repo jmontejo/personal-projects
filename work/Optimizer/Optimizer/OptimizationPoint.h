@@ -11,6 +11,7 @@ class OptimizationPoint{
     OptimizationPoint(std::vector<double> cuts, float metric, float sig, float bkg);
     OptimizationPoint(Double_t *pars, int n, float metric);
 		std::vector<double> cuts;
+		std::vector<double> fractionalImprovement;
 		float metric, sig, bkg;
 		static void SetVariablePool(VariablePool *vars);
 	private:

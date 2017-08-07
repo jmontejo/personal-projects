@@ -9,6 +9,7 @@ OptimizationPoint::OptimizationPoint(Double_t *cuts, int n, float metric){
 	for(int i=0;i<n;i++)
 		vcuts.at(i) = cuts[i];
 	this->cuts = vcuts;
+	this->fractionalImprovement.resize(n,0);
 	this->metric = metric;
 	this->sig = -1.;
 	this->bkg = -1.;
@@ -16,6 +17,7 @@ OptimizationPoint::OptimizationPoint(Double_t *cuts, int n, float metric){
 
 OptimizationPoint::OptimizationPoint(std::vector<double> cuts, float metric, float sig, float bkg){
 	this->cuts = cuts;
+	this->fractionalImprovement.resize(cuts.size(),0);
 	this->metric = metric;
 	this->sig = sig;
 	this->bkg = bkg;

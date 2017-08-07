@@ -182,15 +182,33 @@ void Algorithm::SetParameters(TString weight, float lumi, float bkgsyst, float b
 }
 
 void Algorithm::PrintBestPoint(){
+	FlagUselessVars(&best_point);
 	std::cout << "Results ---------- : " <<name << std::endl;
 	std::cout << Form("metric/sig/bkg     : %f %f %f",best_point.metric,best_point.sig,best_point.bkg) <<std::endl;
-	for(int i=0; i<N; i++)
-		std::cout << Form("%s\t\t%f",vars->variables.at(i).name.Data(),best_point.cuts.at(i)) <<std::endl;
+	TString cutchain = "";
+	TString cutchain_skim = "";
+	for(int i=0; i<N; i++){
+		std::cout << Form("%s\t\t%f\t\t%f",vars->variables.at(i).name.Data(),best_point.cuts.at(i),best_point.fractionalImprovement.at(i)) <<std::endl;
+		cutchain += Form("(%s > %f)*",vars->variables.at(i).name.Data(),best_point.cuts.at(i));
+		if(best_point.fractionalImprovement.at(i) > 1.01)
+			cutchain_skim += Form("(%s > %f)*",vars->variables.at(i).name.Data(),best_point.cuts.at(i));
+	}
+	std::cout << cutchain.Remove(cutchain.Length()-1) <<std::endl;
+	std::cout << cutchain_skim.Remove(cutchain_skim.Length()-1) <<std::endl;
+	cutchain = "";
+	cutchain_skim = "";
 	if(round){
+		FlagUselessVars(&best_point_rounded);
 		std::cout << "Rounded ---------- : " <<name << std::endl;
 		std::cout << Form("metric/sig/bkg     : %f %f %f",best_point_rounded.metric,best_point_rounded.sig,best_point_rounded.bkg) <<std::endl;
-		for(int i=0; i<N; i++)
-			std::cout << Form("%s\t\t%f",vars->variables.at(i).name.Data(),best_point_rounded.cuts.at(i)) <<std::endl;
+		for(int i=0; i<N; i++){
+			std::cout << Form("%s\t\t%f\t\t%f",vars->variables.at(i).name.Data(),best_point_rounded.cuts.at(i),best_point_rounded.fractionalImprovement.at(i)) <<std::endl;
+			cutchain += Form("(%s > %f)*",vars->variables.at(i).name.Data(),best_point_rounded.cuts.at(i));
+			if(best_point_rounded.fractionalImprovement.at(i) > 1.01)
+				cutchain_skim += Form("(%s > %f)*",vars->variables.at(i).name.Data(),best_point_rounded.cuts.at(i));
+		}
+		std::cout << cutchain.Remove(cutchain.Length()-1) <<std::endl;
+		std::cout << cutchain_skim.Remove(cutchain_skim.Length()-1) <<std::endl;
 	}
 }
 
@@ -203,6 +221,7 @@ void Algorithm::Round(const OptimizationPoint &p){
 	bool offset;
 	Double_t pars[vars->GetN()];
 	for(int i=0;i<nTemp;i++){
+		if (i==(nTemp/10)) std::cout << i << "/" << nTemp <<std::endl;
 		for (int k = 0; k < vars->GetN(); k++){
 			offset = ((i >> k) & 0x1);
 			int vari = vars->variables.at(k).f2i(p.cuts.at(k),offset);
@@ -211,7 +230,7 @@ void Algorithm::Round(const OptimizationPoint &p){
 		}
 		metric = -BinomialExpZ(pars);
 		//metric = BinomialExpZdisplay(pars); //since we check against the non-display metric this doesn't make sense
-																					//unless the display metric is better
+		//unless the display metric is better
 		if(metric > best_rounded){
 			best_rounded = metric;
 			best_point_rounded = OptimizationPoint(pars,vars->GetN(),metric);
@@ -230,3 +249,24 @@ void Algorithm::Round(const OptimizationPoint &p){
 	std::cout << "End Round" <<std::endl;
 }
 
+void Algorithm::FlagUselessVars(OptimizationPoint *p){
+	std::cout << "Looking for useless variables" <<std::endl;
+	float metric;
+	float old_metric =  p->metric;
+	Double_t pars[vars->GetN()];
+	for (int k = 0; k < vars->GetN(); k++){
+		pars[k] = p->cuts.at(k);
+	}
+
+	for (int k = 0; k < vars->GetN(); k++){
+		float varmin = vars->variables.at(k).f_getMin();
+		pars[k] = varmin;
+		metric = -BinomialExpZ(pars); //This call can change p!!!
+		p->fractionalImprovement.at(k) = p->metric/metric;
+		pars[k] = p->cuts.at(k);
+		std::cout << Form("%d\t%f\t%f\t%f\t%f",k,p->metric,metric,varmin,p->fractionalImprovement.at(k)) << std::endl;
+	}
+	std::cout << old_metric << " " << p->metric <<std::endl;
+	if(old_metric !=p->metric)
+		FlagUselessVars(p);
+}

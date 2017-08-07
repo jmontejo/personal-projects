@@ -29,6 +29,7 @@ class Algorithm {
 		TGraph* getGraph(){ return perfgraph; };
 		TGraph* getGraphRounded(){ return perfgraph_rounded; };
 		void PrintBestPoint();
+		void FlagUselessVars(OptimizationPoint *p);
 
   protected:
     Algorithm(VariablePool *vars);

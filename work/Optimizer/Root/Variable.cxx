@@ -14,7 +14,7 @@ Variable::Variable(TString name, TH1F *hsig, TH1F *hbkg, float step, int total){
 		}
 	fmax = hbkg->GetBinLowEdge(hbkg->GetNbinsX()+1);
 	for(int i=0;i<hbkg->GetNbinsX();i++)
-		if(hbkg->Integral(i,-1)/hbkg->Integral(0,-1)<0.1){
+		if(hbkg->Integral(i,-1)/hbkg->Integral(0,-1)<0.05){
 			fmax = hbkg->GetBinLowEdge(i);
 			break;
 		}

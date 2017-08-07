@@ -13,6 +13,22 @@
 
 #define DEBUG 1
 
+void Test_f2i(VariablePool *vp){
+
+	for(unsigned int i=0;i<vp->variables.size();i++){
+		float vmin  = vp->variables.at(i).f_getMin();
+		float vmax  = vp->variables.at(i).f_getMax();
+		float range = vmax - vmin;
+		TString name = vp->variables.at(i).name;
+		for(unsigned int j=1;j<=100;j++){
+			float point = vmin + j*range/100.;
+			std::cout << Form("%d\t%s\t%f\t%f\t%f",j,name.Data(),point,vp->variables.at(i).i2f(vp->variables.at(i).f2i(point)),vp->variables.at(i).i2f(vp->variables.at(i).f2i(point,true))) << std::endl;
+		}
+	}
+	vp->Print();
+	exit(1);
+};
+
 VariablePool::VariablePool(TTree *sigtree, TChain *bkgtree, Options *options){
 	m_cut     	= options->get("cut");
 	m_weight  	= options->get("weight");
@@ -47,6 +63,7 @@ VariablePool::VariablePool(TTree *sigtree, TChain *bkgtree, Options *options){
 		std::cout << "Plots done, exiting" <<std::endl;
 		exit(0);
 	}
+	//Test_f2i(this);
 }
 
 VariablePool::~VariablePool(){
