@@ -20,7 +20,7 @@ case `hostname` in
   *pic*) # ------- pic
     export MYSVN="/nfs/at3users/users/jmontejo/projects"
     ;;
-  *lxplus* | *nifae* ) # ------- lxplus
+  *cern* | *nifae* ) # ------- cern, not lxplus to catch also batch
     export MYSVN="/afs/cern.ch/user/j/jmontejo/work/atlas-jmontejo/projects"
 		#add texlive styles
 		export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
@@ -97,7 +97,7 @@ alias valgrind='valgrind --suppressions=$ROOTSYS/etc/valgrind-root.supp'
 alias work='source $MYSVN/scripts/mystart.sh '
 #the empty space at the end is needed
 alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
-alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; \rucio $arg ; fi; '
+#alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; rucio $arg ; fi; '
 alias checkAMI='echo "Please use: ami dataset info show"'
 
 #my new commands

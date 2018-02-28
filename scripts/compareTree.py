@@ -37,8 +37,8 @@ def compareTree(tree1, tree2, file1, file2, options):
       else:
         print "Crap, no way of getting leaf?",key,val
 
-	if options.novectors:
-  	common  = [c for c in common if "vector" not in  tree1.GetLeaf(c).GetTypeName()]
+  if options.novectors:
+    common  = [c for c in common if "vector" not in  tree1.GetLeaf(c).GetTypeName()]
   ##common = [c for c in common if "vector" not in  tree1.GetLeaf(branchesmap[c]).GetTypeName()]
   #print common
 

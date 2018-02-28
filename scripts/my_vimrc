@@ -1,7 +1,9 @@
 syntax on
-set tabstop=2
-"set expandtab
-set shiftwidth=2
+filetype plugin indent on
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
 set diffopt+=iwhite
 au BufNewFile,BufRead *.log set filetype=conf
 map <C-j> <C-U>

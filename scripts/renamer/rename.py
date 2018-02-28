@@ -25,28 +25,30 @@ class pattern:
 
 class renamer:
 
-  def __init__(self,in_p,out_p):
+  def __init__(self,in_p,out_p,mapwildcard):
     self.in_blocks    = in_p.blocks
     self.in_blocks_re = in_p.blocks[:]
     if self.in_blocks_re[0] == '' : self.in_blocks_re[0]  = "^"
     if self.in_blocks_re[-1] == '': self.in_blocks_re[-1] = "$"
     self.out_blocks    = out_p.blocks
+    self.mapwildcard = mapwildcard
 
-  def getrename(self,str):
+  def getrename(self,thestr):
     pos = []
     prepos = 0
     for in_block in self.in_blocks_re:
-      pos.append(re.search(in_block,str[prepos:]).start()+prepos)
+      pos.append(re.search(in_block,thestr[prepos:]).start()+prepos)
       if in_block != "^" and in_block != "$":
         prepos = pos[-1]+len(in_block)
-    pos.append(len(str))
+    pos.append(len(thestr))
 
-    out = ""
+    out = []
     for i in range(0,len(self.in_blocks)):
       if self.in_blocks[i] == '':
-        out+=self.out_blocks[i]+str[pos[i]:pos[i+1]]
+        out.extend( [self.out_blocks[i], thestr[pos[i]:pos[i+1]]] )
       else:
-        out+= str[pos[i]:pos[i+1]].replace(self.in_blocks[i],self.out_blocks[i])
+        out.extend( [self.out_blocks[i], thestr[pos[i]:pos[i+1]].replace(self.in_blocks[i],"")])
+    out = "".join([out[self.mapwildcard.get(i,i)] for i in range(len(out))])
     
     return out
 
@@ -88,6 +90,10 @@ if __name__=="__main__":
                      dest="follow",
                      action="store_true",
                      default=False)
+  parser.add_option ("-m","--map",
+                     help="Reorder the wildcards in the output according to this mapping. Format x:x[:x ...]",
+                     dest="mapwildcard",
+                     default="")
   
   options,args = parser.parse_args()
   verbose = options.verbose
@@ -111,8 +117,17 @@ if __name__=="__main__":
     print "The patterns are not compatible, same number of wildcards '*' expected"
     sys.exit(1)
 
+  if options.mapwildcard:
+      try:
+          mapwildcard       = dict((1+2*k,1+2*int(v)) for k,v in enumerate(options.mapwildcard.split(":"))) 
+      except Exception:
+          print "Badly formed mapping, needs to be integers in the format x:x[:x ...]"
+          sys.exit(1)
+  else:
+      mapwildcard = dict()
+
   in_list = glob.glob(args[0])
-  myRenamer = renamer(in_pattern,out_pattern)
+  myRenamer = renamer(in_pattern,out_pattern,mapwildcard)
   for item in in_list:
     out = myRenamer.getrename(item)
     if os.path.exists(out) and skip:
