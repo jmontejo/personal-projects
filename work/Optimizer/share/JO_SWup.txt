@@ -70,3 +70,8 @@ var ht_sig								1
 var amt2									5
 var mt2_tau								5
 var topness								1
+
+alg Minimizer Minuit2:Scan:1000000
+alg Minimizer Minuit2:Simplex:1000000:usePrevBest
+alg Minimizer Minuit2:Migrad:1000000:usePrevBest
+alg Minimizer Genetic:.:100:usePrevBest:round
