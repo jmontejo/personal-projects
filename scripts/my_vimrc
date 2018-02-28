@@ -31,6 +31,10 @@ if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
    set fileencodings=utf-8,latin1
 endif
 
+set tw=0
+set formatoptions=l
+set wrap linebreak nolist
+
 "execute pathogen#infect()
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}

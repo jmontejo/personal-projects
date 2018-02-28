@@ -81,7 +81,7 @@ alias at305='ssh -Y jmontejo@at305.pic.es'
 alias at306='ssh -Y jmontejo@at306.pic.es'
 alias at307='ssh -Y jmontejo@at307.pic.es'
 alias lxplus='LANG=C ssh -Y jmontejo@lxplus.cern.ch'
-alias lxplus5='ssh -Y jmontejo@lxplus5.cern.ch'
+alias lxscreen='ssh -Y jmontejo@lxplus007.cern.ch'
 alias atlasgw='ssh -Y jmontejo@atlasgw.cern.ch'
 alias nifae06='ssh -Y jmontejo@nifae06.cern.ch'
 

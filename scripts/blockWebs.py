@@ -29,8 +29,8 @@ if __name__ == "__main__":
     sys.exit(1)
   if allow:
     print "FUCKER!!! DON'T GOOF OFF, USE YOUR TIME WISELY!!!" 
-    #time.sleep(30)
-    #sys.exit(1)
+    time.sleep(10)
+    sys.exit(1)
 
   #file="hosts"
   #tempfile="hosts.tmp"
