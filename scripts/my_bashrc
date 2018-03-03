@@ -17,11 +17,8 @@ alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
 
 #------ Machine dependent settings
 case `hostname` in
-  *pic*) # ------- pic
-    export MYSVN="/nfs/at3users/users/jmontejo/projects"
-    ;;
-  *cern* | *nifae* ) # ------- cern, not lxplus to catch also batch
-    export MYSVN="/afs/cern.ch/user/j/jmontejo/work/atlas-jmontejo/projects"
+  *cern* | *lxplus* ) # ------- cern, not lxplus to catch also batch
+    export MYGIT="/afs/cern.ch/user/j/jmontejo/work/personal-projects"
 		#add texlive styles
 		export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
     #export AtlasSetup=/afs/cern.ch/atlas/software/dist/AtlasSetup
@@ -34,18 +31,15 @@ case `hostname` in
        stty erase '^?'
     fi
     ;;
-  *atropos* | *caronte*) #atropos and caronte
-    export MYSVN="/www/personal/jmontejo/projects"
-    ;;
   *) #local
     export MANPATH=/opt/local/share/man:$MANPATH
     export PATH=/opt/local/libexec/gnubin/:$PATH
-    export MYSVN="/projects"
+    export MYGIT="/projects"
     alias tex2png='tex2png.sh'
-    alias log="python $MYSVN/scripts/logger/main_log.py"
+    alias log="python $MYGIT/scripts/logger/main_log.py"
     alias ls='ls -h -G --color=auto'
-    alias allow="sudo $MYSVN/scripts/blockWebs.py -a"
-    alias block="sudo $MYSVN/scripts/blockWebs.py -b"
+    alias allow="sudo $MYGIT/scripts/blockWebs.py -a"
+    alias block="sudo $MYGIT/scripts/blockWebs.py -b"
     alias mountafs="sshfs jmontejo@lxplus.cern.ch:/afs /afs"
     alias umountafs="umount /afs "
     source /Users/JMontejo/Documents/root_5.34.26/bin/thisroot.sh
@@ -64,7 +58,7 @@ export SVNROOT=svn+ssh://svn.cern.ch/reps/atlasoff
 export SVN_EDITOR=/usr/bin/vim
 export EDITOR=/usr/bin/vim
 export PATH=$PATH:$HOME/bin:.
-export PYTHONPATH=$PYTHONPATH:$MYSVN/scripts
+export PYTHONPATH=$PYTHONPATH:$MYGIT/scripts
 export GZIP=-9
 
 #login alias
@@ -94,19 +88,19 @@ alias emacs='emacs -nw'
 alias cdb='cd `pwd -P`/..'
 alias lsd='ls -d -- */'
 alias valgrind='valgrind --suppressions=$ROOTSYS/etc/valgrind-root.supp'
-alias work='source $MYSVN/scripts/mystart.sh '
+alias work='source $MYGIT/scripts/mystart.sh '
 #the empty space at the end is needed
 alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
 #alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; rucio $arg ; fi; '
 alias checkAMI='echo "Please use: ami dataset info show"'
 
 #my new commands
-alias comparePath='python $MYSVN/scripts/comparePath.py'
-alias compareTree='python $MYSVN/scripts/compareTree.py'
-alias hack='python $MYSVN/scripts/hack.py'
-alias pdfize='python $MYSVN/scripts/pdfize.py'
-alias webize='python $MYSVN/scripts/createHtmlOverview.py'
-alias rename='set -f; reset_expansion python $MYSVN/scripts/renamer/rename.py'
+alias comparePath='python $MYGIT/scripts/comparePath.py'
+alias compareTree='python $MYGIT/scripts/compareTree.py'
+alias hack='python $MYGIT/scripts/hack.py'
+alias pdfize='python $MYGIT/scripts/pdfize.py'
+alias webize='python $MYGIT/scripts/createHtmlOverview.py'
+alias rename='set -f; reset_expansion python $MYGIT/scripts/renamer/rename.py'
 my_wiki(){
   dig +short txt $1.wp.dg.cx
 }
@@ -125,10 +119,10 @@ reset_expansion(){
   trap - INT TERM EXIT
 }
 my_vim(){
-  python $MYSVN/scripts/hack.py --vim "$@" && \vim $@
+  python $MYGIT/scripts/hack.py --vim "$@" && \vim $@
 }
 my_make(){
-  python $MYSVN/scripts/hack.py --make "$@" && \make $@
+  python $MYGIT/scripts/hack.py --make "$@" && \make $@
 }
 my_display(){
 case `hostname` in
@@ -155,13 +149,13 @@ my_redo(){
 alias vim='my_vim'
 alias make='my_make'
 alias display='my_display '
-alias rm='set -f; reset_expansion python $MYSVN/scripts/my_rm.py'
-alias mypwd='python $MYSVN/scripts/my_pwd.py'
-alias cp='python $MYSVN/scripts/my_cp.py'
-alias dccp='$MYSVN/scripts/my_dccp.py'
+alias rm='set -f; reset_expansion python $MYGIT/scripts/my_rm.py'
+alias mypwd='python $MYGIT/scripts/my_pwd.py'
+alias cp='python $MYGIT/scripts/my_cp.py'
+alias dccp='$MYGIT/scripts/my_dccp.py'
 alias redo='my_redo '
 my_chain(){
-	cmd='root -l $MYSVN/scripts/chain.cxx('$#
+	cmd='root -l $MYGIT/scripts/chain.cxx('$#
 	for i in $@; do
 		#cmd=$cmd','$i
 		cmd=$cmd',"'$i'"'
