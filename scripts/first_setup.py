@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
   options,args = parser.parse_args()
   if len(args) != 1:
-    print "Path to $MYSVN needed: first_setup.py $MYSVN"
+    print "Path to $MYGIT needed: first_setup.py $MYGIT"
     sys.exit(1)
   mysvn = args[0]+"/"
 
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     "~/.bashrc"                   :("/scripts/my_bashrc",),
     "~/.bash_profile"             :("/scripts/my_bash_profile",),
     "~/.subversion/config"        :("/scripts/my_svnconfig.edit",
-                                        "sed  's/$MYSVN/%s/g' %s/scripts/my_svnconfig > %s/scripts/my_svnconfig.edit" % (mysvn.replace("/","\\/"),mysvn,mysvn) ),
+                                        "sed  's/$MYGIT/%s/g' %s/scripts/my_svnconfig > %s/scripts/my_svnconfig.edit" % (mysvn.replace("/","\\/"),mysvn,mysvn) ),
     "~/.vim/colors/mymorning.vim" :("/scripts/my_morning.vim",
                                         "mkdir -p ~/.vim/colors"),
     "~/.vimrc"                    :("/scripts/my_vimrc",),

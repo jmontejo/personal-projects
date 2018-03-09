@@ -3,7 +3,7 @@ import subprocess, os
 
 class logDB:
 
-  home = os.getenv("MYSVN")
+  home = os.getenv("MYGIT")
   DBstorage=home+"/scripts/logger/myLogDB.txt"
   tempfile="dummy.temp"
   header=""

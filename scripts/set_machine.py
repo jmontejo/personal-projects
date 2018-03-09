@@ -24,7 +24,7 @@ def dosetup(pc1, pc2):
 
 if __name__ == "__main__":
 
-  machinelist = os.path.expandvars("$MYSVN/scripts/machinelist.txt")
+  machinelist = os.path.expandvars("$MYGIT/scripts/machinelist.txt")
   if not os.path.exists(machinelist): os.system("touch "+machinelist)
   parser = OptionParser() 
   parser.add_option ("-l","--list", 

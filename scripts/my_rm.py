@@ -6,7 +6,7 @@ def isBackground():
 
 if __name__ == "__main__":
 
-  trashbin = "$MYSVN/scripts/trash/"
+  trashbin = "$MYGIT/scripts/trash/"
   extensions = [".sh",".py",".cxx",".C",".h"]
 
   cmd ="/bin/rm"

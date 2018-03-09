@@ -4,7 +4,7 @@ import string
 
 class webizer:
 
-  home = os.getenv("MYSVN")
+  home = os.getenv("MYGIT")
   htmlStorage=home+"/scripts/logger/web_content/"
 
   def dump(self, logDB):
