@@ -78,6 +78,7 @@ alias lxplus='LANG=C ssh -Y jmontejo@lxplus.cern.ch'
 alias lxscreen='ssh -Y jmontejo@lxplus007.cern.ch'
 alias atlasgw='ssh -Y jmontejo@atlasgw.cern.ch'
 alias nifae06='ssh -Y jmontejo@nifae06.cern.ch'
+alias testbed='ssh -Y jmontejo@pc-tbed-pub.cern.ch'
 
 #useful alias
 alias pythno='python'
@@ -92,7 +93,7 @@ alias work='source $MYGIT/scripts/mystart.sh '
 #the empty space at the end is needed
 alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
 #alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; rucio $arg ; fi; '
-alias checkAMI='echo "Please use: ami dataset info show"'
+alias lstail='ls -lrt --color=always | tail'
 
 #my new commands
 alias comparePath='python $MYGIT/scripts/comparePath.py'

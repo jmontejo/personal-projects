@@ -19,7 +19,7 @@ case `hostname` in
     export PS1="\[$(tput setaf 0)\]\[$(tput setab 3)\][\h] \W >\[$(tput sgr0)\] "
     echo "Type work"
     ;;
-  *atropos*) #atropos
+  *tbed*) #tbed
     export PS1="\[$(tput setaf 0)\]\[$(tput setab 6)\][\h] \W >\[$(tput sgr0)\] "
     ;;
   *) #local

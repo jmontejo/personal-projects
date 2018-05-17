@@ -93,10 +93,11 @@ class coolPlot(object):
 			if h==0: same=""
 			if len(copylist)>1:
 				histo.SetLineColor(mycolor(h))
+				histo.SetMarkerColor(mycolor(h))
 			histo.Draw(same)
 			if ratiofunction:
 				histo.GetFunction(ratiofunction).SetLineColor(mycolor(h))
-			histo.Draw("FUNC,same")
+				histo.Draw("FUNC,same")
 			legend.AddEntry(histo)
 			if yields:
 				if normalized:
