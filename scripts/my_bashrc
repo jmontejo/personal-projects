@@ -17,7 +17,7 @@ alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
 
 #------ Machine dependent settings
 case `hostname` in
-  *cern* | *lxplus* ) # ------- cern, not lxplus to catch also batch
+  *cern* | *lxplus* | *tbed* ) # ------- cern, not lxplus to catch also batch
     export MYGIT="/afs/cern.ch/user/j/jmontejo/work/personal-projects"
 		#add texlive styles
 		export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
@@ -93,7 +93,7 @@ alias work='source $MYGIT/scripts/mystart.sh '
 #the empty space at the end is needed
 alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
 #alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; rucio $arg ; fi; '
-alias lstail='ls -lrt --color=always | tail'
+alias lstail='ls -lrt --color=always "$@" | tail'
 
 #my new commands
 alias comparePath='python $MYGIT/scripts/comparePath.py'
@@ -130,7 +130,7 @@ case `hostname` in
   *pic*) # ------- pic
     cmd=\display
     ;;
-  *lxplus*) # ------- lxplus
+  *lxplus* | *tbed* ) # ------- lxplus
     cmd=\display
     ;;
   *) # ------- local
@@ -145,7 +145,9 @@ my_redo(){
     echo Usage: redo old new
     return
   fi
-  `getlast | sed s/$1/$2/g`
+  fc -s $1=$2
+  #!!:gs/$1/$2 
+  #`getlast | sed s/$1/$2/g`
 }
 alias vim='my_vim'
 alias make='my_make'

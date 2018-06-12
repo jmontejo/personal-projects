@@ -85,7 +85,7 @@ def compareTree(tree1, tree2, file1, file2, options):
           print v, [x for x in v1], [x for x in v2]
           #print "{0:{1}}:{2:15n} {3:15n}".format(v,maxlength+1,v1,v2)
           firstVar = False
-  print "Scanned %d events"% options.nevents
+  print "Scanned %d events and %d variables"% (options.nevents, len(common))
   if crazyset:
     print "Hidden (crazy) differences: ",crazyset
 
