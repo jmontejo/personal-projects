@@ -17,21 +17,7 @@ alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
 
 #------ Machine dependent settings
 case `hostname` in
-  *cern* | *lxplus* | *tbed* ) # ------- cern, not lxplus to catch also batch
-    export MYGIT="/afs/cern.ch/user/j/jmontejo/work/personal-projects"
-		#add texlive styles
-		export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
-    #export AtlasSetup=/afs/cern.ch/atlas/software/dist/AtlasSetup
-    #alias asetup='source $AtlasSetup/scripts/asetup.sh'
-    #source /afs/cern.ch/atlas/offline/external/GRID/DA/panda-client/latest/etc/panda/panda_setup.sh
-    #export PATHENA_GRID_SETUP_SH=/afs/cern.ch/project/gd/LCG-share/current/etc/profile.d/grid_env.sh
-    alias ls='ls -h -G --color=auto'
-    
-    if tty --quiet ; then
-       stty erase '^?'
-    fi
-    ;;
-  *) #local
+  *jmontejo* ) #local
     export MANPATH=/opt/local/share/man:$MANPATH
     export PATH=/opt/local/libexec/gnubin/:$PATH
     export MYGIT="/projects"
@@ -48,6 +34,20 @@ case `hostname` in
      if grep 127 /etc/hosts | grep -v localhost | grep -q "#"; then 
      echo "Logged at CERN, how about blocking websites?"; 
      fi;
+    fi
+    ;;
+  *cern* | *lxplus* | *tbed* ) # ------- lxbatch needs cern
+    export MYGIT="/afs/cern.ch/user/j/jmontejo/work/personal-projects"
+		#add texlive styles
+		export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
+    #export AtlasSetup=/afs/cern.ch/atlas/software/dist/AtlasSetup
+    #alias asetup='source $AtlasSetup/scripts/asetup.sh'
+    #source /afs/cern.ch/atlas/offline/external/GRID/DA/panda-client/latest/etc/panda/panda_setup.sh
+    #export PATHENA_GRID_SETUP_SH=/afs/cern.ch/project/gd/LCG-share/current/etc/profile.d/grid_env.sh
+    alias ls='ls -h -G --color=auto'
+    
+    if tty --quiet ; then
+       stty erase '^?'
     fi
     ;;
 esac
