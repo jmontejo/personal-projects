@@ -17,7 +17,7 @@ alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
 
 #------ Machine dependent settings
 case `hostname` in
-  *jmontejo* ) #local
+  *jmontejo* | *local* ) #local
     export MANPATH=/opt/local/share/man:$MANPATH
     export PATH=/opt/local/libexec/gnubin/:$PATH
     export MYGIT="/projects"
@@ -93,7 +93,7 @@ alias work='source $MYGIT/scripts/mystart.sh '
 #the empty space at the end is needed
 alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
 #alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; rucio $arg ; fi; '
-alias lstail='ls -lrt --color=always "$@" | tail'
+function lstail () { ls -lrt --color=always "$@" | tail; }
 
 #my new commands
 alias comparePath='python $MYGIT/scripts/comparePath.py'
