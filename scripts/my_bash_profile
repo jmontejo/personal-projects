@@ -21,6 +21,7 @@ case `hostname` in
     ;;
   *tbed*) #tbed
     export PS1="\[$(tput setaf 0)\]\[$(tput setab 6)\][\h] \W >\[$(tput sgr0)\] "
+    echo "Type work"
     ;;
   *) #local
     export PS1="\[$(tput setaf 0)\]\[$(tput setab 1)\][local] \W >\[$(tput sgr0)\] "

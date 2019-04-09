@@ -162,9 +162,7 @@ class Directory:
     def getImgTable(self):
         "Provide an html table showing the images of this directory"
         nColumns = 2
-        thumbWidth=400
-        thumbHeight=300
-        #thumbHeight=400
+        thumbWidth=600
         imgFiles = self.findImages()
         if self.verbose_: print "%s %d images" % (self.name_,len(imgFiles))
         if not len(imgFiles): return ""
@@ -174,7 +172,7 @@ class Directory:
         for imgFile in imgFiles:
             htmlBody += "<td>\n"
             htmlBody += "<a href=\"%s\">" % imgFile
-            htmlBody += "<img src=\"%s\" width=\"%d\" height=\"%d\">" % (imgFile, thumbWidth, thumbHeight)
+            htmlBody += "<img src=\"%s\" width=\"%d\" >" % (imgFile, thumbWidth)
             htmlBody += "</img>"
             htmlBody += "<br>\n"
             htmlBody += "<h4>%s</h4>" % imgFile[:imgFile.rfind(".")]

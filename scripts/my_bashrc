@@ -38,8 +38,8 @@ case `hostname` in
     ;;
   *cern* | *lxplus* | *tbed* ) # ------- lxbatch needs cern
     export MYGIT="/afs/cern.ch/user/j/jmontejo/work/personal-projects"
-		#add texlive styles
-		export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
+	#add texlive styles
+	export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
     #export AtlasSetup=/afs/cern.ch/atlas/software/dist/AtlasSetup
     #alias asetup='source $AtlasSetup/scripts/asetup.sh'
     #source /afs/cern.ch/atlas/offline/external/GRID/DA/panda-client/latest/etc/panda/panda_setup.sh
@@ -89,11 +89,16 @@ alias emacs='emacs -nw'
 alias cdb='cd `pwd -P`/..'
 alias lsd='ls -d -- */'
 alias valgrind='valgrind --suppressions=$ROOTSYS/etc/valgrind-root.supp'
-alias work='source $MYGIT/scripts/mystart.sh '
+alias work='source $MYGIT/scripts/mystart.sh'
 #the empty space at the end is needed
 alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
 #alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; rucio $arg ; fi; '
 function lstail () { ls -lrt --color=always "$@" | tail; }
+alias cd...='cd ../../..'
+alias cd....='cd ../../../..'
+alias cd.....='cd ../../../../..'
+alias cd......='cd ../../../../../..'
+alias triggerAPI='source $MYGIT/scripts/triggerAPI.sh'
 
 #my new commands
 alias comparePath='python $MYGIT/scripts/comparePath.py'
