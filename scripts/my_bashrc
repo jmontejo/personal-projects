@@ -5,10 +5,9 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-export HISTSIZE=100000
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
-export HISTSIZE=100000                   # big big history
-export HISTFILESIZE=100000               # big big history
+export HISTSIZE=1000000                   # big big history
+export HISTFILESIZE=1000000               # big big history
 shopt -s histappend                      # append to history, don't overwrite it
 PROMPT_COMMAND='history -a;'
 
@@ -40,11 +39,16 @@ case `hostname` in
     export MYGIT="/afs/cern.ch/user/j/jmontejo/work/personal-projects"
 	#add texlive styles
 	export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
+    export PATH=$PATH:/afs/cern.ch/user/j/jmontejo/.local/bin
+    export PYTHONPATH=/afs/cern.ch/user/j/jmontejo/.local/lib/python2.7/site-packages:$PYTHONPATH
     #export AtlasSetup=/afs/cern.ch/atlas/software/dist/AtlasSetup
     #alias asetup='source $AtlasSetup/scripts/asetup.sh'
     #source /afs/cern.ch/atlas/offline/external/GRID/DA/panda-client/latest/etc/panda/panda_setup.sh
     #export PATHENA_GRID_SETUP_SH=/afs/cern.ch/project/gd/LCG-share/current/etc/profile.d/grid_env.sh
     alias ls='ls -h -G --color=auto'
+    if [[ $HOSTNAME == *pc-tbed-pub* ]]; then
+        export SITE_NAME=CERN-PROD
+    fi
     
     if tty --quiet ; then
        stty erase '^?'
@@ -91,7 +95,7 @@ alias lsd='ls -d -- */'
 alias valgrind='valgrind --suppressions=$ROOTSYS/etc/valgrind-root.supp'
 alias work='source $MYGIT/scripts/mystart.sh'
 #the empty space at the end is needed
-alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
+#alias ami='arg="$@" ; if  ! which localSetupPyAMI &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias ami; localSetupPyAMI ; ami $arg ; fi; '
 #alias rucio='arg="$@" ; if  ! which localSetupRucioClients &> /dev/null ; then setupATLAS; echo "Alias are now set, try again"; else unalias rucio; localSetupRucioClients ; rucio $arg ; fi; '
 function lstail () { ls -lrt --color=always "$@" | tail; }
 alias cd...='cd ../../..'
@@ -99,6 +103,7 @@ alias cd....='cd ../../../..'
 alias cd.....='cd ../../../../..'
 alias cd......='cd ../../../../../..'
 alias triggerAPI='source $MYGIT/scripts/triggerAPI.sh'
+alias pyroot='source $MYGIT/scripts/pyroot.sh'
 
 #my new commands
 alias comparePath='python $MYGIT/scripts/comparePath.py'
@@ -158,6 +163,8 @@ alias vim='my_vim'
 alias make='my_make'
 alias display='my_display '
 alias rm='set -f; reset_expansion python $MYGIT/scripts/my_rm.py'
+#test size of trash folder
+let t=`du -s -BM ~/work/personal-projects/scripts/trash/ | cut -f1 | sed s/M//g`; if (( "$t" >= 10 )); then echo "Trash folder is more than ${t}M, consider emptying"; fi
 alias mypwd='python $MYGIT/scripts/my_pwd.py'
 alias cp='python $MYGIT/scripts/my_cp.py'
 alias dccp='$MYGIT/scripts/my_dccp.py'

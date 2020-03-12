@@ -1,5 +1,6 @@
 #!/usr/bin/env python 
 
+# Run with fill_metadatay.py pattern, instructions below are obsolete and include the individual steps, now wrapped
 # metadata.txt obtained with:
 # > lsetup  "asetup AthAnalysisBase,2.4.35" pyAMI
 # > rucio ls --short mc15_13TeV.448*.MGPy8EG_A14N23LO_*N1*_higgsinoRPV*.evgen.EVNT.* | grep -v _tid | sort > evnt.txt # <--- change pattern here
@@ -7,7 +8,7 @@
 # see https://twiki.cern.ch/twiki/bin/view/AtlasProtected/PmgCentralPage#Reporting_issues
 #
 # SUSY IDs from https://twiki.cern.ch/twiki/bin/view/AtlasProtected/SUSYSignalUncertainties#Subprocess_IDs
-import os, sys, argparse
+import os, sys, argparse, shutil
 
 N1N2xsecmap = {}
 C1N1xsecmap = {}
@@ -60,11 +61,11 @@ def main():
             mass = line.split(".")[2].split("_")[4]
             print tokens[0], "mass:",mass
             if "C1N1" in line:
-                tokens[2] = "115"
+                tokens[2] = "0" #"115" PMG complains, there has to a zero, and duplicated lines with other ids if desired
                 tokens[3] = C1N1xsecmap[mass][0]
                 tokens[6] = C1N1xsecmap[mass][1]
             elif "N1N2" in line:
-                tokens[2] = "112"
+                tokens[2] = "0" #"112" PMG complains, there has to a zero, and duplicated lines with other ids if desired
                 tokens[3] = N1N2xsecmap[mass][0]
                 tokens[6] = N1N2xsecmap[mass][1]
             elif "GG" in line:
@@ -77,5 +78,8 @@ def main():
             outfile.write(";".join(tokens)+"\n")
           else:
             outfile.write(line)
+    shutil.move("metadata.txt", "metadata.txt.old")
+    shutil.move("metadata.txt.out", "metadata.txt")
+    print "Original file in metadata.txt.old, updated file in metadata.txt"
 
 if __name__ == "__main__": main()
