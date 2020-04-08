@@ -28,14 +28,16 @@ if __name__ == "__main__":
     print "Block or Allow is mandatory" 
     sys.exit(1)
   if allow:
-    print "FUCKER!!! DON'T GOOF OFF, USE YOUR TIME WISELY!!!" 
+    print "FUCKER!!! DON'T GOOF OFF, USE YOUR TIME WISELY!!! -_- ..." 
     time.sleep(10)
-    sys.exit(1)
+    #sys.exit(1)
 
   #file="hosts"
   #tempfile="hosts.tmp"
   file="/etc/hosts"
   tempfile="/etc/hosts.tmp"
+  bakfile="/etc/hosts.bak"
+  shutil.copy(file,bakfile)
   edit=""
   for line in open(file).read().split("\n"):
     if "www" in line or ".com" in line:
@@ -51,3 +53,6 @@ if __name__ == "__main__":
   shutil.copy(tempfile,file)
 
   os.popen("dscacheutil -flushcache")
+  if allow:
+    os.system("sleep 600 && cp %s %s &"%(bakfile, file))
+

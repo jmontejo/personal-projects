@@ -3,6 +3,7 @@ syntax on
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set hlsearch
 
 set diffopt+=iwhite
 au BufNewFile,BufRead *.log set filetype=conf

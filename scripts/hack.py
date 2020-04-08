@@ -155,6 +155,7 @@ def check_make(makeclean):
         os.system("cat "+msg)
     if not makeclean:
       raw_input("")
+  return 0
   
 
 #if __name__ == "__main__": main()

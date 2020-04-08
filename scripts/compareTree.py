@@ -6,6 +6,7 @@ import re
 
 def compareTree(tree1, tree2, file1, file2, options):
 
+  sameEntries = False
   if tree1.GetEntries() != tree2.GetEntries():
     print "Different number of entries:",
     print file1,":",tree1.GetEntries()
@@ -15,6 +16,7 @@ def compareTree(tree1, tree2, file1, file2, options):
       tree2 = tree1
       tree1 = tmp
   else:
+    sameEntries = True
     print "Same number of entries"
 
   branches1 = set([x.GetName() for x in tree1.GetListOfBranches() if not options.skip or not re.search(options.skip,x.GetName())])
@@ -42,6 +44,7 @@ def compareTree(tree1, tree2, file1, file2, options):
   ##common = [c for c in common if "vector" not in  tree1.GetLeaf(branchesmap[c]).GetTypeName()]
   #print common
 
+  index = None
   if   "EventNumber" in branches2: index = "EventNumber"
   elif "eventNumber" in branches2: index = "eventNumber"
   else:
@@ -51,19 +54,27 @@ def compareTree(tree1, tree2, file1, file2, options):
         break
     else:
       print "Could not build index, no event number in the file"
-      return
+      if not sameEntries: return
+      print "Will assume that the events are in the same order in both trees"
 
-  tree2.BuildIndex(index,"mc_channel_number")
+  if index: tree2.BuildIndex(index,"mc_channel_number")
   crazyset = set()
   limit = min(tree1.GetEntries(),tree2.GetEntries())
   options.nevents = min(options.nevents,limit)
   print "Started scan"
-  for i in range(options.nevents):
-    while True:
-      i = randint(0,limit)
+  for count in range(options.nevents):
+    i = randint(0,limit)
+    if index:
+      header = "-------- %s: %s"%(index,getattr(tree1,index))
+      while True: #Scan events until it finds a coincidence
+        tree1.GetEntry(i)
+        ret = tree2.GetEntryWithIndex(getattr(tree1,index),getattr(tree1,"mc_channel_number"))
+        if ret!=-1: break
+        else: i = randint(0,limit)
+    else: 
+      header = "-------- Event count: %d"%count
       tree1.GetEntry(i)
-      ret = tree2.GetEntryWithIndex(getattr(tree1,index),getattr(tree1,"mc_channel_number"))
-      if ret!=-1: break
+      tree2.GetEntry(i)
     maxlength = len(max(common, key=len))
     firstVar = True
     for v in sorted(common):
@@ -75,13 +86,13 @@ def compareTree(tree1, tree2, file1, file2, options):
           if (v1 < 1e-10 or v2 < 1e-10 or v1 > 1e10 or v2 > 1e10) and not options.showcrazy: 
             crazyset.add(v)
             continue
-          if firstVar: print "-------- %s: %s"%(index,getattr(tree1,index))
+          if firstVar: print header
           print "{0:{1}}:{2:15n} {3:15n}".format(v,maxlength+1,v1,v2)
           firstVar = False
       else:
         v2 = getattr(tree2,v)
         if v1!=v2:
-          if firstVar: print "-------- %s: %s"%(index,getattr(tree1,index))
+          if firstVar: print header
           print v, [x for x in v1], [x for x in v2]
           #print "{0:{1}}:{2:15n} {3:15n}".format(v,maxlength+1,v1,v2)
           firstVar = False

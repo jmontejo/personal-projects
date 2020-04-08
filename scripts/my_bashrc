@@ -22,12 +22,12 @@ case `hostname` in
     export MYGIT="/projects"
     alias tex2png='tex2png.sh'
     alias log="python $MYGIT/scripts/logger/main_log.py"
-    alias ls='ls -h -G --color=auto'
+    alias ls='ls -h -G'
     alias allow="sudo $MYGIT/scripts/blockWebs.py -a"
     alias block="sudo $MYGIT/scripts/blockWebs.py -b"
     alias mountafs="sshfs jmontejo@lxplus.cern.ch:/afs /afs"
     alias umountafs="umount /afs "
-    source /Users/JMontejo/Documents/root_5.34.26/bin/thisroot.sh
+    source /Applications/root_v6.14.06/bin/thisroot.sh
     #source /Users/JMontejo/Downloads/root/bin/thisroot.sh 
     if python -c "from socket import gethostname; print gethostname()" | grep -q cern; then
      if grep 127 /etc/hosts | grep -v localhost | grep -q "#"; then 
@@ -79,10 +79,11 @@ alias at305='ssh -Y jmontejo@at305.pic.es'
 alias at306='ssh -Y jmontejo@at306.pic.es'
 alias at307='ssh -Y jmontejo@at307.pic.es'
 alias lxplus='LANG=C ssh -Y jmontejo@lxplus.cern.ch'
-alias lxscreen='ssh -Y jmontejo@lxplus007.cern.ch'
+alias lxplus6='LANG=C ssh -Y jmontejo@lxplus6.cern.ch'
+alias lxscreen='ssh -Y jmontejo@lxplus766.cern.ch'
 alias atlasgw='ssh -Y jmontejo@atlasgw.cern.ch'
 alias nifae06='ssh -Y jmontejo@nifae06.cern.ch'
-alias testbed='ssh -Y jmontejo@pc-tbed-pub.cern.ch'
+alias testbed='ssh -Y jmontejo@pc-tbed-pub'
 
 #useful alias
 alias pythno='python'
