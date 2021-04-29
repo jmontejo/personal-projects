@@ -1,0 +1,99 @@
+
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% adjust the page margins
+\usepackage[scale=0.74]{geometry}
+\setlength{\hintscolumnwidth}{4.2cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+\usepackage{color}
+\newcommand{\coloredLink}[2]{\textcolor{blue}{\href{#1}{#2}}}
+
+\newcommand\ttbb{\ensuremath{t\bar{t}b\bar{b}}}
+\newcommand\ttbar{\ensuremath{t\bar{t}}}
+\newcommand\ttH{\ensuremath{t\bar{t}H}}
+\newcommand\bbbar{\ensuremath{b\bar{b}}}
+
+\newif\ifAddReferences  %% References
+\newif\ifAddStatement  %% Statement of research interest
+\AddReferencestrue
+\AddStatementtrue
+
+
+
+
+% personal data
+\name{Javier}{Montejo Berlingen}
+%\title{title}                               % optional, remove / comment the line if not wanted
+\address{CERN 40/5-C11}{1217 Meyrin}{Switzerland}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+\phone[fixed]{+41~786314562}
+\email{jmontejo@cern.ch}                               % optional, remove / comment the line if not wanted
+%\homepage{www.johndoe.com}                         % optional, remove / comment the line if not wanted
+%\social[linkedin]{francesco-rubbo}                        % optional, remove / comment the line if not wanted
+%\social[twitter]{jdoe}                             % optional, remove / comment the line if not wanted
+%\social[github]{francescorubbo}                              % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{some quote}                                 % optional, remove / comment the line if not wanted
+
+% to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
+%\makeatletter
+%\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+%\makeatother
+%\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
+
+\usepackage{multibib}
+\newcites{article,confnote,proceedings}{{Articles},{Conference Notes},{Proceedings}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+\section{Publication list}
+
+\cventry{\coloredLink{https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/CONFNOTES/ATLAS-CONF-2016-050/}{ATLAS-CONF-2016-050}}{}
+{Search for top squarks in final states with one isolated lepton, jets, and missing transverse momentum in $\sqrt{s}=13~TeV$ pp collisions with the ATLAS detector}{}{}{}
+
+\cventry{\coloredLink{https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/CONFNOTES/ATLAS-CONF-2016-094}{ATLAS-CONF-2016-094}}{}
+{Search for new phenomena in a lepton plus high jet multiplicity final state with the ATLAS experiment using $\sqrt{s} = 13~TeV$ proton-proton collision data}{}{}{}
+
+\cventry{\coloredLink{http://journals.aps.org/prd/abstract/10.1103/PhysRevD.94.052009}{PRD 94, (2016) 052009}}{}
+{Search for top squarks in final states with one isolated lepton, jets, and missing transverse momentum in $\sqrt{s}=13~TeV$ pp collisions with the ATLAS detector}{}{}{}
+
+\cventry{\coloredLink{http://dx.doi.org/10.1140/epjc/s10052-015-3726-9}{EPJC 75 (2015) 510}}{}
+{ATLAS Run 1 searches for direct pair production of third-generation squarks at the Large Hadron Collider}{}{}{}
+
+\cventry{\coloredLink{http://dx.doi.org/10.1007/JHEP08(2015)105}{JHEP 08 (2015) 105}}{}
+{Search for production of vector-like quark pairs and of four top quarks in the lepton plus jets final state in pp collisions at $\sqrt{s}=8~TeV$ with the ATLAS detector}{}{}{}
+
+\cventry{\coloredLink{http://dx.doi.org/10.1140/epjc/s10052-015-3543-1}{EPJC 75 (2015) 349}}{}
+{Search for the Standard Model Higgs boson produced in association with top quarks and decaying into $b\bar{b}$ in pp collisions at $\sqrt{s}=8~TeV$ with the ATLAS detector}{}{}{}
+
+%\vspace{0.5cm}
+%
+%\cventry{\coloredLink{https://cds.cern.ch/record/1670532}{ATLAS-CONF-2014-011}}{}
+%{Search for the Standard Model Higgs boson produced in association with top quarks and decaying to $b\bar{b}$ in pp collisions at $\sqrt{s}=8~TeV$ with the ATLAS detector at the LHC}{}{}{}
+%\vspace{0.5cm}
+%
+%\cventry{\coloredLink{https://cds.cern.ch/record/1525525}{ATLAS-CONF-2013-018}}{}
+%{Search for heavy top-like quarks decaying to a Higgs boson and a top quark in the lepton plus jets final state in pp collisions at $\sqrt{s}=8~TeV$ with the ATLAS detector}{}{}{}
+%\vspace{0.5cm}
+%
+\section{Preliminary results superseded by publications}
+\cventry{\coloredLink{https://cds.cern.ch/record/1670532}{ATLAS-CONF-2014-011}}{}
+{Search for the Standard Model Higgs boson produced in association with top quarks and decaying to $b\bar{b}$ in pp collisions at $\sqrt{s}=8~TeV$ with the ATLAS detector at the LHC}{}{}{}
+\cventry{\coloredLink{https://cds.cern.ch/record/1525525}{ATLAS-CONF-2013-018}}{}
+{Search for heavy top-like quarks decaying to a Higgs boson and a top quark in the lepton plus jets final state in pp collisions at $\sqrt{s}=8~TeV$ with the ATLAS detector}{}{}{}
+\cventry{\coloredLink{https://cds.cern.ch/record/1478423}{ATLAS-CONF-2012-135}}{}
+{Search for the Standard Model Higgs boson produced in association with top quarks in proton-proton collisions at $\sqrt{s}=7~TeV$ using the ATLAS detector}{}{}{}
+\end{document}
+
+
+%% end of file `template.tex'.

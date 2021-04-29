@@ -1,0 +1,104 @@
+
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% adjust the page margins
+\usepackage[scale=0.75]{geometry}
+%\setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+\usepackage{color}
+\newcommand{\coloredLink}[2]{\textcolor{blue}{\href{#1}{#2}}}
+
+% personal data
+\name{Francesco}{Rubbo}
+%\title{title}                               % optional, remove / comment the line if not wanted
+\address{CERN 32/S-A18}{1217 Meyrin}{Switzerland}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+\phone[mobile]{+39~339~311~4119}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
+\phone[fixed]{+41~(22)~76~76063}
+%\phone[fax]{+3~(456)~789~012}
+\email{rubbo.francesco@gmail.com}                               % optional, remove / comment the line if not wanted
+%\homepage{www.johndoe.com}                         % optional, remove / comment the line if not wanted
+%\social[linkedin]{francesco-rubbo}                        % optional, remove / comment the line if not wanted
+%\social[twitter]{jdoe}                             % optional, remove / comment the line if not wanted
+%\social[github]{francescorubbo}                              % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{some quote}                                 % optional, remove / comment the line if not wanted
+
+% to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
+%\makeatletter
+%\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+%\makeatother
+%\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
+
+\usepackage{multibib}
+\newcites{article,confnote,proceedings}{{Articles},{Conference Notes},{Proceedings}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+
+\section{Personal Information}
+\cvline{Date of birth}{January 21, 1986}
+\cvline{Place of birth}{Ciri\'e, Italy}
+\cvline{Sex}{Male}
+\cvline{Nationality}{Italian}
+\section{Education}
+\cventry{2011--present}{Ph.D. Candidate}{Universitat Aut\`onoma de Barcelona}{Spain}{\newline{}Advisor: Aurelio Juste}{Thesis: Search for New Physics in Top quark final states at LHC. \newline{}Expected graduation: October 2014}  % arguments 3 to 6 can be left empty
+\cventry{2008--2010}{M.S. in Physics of Fundamental Interactions (Laurea Specialistica)}{\newline{}Universit\'a degli Studi di Torino}{Italy}{\newline{}Advisor: Diego Tonelli}{Thesis: Search for a $Z^{\pm}(4430)\to\psi(2S)\pi^{\pm}$ resonance in hadron collisions at CDFII}
+\cventry{2005--2008}{B.S. in Physics (Laurea di primo livello)}{\newline{}Universit\'a degli Studi di Torino}{Italy}{}{}
+
+\section{Employment and Research}
+\cventry{Dec 2013--present}{Graduate Student}{CERN}{Geneva}{}{Contributing to the effort within the TopLHC working group to combine the CMS and ATLAS $t\bar{t}$ charge asymmetry measurements [\coloredLink{http://cds.cern.ch/record/1670535}{ATLAS-CONF-2014-012}].}
+\cventry{Nov 2013--Feb 2014}{Graduate Student}{CERN}{Geneva}{}{Studies on measurements of the $t\bar{t}$ charge asymmetry in $t\bar{t}\gamma$ events, in collaboration with theorists J.A. Aguilar-Saavedra and E. Alvarez [\coloredLink{http://arxiv.org/abs/1402.3598}{arXiv:1402.3598}].}
+\cventry{Aug 2013--present}{Graduate Student}{CERN}{Geneva}{}{Designing and developing a Python implementation of the Fully Bayesian Unfolding algorithm [\coloredLink{https://pypi.python.org/pypi/fbu}{PyFBU}].}
+\cventry{Jul 2013--present}{Graduate Student}{CERN}{Geneva}{ATLAS experiment}{Measurement of the inclusive and differential $t\bar{t}$ charge asymmetry in the semileptonic channel using the full 2012 dataset at $\sqrt{s}=8$ TeV, corresponding to an integrated luminosity of $20.3~fb^{-1}$.}
+\cventry{Jan 2012--Jul 2013}{Graduate Student}{CERN}{Geneva}{ATLAS experiment}{Measurement of the inclusive and differential $t\bar{t}$ charge asymmetry in the semileptonic channel using the full 2011 dataset at $\sqrt{s}=7$ TeV, corresponding to an integrated luminosity of $4.7~fb^{-1}$ [\coloredLink{https://cds.cern.ch/record/1562978}{ATLAS-CONF-2013-078}].}
+\cventry{Aug 2011--Sep 2011}{Graduate Student}{CERN}{Geneva}{}{Studies on model independent kinematical enhancements of the $t\bar{t}$ charge asymmetry, in collaboration with theorist J.A. Aguilar-Saavedra [\coloredLink{http://dx.doi.org/10.1016/j.physletb.2011.12.007}{Phys.Lett. B\textbf{707}}].}
+\cventry{Mar 2011--Dec 2011}{Graduate Student}{CERN}{Geneva}{ATLAS experiment}{Contributed to the first ATLAS measurement of the $t\bar{t}$ charge asymmetry in the semileptonic channel using $1.04~fb^{-1}$ of data collected at $\sqrt{s}=7$ TeV [\coloredLink{http://www.springerlink.com/content/61x5lq055240w477/}{Eur.Phys.J. C\textbf{72}}].}
+\cventry{Jan 2011--Dec 2012}{Graduate Student}{CERN}{Geneva}{ATLAS experiment}{Maintenance and development of Jet Trigger menu. Jet trigger on-call expert and trigger online shifter.}
+\cventry{Aug 2010--Nov 2010}{Undergraduate Research Assistant}{FNAL}{Batavia}{CDF experiment}{Search for a $Z^{\pm}(4430)\to\psi(2S)\pi^{\pm}$ resonance in hadron collisions at CDFII and CDF main shifter, controlling trigger, detector and data acquisition.}
+\cventry{Jan 2010--Jul 2010}{Undergraduate Research Assistant}{FNAL}{Batavia}{CDF experiment}{Inclusive search for a $Z^{\pm}(4430)\to\psi(2S)\pi^{\pm}$ resonance in hadron collisions at CDFII.}
+\cventry{Summer 2009}{Summer Student}{FNAL}{Batavia}{CDF experiment}{Search for a $Z^{\pm}(4430)\to\psi(2S)\pi^{\pm}$ resonance in hadron collisions at CDFII, as an intermediate state in B-meson decays.}
+\cventry{Summer 2008}{Summer Student}{CERN}{Geneva}{CMS experiment}{Participated in the commissioning of the Electromagnetic Calorimeter of the CMS experiment. Performed studies on ECAL intercalibration.}
+\cventry{Oct 2007--Jun 2008}{Teaching Assistant}{Universit\'a degli Studi di Torino}{Italy}{}{Teaching Assistant during computing lessons about Mathematica software and C++ programming}
+
+\section{Selected Publications}
+\cvitem{}{A complete list (180+ papers) is available at \coloredLink{https://inspirehep.net/author/profile/F.Rubbo.1}{inspirehep.net}.}
+\nocitearticle{article1,article2,article3,article4}
+\bibliographystylearticle{plain}
+\bibliographyarticle{publications}
+
+\nociteconfnote{confnote1,confnote2}
+\bibliographystyleconfnote{plain}
+\bibliographyconfnote{publications}
+
+\nociteproceedings{proceedings1,proceedings2}
+\bibliographystyleproceedings{abbrv}
+\bibliographyproceedings{publications}
+
+\section{Conferences and Schools}
+\cventry{May 2013}{Large Hadron Collider Physics}{Barcelona}{Spain}{}{}
+\cventry{Jun 2012}{European School of High Energy Physics}{Anjou}{France}{}{}
+\cventry{Sep 2011}{International Workshop on Top Quark Physics}{Sant Feliu de Guixols}{Spain}{}{}
+\cventry{May 2010}{International Workshop on Heavy Quarkonium}{Fermilab}{Chicago}{USA}{}
+
+\section{Languages and Computer skills}
+\cvline{}{Italian (Native), English (Fluent), French (Fluent), Spanish (Basic)}
+\cvdoubleitem{OS}{Linux, Windows, MacOS}{Programming}{C/C++, Python}
+\cvdoubleitem{Scripting}{bash, tcsh, Python}{Scientific}{ROOT, Octave}
+
+
+\clearpage
+\end{document}
+
+
+%% end of file `template.tex'.

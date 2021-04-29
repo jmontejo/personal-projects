@@ -1,0 +1,180 @@
+
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% adjust the page margins
+\usepackage[scale=0.75]{geometry}
+\setlength{\hintscolumnwidth}{2.6cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+\usepackage{color}
+\newcommand{\coloredLink}[2]{\textcolor{blue}{\href{#1}{#2}}}
+
+\newcommand\ttbb{\ensuremath{t\bar{t}b\bar{b}}}
+\newcommand\ttbar{\ensuremath{t\bar{t}}}
+\newcommand\ttH{\ensuremath{t\bar{t}H}}
+\newcommand\bbbar{\ensuremath{b\bar{b}}}
+
+\newif\ifAddReferences  %% References
+\newif\ifAddStatement  %% Statement of research interest
+\AddReferencestrue
+\AddStatementtrue
+
+
+
+
+% personal data
+\name{Javier}{Montejo Berlingen}
+%\title{title}                               % optional, remove / comment the line if not wanted
+\address{CERN 40/5-C11}{1217 Meyrin}{Switzerland}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+%\phone[mobile]{+39~339~311~4119}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
+%\phone[fixed]{+41~78~631~45~62}
+\phone[fixed]{+41~786314562}
+%\phone[fax]{+3~(456)~789~012}
+\email{jmontejo@cern.ch}                               % optional, remove / comment the line if not wanted
+%\homepage{www.johndoe.com}                         % optional, remove / comment the line if not wanted
+%\social[linkedin]{francesco-rubbo}                        % optional, remove / comment the line if not wanted
+%\social[twitter]{jdoe}                             % optional, remove / comment the line if not wanted
+%\social[github]{francescorubbo}                              % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{some quote}                                 % optional, remove / comment the line if not wanted
+
+% to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
+%\makeatletter
+%\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+%\makeatother
+%\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
+
+\usepackage{multibib}
+\newcites{article,confnote,proceedings}{{Articles},{Conference Notes},{Proceedings}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+
+\section{Personal Information}
+\cvline{Date of birth}{March 26, 1986}
+\cvline{Place of birth}{Salamanca, Spain}
+\cvline{Sex}{Male}
+\cvline{Nationality}{Spanish, German}
+
+\section{Education}
+\cventry{Jun 2015}{Ph.D.,}{Universitat Aut\'onoma de Barcelona,}{Spain.}{\newline{}Thesis: Searches for new physics in final states with \ttbar \ and additional heavy flavour jets.\newline
+ATLAS thesis award}{Advisor: Aurelio Juste Rozas.}
+\cventry{Feb 2012}{M.Sc. in high energy physics,}{Universitat Aut\'onoma de Barcelona,}{Spain.}{\newline{}Master thesis: Timing performance of the Tile calorimeter with muons from collision events.}{Advisor: Ilya Korolkov.}
+\cventry{Jan 2011}{B.Sc. in Computer Science,}{Universidad de Salamanca,}{Spain.}{\newline{}
+Extraordinary Graduation Award. \newline{}European interchange grant to study Computer Science at the \emph{Humboldt-Universit\"at zu Berlin}, Germany. \newline{}B.Sc. thesis: jSchroedinger, multiplatform application for the visualisation and numerical resolution of quantum potentials.}{Advisor: Jose Garc\'{i}a-Bermejo Giner.}
+\cventry{Jan 2010}{B.Sc. in Physics,}{Universidad de Salamanca,}{Spain.}{\newline{}Extraordinary Graduation Award.\newline{}National Award for Excellence in Academic Performance.}{}{}
+%\cventry Beca de La Caixa para estudios de m\'{a}ster en Espa\~na.
+%\cventry Beca de Formaci\'{o}n de Profesorado Universitario (FPU) convocatoria 2010. Concedida por el ministerio de educaci\'{o}n. 
+
+\section{Research Experience}
+
+\cventry{\textbf{ttH}}{}{}{}{The main topic of my work has been the search for the associated production of a Higgs boson and a top quark pair (\ttH), with the decay of the Higgs boson to \bbbar\ and semileptonic \ttbar\ decay. This process depends on the Yukawa coupling between the top quark and the Higgs boson at tree level, therefore it is sensitive to variations of the coupling, and allows also to disentangle the effect of new physics in loop-induced processes like gluon fusion to Higgs and H $\rightarrow \gamma\gamma$.
+However, it is also an extremely challenging measurement due to the large backgrounds from \ttbar+jets, which suffers from large systematic and theoretical uncertainties, and the large combinatorial background from the high b-jet multiplicity.}{}{}
+\cventry{\textbf{}}{}{}{}{
+In the early stages of the analysis I worked on b-tagging, studying and introducing the Tag Rate Function method (TRF) in order to model the b-tagging up to 4 b-tagged jets while avoiding the loss in statistics.}{}{}
+\cventry{\textbf{}}{}{}{}{
+The \ttbar+jets modeling and in particular \ttbb\ modeling is probably the most critical aspect of the analysis, therefore I worked on the different aspects of the modeling. I gained experience with Monte Carlo generators, both in the understanding and generation of samples. During this period I became familiar with the generation of samples in Alpgen, Sherpa and Madgraph. The studies and settings for the latter were used for the generation of the official ATLAS samples. In parallel a collaboration with theorists was started that lead to the improvement of our \ttbb\ modeling to NLO.}{}{}
+\cventry{\textbf{}}{}{}{}{
+Another very important aspect on which I worked is the quantification and modeling of systematic uncertainties. Since the analyses strategy relies on a likelihood profile fit to extract the signal, a thorough and detailed systematic model is critical in order to ensure the correctness of the result. The assessment of systematics, specially for \ttbb\ for which no signal-free control region exists, was one of the most challenging tasks. }{}{}
+\cventry{\textbf{}}{}{}{}{
+I also worked on the kinematic reconstruction of the events through a likelihood fit. The reconstruction of the \ttbar\  system allows for the identification of the \bbbar\ pair originating from the Higgs decay, therefore reducing the combinatorial background.}{}{}
+\cventry{\textbf{}}{}{}{}{
+Finally, I was responsible for the statistical analysis, which consisted of a likelihood profile fit and limit extraction. Given the complexity of the fit and the modeling of systematics, a lot of effort was invested to ensure the perfect understanding of the result and to maximize the information extracted from the data. }{}{}
+\cventry{\textbf{}}{}{}{}{
+The results were summarized in two conference notes at 7 and 8 TeV, and a paper published in EPJC. This analysis represents currently the most sensitive search for \ttH, H $\rightarrow$ \bbbar\ at the LHC. \newline
+[\coloredLink{https://cds.cern.ch/record/1478423}{ATLAS-CONF-2012-135}]
+[\coloredLink{https://cds.cern.ch/record/1670532}{ATLAS-CONF-2014-011}]
+[\coloredLink{http://dx.doi.org/10.1140/epjc/s10052-015-3543-1}{EPJC 75 (2015) 349}]
+}{}{}
+
+\cventry{\textbf{BSM}}{}{}{}{After the observation of a particle compatible with the Higgs boson, the Standard Model is complete, although many open questions remain such as the hierarchy problem or the existence of dark matter. Some theories beyond the Standard Model (BSM) try to address these problems, and it is a key aspect of the LHC program to confront those theories with the data. \newline
+The experience I gained in the \ttH\ analysis was also applied to BSM searches, in particular in the search for signals resulting in final states with high number of jets and b-tags.
+ }{}{}
+\cventry{\textbf{}}{}{}{}{
+\textbf{Vector-like quarks:} I also worked in the search for vector-like top partners, which appear in many extensions of the SM such as Little Higgs or extra-dimensional models. One of the allowed decays of these vector-like partners is $T \rightarrow H t$, which gives rise to a signal with high number of jets and b-tags. \newline
+After collaborating in the preliminary result for the search of $T\bar{T} \rightarrow Ht+X$ 
+[\coloredLink{https://cds.cern.ch/record/1525525}{ATLAS-CONF-2013-018}], I became the
+main analyzer for the publication result. I introduced improvements in the signal region definition, a more detailed systematic treatment and the usage of a likelihood profile fit in order to constrain in-situ the large systematics that affect the signal regions. This improvements lead to a factor of 2 gain in cross section sensitivity, and between 100 GeV and 150 GeV in mass reach depending on the model. 
+%	I also worked on the statistical combination with other VLQ analyses targeting different decay modes, extending the limits to a large region of the allowed decays of the top partner. 
+This is one of the most sensitive analyses for vector-like tops at the LHC and has been published in JHEP.
+[\coloredLink{http://dx.doi.org/10.1007/JHEP08(2015)105}{JHEP 08 (2015) 105}]
+ }{}{}
+\cventry{\textbf{}}{}{}{}{
+\textbf{SUSY:} One of the most compelling extensions of the SM is the inclusion of Supersymmetry. Simplified supersymmetric models have been thoroughly studied and searched for, but some regions of the parameter space have not been excluded yet. One of the scenarios where the traditional SUSY searches have little sensitivity occurs when the lightest supersymmetric partner of the top quark (stop) is only slightly heavier than the sum of the masses of the top quark and the lightest supersymmetric particle (LSP).}{}{}
+\cventry{\textbf{}}{}{}{}{
+Targeting this scenario, I am currently working in the analysis of direct pair production of the heavy stop ($\tilde{t}_2$) decaying via $\tilde{t}_2 \rightarrow H \tilde{t}_1$ and a subsequent $\tilde{t}_1 \rightarrow t \tilde{\chi}_1^0$. 
+%When the mass of the $\tilde{t}_1$ is very close to the sum of the top quark and neutralino mass, the decay of the $\tilde{t}_1$ leads final states difficult to distinguish from SM \ttbar\ production. In this case the model XXX
+Given the very different features of this signal compared to my previous analyses a thorough optimization was performed in order to improve the sensitivity of the analysis. The analysis was published in EPJC as part of the third generation summary paper.
+[\coloredLink{http://dx.doi.org/10.1140/epjc/s10052-015-3726-9}{EPJC 75 (2015) 510}]
+}{}{}
+\cventry{\textbf{}}{}{}{}{
+\textbf{Combinations:} In both searches, VLQ and SUSY, the targeted decay of the new particles is through a Higgs boson. In the most general case different decays of the new particles are allowed, and the search is performed as a scan in the branching ratio plane to the different decay modes. These analyses are then combined with other analyses optimized for the complementary decay modes.
+}{}{}
+\cventry{\textbf{Tile calorimeter}}{}{}{}{During my years in ATLAS I have also devoted a fraction of my time to working on the Tile calorimeter. My work was focused on the understanding and calibration of the timing performance of the calorimeter using collision data. Multiple detector and geometrical effects that were previously not accounted for were identified, and a set of selection cuts and corrections were introduced that improved the resolution of the time measurement up to 20\%. [\coloredLink{https://cds.cern.ch/record/1473262}{ATL-TILECAL-INT-2012-005}] \newline
+I also gained some hardware experience by contributing to the maintenance and repairs of Tilecal modules during the LS1 phase. \newline
+After my contributions to the calorimeter performance I was appointed as Data Quality Validator and Data Quality Leader for the Tile calorimeter for several months.
+}{}{}
+
+
+\section{Conferences, schools and workshops}
+\cventry{Mar 2015}{XXIX Rencontres de Physique de la Vall\'{e}e d'Aoste,}{La Thuile,}{Italy.}{\newline{}
+    Talk: Search for the Higgs boson in the ttH production channel using the ATLAS detector. 
+    %\newline
+     [\coloredLink{https://cds.cern.ch/record/2002318}{ATL-PHYS-SLIDE-2015-073}]
+    }{}{}\cventry{Nov 2014}{ttH workshop,}{CERN,}{Geneva.}{\newline{}
+    Talk: Sensitivity projections for ttH.}{}{}
+\cventry{Jun 2014}{European School of High-Energy Physics,}{Garderen,}{Holland.}{}{}
+\cventry{Sep 2013}{ATLAS Higgs to \bbbar\ workshop,}{Marseille,}{France.}{\newline{}
+    Talk: ttbar modeling for VH and ttH.}{}{}
+\cventry{Aug 2013}{21st International Conference on Supersymmetry and Unification of Fundamental Interactions (SUSY 2013),}{Trieste,}{Italy.}{\newline{}
+    Talk: Top quark production in the ATLAS detector of the LHC. \newline
+     [\coloredLink{https://cds.cern.ch/record/1596998}{ATL-PHYS-SLIDE-2013-509}]
+}{}{}
+\cventry{Jun 2013}{ttH workshop,}{CERN,}{Geneva.}{\newline{}
+    Talk: tt+jets/bb modeling and systematics in ttH(bb) analyses.}{}{}
+\cventry{May 2013}{Large Hadron Collider Physics (LHCP 2013),}{Barcelona,}{Spain.}{\newline{}
+	Poster: Search for the Standard Model Higgs boson produced in association with top quarks and decaying to $b\bar{b}$ at $\sqrt{s} = 7~TeV$. \newline
+	[\coloredLink{https://cds.cern.ch/record/1551958}{ATL-PHYS-SLIDE-2013-298}]% \newline{}
+%    Proceedings: [\coloredLink{http://www.epj-conferences.org/articles/epjconf/abs/2013/21/epjconf_lhcp2013_20028/epjconf_lhcp2013_20028.html}{EPJ Web of Conferences 60, 20028 (2013)}]}{}{}
+%all this just to avoid the 5th page, FIXME
+   [\coloredLink{http://www.epj-conferences.org/articles/epjconf/abs/2013/21/epjconf_lhcp2013_20028/epjconf_lhcp2013_20028.html}{Proceedings}]}{}{}
+    
+    
+    
+\cventry{Dec 2012}{ATLAS Higgs to \bbbar\ workshop,}{Saint Genis,}{France.}{\newline{}Talk: Statistical procedures and limit setting in Higgs to \bbbar.}{}{}
+\cventry{Jul 2012}{Hadron Collider Physics School (HASCO 2012),}{G\"ottingen,}{Germany}{}{}
+\cventry{Mar 2012}{LHC commissioning,}{CERN,}{Geneva.}{\newline{}Poster: ATLAS detector performance in 2011: calorimeters. \newline
+[\coloredLink{https://cds.cern.ch/record/1445591}{ATL-PHYS-SLIDE-2012-154
+}]}{}{}
+\cventry{Sep 2011}{4th International Workshop on Top Quark Physics (TOP 2011),}{Sant Feliu de Guixols,}{Spain.}{%\newline{}
+Participation. }{}
+
+\section{Languages and Computer skills}
+\cvline{}{Spanish (Native), German (Native), English (Fluent, C2), French (Basic)}
+\cvline{Programming}{C/C++, Python, Java, ROOT}
+
+\clearpage
+
+\ifAddStatement
+\input{statement_body}
+\fi
+
+\ifAddReferences
+\input{references_body}
+\fi
+
+
+\end{document}
+
+
+%% end of file `template.tex'.

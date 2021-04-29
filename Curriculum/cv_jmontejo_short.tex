@@ -1,0 +1,264 @@
+
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% adjust the page margins
+\usepackage[scale=0.75]{geometry}
+\setlength{\hintscolumnwidth}{2.6cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+\usepackage{color}
+\usepackage{bm}
+\usepackage{amstext}
+\newcommand{\coloredLink}[2]{\textcolor{blue}{\href{#1}{#2}}}
+
+\newcommand\ttbb{\ensuremath{t\bar{t}b\bar{b}}}
+\newcommand\ttbar{\ensuremath{t\bar{t}}}
+\newcommand\tttt{\ensuremath{t\bar{t}t\bar{t}}}
+\newcommand\ttH{\ensuremath{t\bar{t}H}}
+\newcommand\bbbar{\ensuremath{b\bar{b}}}
+\newcommand{\met}{\ensuremath{E_{{T}}^{{miss}}}}
+\newcommand{\pt}{\ensuremath{p_{T}}}
+
+\newif\ifAddReferences  %% References
+\newif\ifAddStatement  %% Statement of research interest
+\newif\ifAddInternalTalks  %% References
+\AddReferencestrue
+\AddStatementfalse
+\AddInternalTalksfalse
+
+
+
+% personal data
+\name{Javier}{Montejo Berlingen} %many FIXME around the CV, find them
+%%%%%%%%%%%%%%%%%%%%%%
+% SINCE YOU ARE READING THIS, LET ME REMIND YOU ABOUT THE IDEA OF HAVING A VERTICAL LINE IN THE MIDDLE
+% AND THE RESULTS AND POSITIONS ON BOTH SIDES TO GIVE CONTEXT OF THE TIMELINE
+%                                                                  CHECK 'CV nuevo layout.key' <----------
+%%%%%%%%%%%%%%%%%%%%%%
+%\title{title}                               % optional, remove / comment the line if not wanted
+\address{CERN 40/5-C11}{1217 Meyrin}{Switzerland}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+%\phone[mobile]{+39~339~311~4119}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
+%\phone[fixed]{+41~78~631~45~62}
+\phone[fixed]{+41~786314562}
+%\phone[fax]{+3~(456)~789~012}
+\email{jmontejo@cern.ch}                               % optional, remove / comment the line if not wanted
+%\homepage{www.johndoe.com}                         % optional, remove / comment the line if not wanted
+%\social[linkedin]{francesco-rubbo}                        % optional, remove / comment the line if not wanted
+%\social[twitter]{jdoe}                             % optional, remove / comment the line if not wanted
+%\social[github]{francescorubbo}                              % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{some quote}                                 % optional, remove / comment the line if not wanted
+
+% to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
+%\makeatletter
+%\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+%\makeatother
+%\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
+
+\usepackage{multibib}
+\newcites{article,confnote,proceedings}{{Articles},{Conference Notes},{Proceedings}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+
+\section{Personal Information}
+\cvline{Date of birth}{March 26, 1986}
+\cvline{Place of birth}{Salamanca, Spain}
+\cvline{Sex}{Male}
+\cvline{Nationality}{Spanish, German}
+\section{Education and Research Positions}
+\cventry{Aug 2017}{CERN LD Staff}{}{}{\newline{}SUSY R-parity violating and long-lived subgroup convener.\newline{}Trigger menu coordinator.\newline{}Trigger coordination scientific secretary.}{}
+\cventry{Aug 2015}{CERN Fellowship}{}{}{\newline{}SUSY third generation subgroup convener.}{}
+\cventry{Jun 2015}{Ph.D.,}{Universitat Aut\'onoma de Barcelona,}{Spain.}{\newline{}Thesis: Searches for new physics in final states with \ttbar \ and additional heavy flavour jets.\newline
+ATLAS thesis award, Springer thesis award.}{}
+\cventry{Feb 2012}{M.Sc. in high energy physics,}{Universitat Aut\'onoma de Barcelona,}{Spain.}{\newline{}Master thesis: Timing performance of the Tile calorimeter with muons from collision events.}{}
+\cventry{Jan 2011}{B.Sc. in Computer Science,}{Universidad de Salamanca,}{Spain.}{\newline{}
+Extraordinary Graduation Award. \newline{}B.Sc. thesis: jSchroedinger, multiplatform application for the visualisation and numerical resolution of quantum potentials.}{}
+\cventry{Jan 2010}{B.Sc. in Physics,}{Universidad de Salamanca,}{Spain.}{\newline{}Extraordinary Graduation Award.\newline{}National Award for Excellence in Academic Performance.}{}{}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\section{Achievements}
+
+\cventry{\textbf{Supersymmetry}}{}{}{}{
+Coordinated and lead the search for stop quarks in the one-lepton final state during the first years of 13 TeV LHC data. This resulted in three fast publications with 3.2, 14 and 36 fb$ ^{-1}$, in which a large region of the phase space best motivated by naturalness is excluded.
+%single top and ttZ, tt2L CR, more complex models %% what level of detail is good here?
+}{}{}
+\cventry{}{}{}{}{
+Developed a fully new search for new physics in a final state with one lepton and high jet multiplicity. Developed new data-driven background estimation methods to predict the $\ttbar$+jets, $W$+jets and $Z$+jets background at high jet multiplicity ($\geq 12$ jets) and high b-jet multiplicity ($\geq 4$ b-jets). The result fills a gap in search coverage in the ATLAS programme and provides exclusion in a large set of models. 
+}{}{}
+\cventry{}{}{}{}{
+Co-chaired the RPV-to-RPC taskforce, successfully leading to a public result with the interpretation of a suite of prompt RPV and RPC analyses in SUSY models with long-lived decays. %In the context of this taskforce an assessment of systematics for displaced signals with prompt objects balbbalbal
+}{}{}
+\cventry{}{}{}{}{
+As SUSY third generation subgroup convener, coordinated a group of 8 analyses and about 60 people. Completed timely the publication of all analyses with the 36 fb$ ^{-1}$ dataset and coordinated the preparation for the full Run 2 papers.
+}{}{}
+
+\cventry{\textbf{Trigger}}{}{}{}{
+Designed the preliminary ATLAS Run 3 trigger menu.
+}{}{}
+\cventry{}{}{}{}{
+Developed the 2018 trigger menus and supervised the trigger operation, including all the special runs (beam-based AFP/ALFA alignment, VdM and calibration transfer runs, AFP run, low-mu run, $\beta$*=90 m, 900 GeV ALFA run, heavy-ion run)}{}{}
+\cventry{}{}{}{}{
+As trigger menu expert and trigger menu on-call, I took part of the trigger operation in Run 2.}{}{}
+
+\cventry{\textbf{Searches in $\bm{\ttbb}$ final states}}{}{}{}{
+Performed the first search for ttH(bb) and established the necessary $\ttbb$ background estimation and modelling uncertainties, which are still in use in Run 2. The inadequate modelling of the $\ttbb$ final state by the available MC simulation, prompted a collaboration with theorist which lead to the first NLO $\ttbb$ simulation.}{}{}
+\cventry{}{}{}{}{
+Developed searches for BSM physics in \ttbb\ and \tttt\ final states. In particular a search for vector-like quarks decaying to a top quark and a Higgs boson ($T\rightarrow Ht$), and a search for the production of the heavier stop ($\tilde{t}_2$) decaying via $\tilde{t}_2 \rightarrow H \tilde{t}_1$, leading to two independent publications.
+}{}{}
+
+\cventry{\textbf{Tile calorimeter}}{}{}{}{
+Characterization and calibration of the timing performance of the calorimeter using collision data. Identified previously unaccounted detector and geometrical effects, and devised a set of selections and corrections that improved the resolution of the time measurement up to 20\%. }{}{}
+\cventry{}{}{}{}{
+Contributed as Data Quality Validator and Data Quality Leader for the Tile calorimeter.}{}{}
+\cventry{}{}{}{}{
+Participated in the repairment and maintenance of Tile calorimeter modules during the LS1 phase.}{}{}
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+\section{Publications}
+
+\cventry{\textbf{Supersymmetry}}{}{}{}{
+Constraints on mediator-based dark matter and scalar dark energy models using $\sqrt{s}=13$ TeV $pp$ collision data collected by the ATLAS detector. \coloredLink{https://link.springer.com/article/10.1007/JHEP05(2019)142}{JHEP 05 (2019) 142}}{}{}
+\cventry{}{}{}{}{
+Reinterpretation of searches for supersymmetry in models with variable R-parity-violating coupling strength and long-lived R-hadrons. \coloredLink{https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/CONFNOTES/ATLAS-CONF-2018-003/}{ATLAS-CONF-2018-003}}{}{}
+\cventry{}{}{}{}{
+Search for top-squark pair production in final states with one lepton, jets, and missing transverse momentum using 36 fb$^{-1}$ of $\sqrt{s}=13$ TeV $pp$ collision data with the ATLAS detector. \coloredLink{https://link.springer.com/article/10.1007/JHEP06(2018)108}{JHEP 06 (2018) 108}}{}{}
+\cventry{}{}{}{}{
+Search for new phenomena in a lepton plus high jet multiplicity final state with the ATLAS experiment using using $\sqrt{s}=13$ TeV $pp$ collision data. \coloredLink{https://link.springer.com/article/10.1007\%2FJHEP09\%282017\%29088}{JHEP 09 (2017) 088}}{}{}
+\cventry{}{}{}{}{
+Search for top squarks in final states with one isolated lepton, jets, and missing transverse momentum in $\sqrt{s}=13$ TeV $pp$ collisions with the ATLAS detector. \coloredLink{http://journals.aps.org/prd/abstract/10.1103/PhysRevD.94.052009}{Phys. Rev. D 94 (2016) 052009}}{}{}
+
+\cventry{\textbf{Trigger}}{}{}{}{
+Trigger Menu in 2017 \coloredLink{https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/PUBNOTES/ATL-DAQ-PUB-2018-002/}{ATL-DAQ-PUB-2018-002}\newline
+Trigger Menu in 2016 \coloredLink{https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/PUBNOTES/ATL-DAQ-PUB-2017-001/}{ATL-DAQ-PUB-2017-001}
+}{}{}
+
+\cventry{\textbf{Searches in $\bm{\ttbb}$ final states}}{}{}{}{
+Search for the Standard Model Higgs boson produced in association with top quarks and decaying into $b\bar{b}$ in $pp$ collisions at $\sqrt{s}=8$ TeV with the ATLAS detector. \coloredLink{http://dx.doi.org/10.1140/epjc/s10052-015-3543-1}{EPJC 75 (2015) 349}
+}{}{}
+\cventry{}{}{}{}{
+Search for production of vector-like quark pairs and of four top quarks in the lepton-plus-jets final state in pp collisions at $\sqrt{s}=8$ TeV with the ATLAS detector. \coloredLink{http://dx.doi.org/10.1007/JHEP08(2015)105}{JHEP 08 (2015) 105}
+ }{}{}
+\cventry{}{}{}{}{
+ATLAS Run 1 searches for direct pair production of third-generation squarks at the Large Hadron Collider. \coloredLink{http://dx.doi.org/10.1140/epjc/s10052-015-3726-9}{EPJC 75 (2015) 510}
+}{}{}
+\cventry{}{}{}{}{
+Search for the Standard Model Higgs boson produced in association with top quarks in proton-proton collisions at  $\sqrt{s}=7$ TeV using the ATLAS detector. \coloredLink{https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/CONFNOTES/ATLAS-CONF-2012-135/}{ATLAS-CONF-2012-135}
+}{}{}
+
+
+\cventry{\textbf{Tile calorimeter}}{}{}{}{
+Operation and performance of the ATLAS Tile Calorimeter in Run 1. \coloredLink{https://link.springer.com/article/10.1140/epjc/s10052-018-6374-z}{EPJC 78 (2018) 987}
+}{}{}
+%------------------------------------------------------------------------------------------------------------------------------------------------
+
+\clearpage
+\ifAddInternalTalks
+\section{Conferences, schools and workshops}
+\else
+\section{Conference talks}
+\fi
+\cventry{May 2019}{27th International Conference on Supersymmetry and Unification of Fundamental Interactions (SUSY 2019),}{Corpus Christi,}{Texas}{\newline{}
+    Talk: Searches for supersymmetry in R-parity violating signatures at the LHC.
+    [\coloredLink{https://cds.cern.ch/record/2676781}{ATL-PHYS-SLIDE-2019-242}]
+}{}{}
+\ifAddInternalTalks
+\cventry{May 2019}{Trigger workshop,}{Elba,}{Italy.}{\newline{}
+    Talk: Run-3 baseline menu.}{}{} %https://indico.cern.ch/event/772409/
+\cventry{Sep 2018}{TDAQ week,}{Krakow,}{Poland.}{\newline{}
+    Talk: Menu considerations for Run 3.}{}{} %https://indico.cern.ch/event/730816
+    \fi
+\cventry{Jul 2018}{23rd International Conference on Computing in High Energy and Nuclear Physics (CHEP 2018),}{Sofia,}{Bulgaria.}{\newline{}
+    Talk: The ATLAS Trigger Menu design for higher luminosities in Run 2. [\coloredLink{https://cds.cern.ch/record/2631630}{ATL-DAQ-SLIDE-2018-500}][\coloredLink{https://cds.cern.ch/record/2645347}{Proceedings}]
+}{}{} 
+\cventry{May 2018}{(Re)interpreting the results of new physics searches at the LHC (ReINPS2018),}{CERN,}{Geneva}{\newline{}
+    Talk: Sensitivity of prompt searches to long-lives particles.
+    [\coloredLink{https://cds.cern.ch/record/2319790}{ATL-PHYS-SLIDE-2018-282}]
+}{}{}
+\ifAddInternalTalks
+\cventry{Apr 2018}{Four-tops workshop,}{CERN,}{Geneva}{\newline{}
+    Talk: Data-driven methods in lepton+jets searches to evaluate the ttbar+jets and W+jets backgrounds.}{}{}
+    \fi
+\cventry{May 2017}{Large Hadron Collider Physics (LHCP),}{Shangai,}{China.}{\newline{}
+    Talk: Unconventional signatures and RPV supersymmetry. Plenary. [\coloredLink{https://cds.cern.ch/record/2266308}{ATL-PHYS-SLIDE-2017-310}]
+ \newline{}
+    Poster: The ATLAS Run-2 Trigger Menu for higher luminosities: Design, Performance and Operational Aspects. [\coloredLink{https://cds.cern.ch/record/2265272}{ATL-DAQ-SLIDE-2017-255}] }{}{}
+\ifAddInternalTalks
+\cventry{May 2017}{ATLAS Exotics \& SUSY workshop,}{Bucharest,}{Romania.}{\newline{}
+    Talk: RPV searches in ATLAS.}{}{}
+\cventry{Feb 2017}{ATLAS trigger workshop,}{University of Geneva,}{Switzerland.}{\newline{}
+    Talk: Trigger rates and processing time. Pileup dependency.}{}{}
+\cventry{Oct 2016}{ttH workshop,}{CERN,}{Geneva.}{\newline{}
+    Talk: ttH to invisible.}{}{}
+\cventry{Sep 2016}{TDAQ week,}{Barcelona,}{Spain.}{\newline{}
+    Talk: Trigger menu rates and CPU projections in 2017.}{}{}
+\cventry{Apr 2016}{Supersymmetry workshop,}{Sussex,}{UK.}{\newline{}
+    Talk: RPV analyses in ATLAS.}{}{}
+    \fi
+\cventry{Mar 2015}{XXIX Rencontres de Physique de la Vall\'{e}e d'Aoste,}{La Thuile,}{Italy.}{\newline{}
+    Talk: Search for the Higgs boson in the ttH production channel using the ATLAS detector. 
+    %\newline
+     [\coloredLink{https://cds.cern.ch/record/2002318}{ATL-PHYS-SLIDE-2015-073}]
+    }{}{}
+\ifAddInternalTalks
+\cventry{Nov 2014}{ttH workshop,}{CERN,}{Geneva.}{\newline{}
+    Talk: Sensitivity projections for ttH.}{}{}
+\cventry{Jun 2014}{European School of High-Energy Physics,}{Garderen,}{Holland.}{}{}
+\cventry{Sep 2013}{ATLAS Higgs to \bbbar\ workshop,}{Marseille,}{France.}{\newline{}
+    Talk: ttbar modeling for VH and ttH.}{}{}
+    \fi
+\cventry{Aug 2013}{21st International Conference on Supersymmetry and Unification of Fundamental Interactions (SUSY 2013),}{Trieste,}{Italy.}{\newline{}
+    Talk: Top quark production in the ATLAS detector of the LHC. \newline
+     [\coloredLink{https://cds.cern.ch/record/1596998}{ATL-PHYS-SLIDE-2013-509}]
+}{}{}
+\ifAddInternalTalks
+\cventry{Jun 2013}{ttH workshop,}{CERN,}{Geneva.}{\newline{}
+    Talk: tt+jets/bb modeling and systematics in ttH(bb) analyses.}{}{}
+    \fi
+\cventry{May 2013}{Large Hadron Collider Physics (LHCP 2013),}{Barcelona,}{Spain.}{\newline{}
+	Poster: Search for the Standard Model Higgs boson produced in association with top quarks and decaying to $b\bar{b}$ at $\sqrt{s} = 7~TeV$. \newline
+	[\coloredLink{https://cds.cern.ch/record/1551958}{ATL-PHYS-SLIDE-2013-298}]% \newline{}
+   [\coloredLink{http://www.epj-conferences.org/articles/epjconf/abs/2013/21/epjconf_lhcp2013_20028/epjconf_lhcp2013_20028.html}{Proceedings}]}{}{}
+\ifAddInternalTalks
+\cventry{Dec 2012}{ATLAS Higgs to \bbbar\ workshop,}{Saint Genis,}{France.}{\newline{}Talk: Statistical procedures and limit setting in Higgs to \bbbar.}{}{}
+\cventry{Jul 2012}{Hadron Collider Physics School (HASCO 2012),}{G\"ottingen,}{Germany.}{}{}
+\fi
+\cventry{Mar 2012}{LHC commissioning,}{CERN,}{Geneva.}{\newline{}Poster: ATLAS detector performance in 2011: calorimeters. \newline
+[\coloredLink{https://cds.cern.ch/record/1445591}{ATL-PHYS-SLIDE-2012-154}]}{}{}
+\ifAddInternalTalks
+\cventry{Sep 2011}{4th International Workshop on Top Quark Physics (TOP 2011),}{Sant Feliu de Guixols,}{Spain.}{}{}
+\fi
+% FIXME this is more for a general job
+%\section{Languages and Computer skills}
+%\cvline{}{Spanish (Native), German (Native), English (Fluent, C2), French (Basic, B1)}
+%\cvline{Programming}{C/C++, Python, Java, ROOT}
+
+\clearpage
+
+\ifAddStatement
+\input{statement_body}
+\fi
+\clearpage
+
+\ifAddReferences
+\input{references_body}
+\fi
+
+
+\end{document}
+
+
+%% end of file `template.tex'.
