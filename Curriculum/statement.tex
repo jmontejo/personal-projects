@@ -14,12 +14,19 @@
 
 \usepackage{color}
 \usepackage{bm}
+\usepackage{amstext}
+
 \newcommand{\coloredLink}[2]{\textcolor{blue}{\href{#1}{#2}}}
 
 \newcommand\ttbb{\ensuremath{t\bar{t}b\bar{b}}}
 \newcommand\ttbar{\ensuremath{t\bar{t}}}
+\newcommand\tttt{\ensuremath{t\bar{t}t\bar{t}}}
 \newcommand\ttH{\ensuremath{t\bar{t}H}}
+\newcommand\ttZ{\ensuremath{t\bar{t}Z}}
+\newcommand\ttW{\ensuremath{t\bar{t}W}}
 \newcommand\bbbar{\ensuremath{b\bar{b}}}
+\newcommand{\met}{\ensuremath{E_{{T}}^{{miss}}}}
+\newcommand{\pt}{\ensuremath{p_{T}}}
 
 \newif\ifAddReferences  %% References
 \newif\ifAddStatement  %% Statement of research interest
@@ -27,12 +34,10 @@
 \AddStatementtrue
 
 
-
-
 % personal data
 \name{Javier}{Montejo Berlingen}
 %\title{title}                               % optional, remove / comment the line if not wanted
-\address{CERN 40/5-C11}{1217 Meyrin}{Switzerland}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+%\address{CERN 40/5-C11}{1217 Meyrin}{Switzerland}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
 %\phone[mobile]{+39~339~311~4119}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
 %\phone[fixed]{+41~78~631~45~62}
 \phone[fixed]{+41~786314562}
@@ -62,7 +67,7 @@
 %-----       resume       ---------------------------------------------------------
 \makecvtitle
 
-\input{statement_body}
+\input{statement_body_cernIC}
 
 
 \end{document}

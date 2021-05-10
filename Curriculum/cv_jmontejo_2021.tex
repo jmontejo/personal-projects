@@ -46,6 +46,7 @@
 \AddTalkstrue
 
 \AtBeginDocument{\hypersetup{colorlinks,citecolor=blue,linkcolor=blue,urlcolor=blue}}
+\AtBeginDocument{\renewcommand\refname{~}}
 
 \name{Javier}{Montejo Berlingen} %many FIXME around the CV, find them
 %%%%%%%%%%%%%%%%%%%%%%
@@ -61,6 +62,7 @@
 
 \usepackage{multibib}
 \newcites{article,confnote,proceedings}{{Articles},{Conference Notes},{Proceedings}}
+
 
 %----------------------------------------------------------------------------------
 %            content
@@ -107,15 +109,25 @@ Extraordinary Graduation Award.}{}
 \cvitem{}{World of work 2018, host and supervisor}
 \cvitem{}{ATLAS guide since 2015}
 
+
+\ifAddStatement
+\clearpage
+%\setlength{\hintscolumnwidth}{0cm}
+%\setlength{\maincolumnwidth}{15.6cm}
+\input{statement_body_cernIC}
+%\setlength{\hintscolumnwidth}{2.05cm}
+\fi
+
 \clearpage
 \section{Research Experience}
 
 %%%%%%%%%%%%%%%% ttH(bb)
 \cvitem{{Run~1: ttH(bb)}}{
 At the beginning of my PhD, the Higgs boson had recently been discovered through its decay to vector bosons, but most of its properties remained to be measured, in particular the couplings to quarks.
-I decided to concentrate on the associated production of a Higgs boson and a top quark pair (\ttH), given the important role of top Yukawa coupling which is the only ``natural'' Yukawa coupling, with $\lambda_\text{t}\approx 1$.
-Measuring the top Yukawa via the \ttH\ production cross section also provides a handle to identify possible BSM contributions in the dominant Higgs production mode, which is the loop-induced gluon-gluon fusion process, and also the very sensitive decay to two photons.
-In addition, due to the loop corrections to the Higgs mass, the top Yukawa coupling is the main contributor to the hierarchy problem.
+I decided to concentrate on the associated production of a Higgs boson and a top quark pair (\ttH), given the important role of top Yukawa coupling which, due to the loop corrections to the Higgs mass, is the main contributor to the hierarchy problem.
+%is the only ``natural'' Yukawa coupling, with $\lambda_\text{t}\approx 1$.
+%Measuring the top Yukawa via the \ttH\ production cross section also provides a handle to identify possible BSM contributions in the dominant Higgs production mode, which is the loop-induced gluon-gluon fusion process, and also the very sensitive decay to two photons.
+%In addition, due to the loop corrections to the Higgs mass, the top Yukawa coupling is the main contributor to the hierarchy problem.
 }
 \cvitem{}{
 In order to compensate the low \ttH\ production cross section, I decided to target the decay of the Higgs boson to \bbbar\ and semileptonic \ttbar\ decay.
@@ -154,7 +166,7 @@ After my work on the calorimeter performance I contributed as Data Quality Valid
 \cvitem{{Run~2: RPC SUSY}}{
 The large increase in energy and luminosity at the start of Run~2 made it the perfect moment to embark on BSM searches, which would benefit the most from the increased centre-of-mass energy. 
 As one of the prime candidates to address the hierarchy problem, I focused on searches for supersymmetry, in particular I joined the search for top squarks in the single-lepton final state.
-My focus was on the challenging regions of phase-space where top squarks with masses well below 1 TeV were not excluded. 
+%My focus was on the challenging regions of phase-space where top squarks with masses well below 1 TeV were not excluded. 
 }
 \cvitem{}{
 I redesigned the background estimation techniques used in the search in order to reduce the reliance on MC simulation, and developed new selections to further suppress backgrounds.
@@ -165,8 +177,12 @@ The strong sensitivity and flexibility of the analysis led to a series of public
 }
 
 \cvitem{{Run~2: RPV SUSY}}{
-Although supersymmetry is a very compelling extension of the SM, no hints for vanilla SUSY has been observed. This motivates the extension of the searches to less traditional final states. I have developed a completely new search for RPV SUSY in final states with no missing transverse energy (\met), at least one lepton and high number of jets (up to 15 jets and 4 $b$-jets. The absence of \met\ in the final state is a feature that could cause supersymmetric particles to remain unobserved due to the large requirements on \met\ placed by most searches. The background modelling at very high jet multiplicities is extremely challenging, and I developed new data-driven methods to estimate the background. The first iterations of the search focused on strong production of gluinos and stops, and set stringent exclusion limits on models that were previously completely uncovered~\cite{ATLAS-CONF-2016-094, SUSY-2016-11}. 
-The analysis with full Run 2 data is in approval~\cite{RPV1L}, and has as target benchmark higgsino production. In order to reach sensitivity to such low cross sections I introduced machine-learning techniques, where custom modifications of the loss function allows the discriminant to be invariant with respect to the number of $b$-jets. This property is exploited to extend the data-driven background estimation to the shape of the discriminant. The sensitivity of the analysis is strongly increased with no additional reliance on MC. The search reaches sensitivity to higgsino production with RPV decay to quarks, and is the first analysis to surpass the limits from LEP.
+Although supersymmetry is a very compelling extension of the SM, no hints for vanilla SUSY has been observed. This motivates the extension of the searches to less traditional final states. I have developed a completely new search for RPV SUSY in final states with no missing transverse energy (\met), at least one lepton and high number of jets (up to 15 jets and 4 $b$-jets). The absence of \met\ in the final state is a feature that could cause supersymmetric particles to remain unobserved due to the large requirements on \met\ placed by most searches. The background modelling at very high jet multiplicities is extremely challenging, and I developed new data-driven methods to estimate the background. The first iterations of the search focused on strong production of gluinos and stops, and set stringent exclusion limits on models that were previously completely uncovered~\cite{ATLAS-CONF-2016-094, SUSY-2016-11}. 
+}
+\cvitem{}{
+The analysis with full Run 2 data had as target benchmark higgsino production. In order to reach sensitivity to such low cross sections I introduced machine-learning techniques, where custom modifications of the loss function allows the discriminant to be invariant with respect to the number of $b$-jets. This property is exploited to extend the data-driven background estimation to the shape of the discriminant. The sensitivity of the analysis is strongly increased with no additional reliance on MC. 
+The search reaches sensitivity to higgsino production with RPV decay to quarks~\cite{ATLAS-CONF-2021-007}, and is the first analysis to surpass the limits from LEP.
+%Highlighted in the CERN courier https://cerncourier.com/wp-content/uploads/2021/04/CERNCourier2021MayJun-digitaledition.pdf
 }
 \cvitem{}{
 Due to its design as model-independent search, I also contributed to the reinterpretation of the search in dark matter models yielding four-top production~\cite{EXOT-2017-32}.
@@ -174,8 +190,8 @@ In addition, several SUSY models that predict this final state, such as minimal 
 }
 
 \cvitem{Trigger}{
-I have contributed to the ATLAS trigger menu group throughout Run~2, initially as trigger menu expert and menu on-call, and during 2018--2019 as trigger menu coordinator. As such I was in charge of the menu during the intense period of special runs in 2018, including low-$\mu$, high-$\beta^*$, AFP runs and the Heavy-Ion run. I was also responsible for the documentation of the trigger menu evolution in dedicated PUB notes~\cite{ATL-DAQ-PUB-2018-002, ATL-DAQ-PUB-2019-001}.
-After the data-taking period I defined the first baseline menu for Run~3~\cite{Run3menu}. Besides the menu composition, I contributed to dedicated studies in order to ensure that the trigger menu being designed would respect all the hardware and cabling constraints.
+I have contributed to the ATLAS trigger menu group throughout Run~2, initially as trigger menu expert and menu on-call, and during 2018--2019 as trigger menu coordinator. As such I was in charge of the menu during the intense period of special runs in 2018, including low-$\mu$, high-$\beta^*$, AFP runs and the Heavy-Ion run. I was also responsible for the documentation of the trigger menu evolution in dedicated public notes~\cite{ATL-DAQ-PUB-2018-002, ATL-DAQ-PUB-2019-001}.
+After the data-taking period I defined the first baseline menu for Run~3~\cite{Run3menu}. Besides the menu composition, I contributed to dedicated studies in order to ensure that the trigger menu being designed would respect all the hardware and cabling constraints of the upgraded systems.
 }
 \cvitem{}{As part of my effort to improve the Run~3 triggers, I am currently L1Calo algorithm and trigger performance coordinator. My goal is to maximise the performance and rate gains from the phase-I L1Calo system, exploiting the capabilities of the new system to its full potential.
 }
@@ -185,10 +201,6 @@ After the data-taking period I defined the first baseline menu for Run~3~\cite{R
 %\input{full_publications}
 \input{publications_cernIC}
 
-\ifAddStatement
-\clearpage
-\input{statement_body_cernIC}
-\fi
 
 \ifAddTalks
 \clearpage
@@ -284,6 +296,7 @@ After the data-taking period I defined the first baseline menu for Run~3~\cite{R
 \fi
 
 \clearpage
+\section{Publications}
 \bibliographystyle{elsarticle-num}
 \bibliography{cv}
 \end{document}
