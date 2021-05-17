@@ -1,3 +1,4 @@
+#! /usr/bin/env python2.7
 """
 pdfize.py
   Makes a pdf view of the contents of the given folder and places it in it.

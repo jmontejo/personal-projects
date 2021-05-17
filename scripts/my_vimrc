@@ -5,6 +5,10 @@ set shiftwidth=4
 set expandtab
 set hlsearch
 
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+
 set diffopt+=iwhite
 au BufNewFile,BufRead *.log set filetype=conf
 map <C-j> <C-U>

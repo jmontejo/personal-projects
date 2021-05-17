@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#! /usr/bin/env python2.7
 
 # Run with fill_metadatay.py pattern, instructions below are obsolete and include the individual steps, now wrapped
 # metadata.txt obtained with:

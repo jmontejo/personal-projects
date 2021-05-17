@@ -1,3 +1,4 @@
+#! /usr/bin/env python2.7
 #FIXME currently with double link naming convention, shoud remove link_old after some time
 import os, sys, time
 from optparse import (OptionParser,BadOptionError)
@@ -19,10 +20,10 @@ class PassThroughOptionParser(OptionParser):
         while rargs:
             try:
                 OptionParser._process_args(self,largs,rargs,values)
-            except BadOptionError, e:
+            except BadOptionError as e:
                 pass
-            except Exception, e:
-                print "exception---",e
+            except Exception as e:
+                print("exception---",e)
 
 # ---- hack_file
 def hack_file(file,message,silent):
@@ -30,7 +31,7 @@ def hack_file(file,message,silent):
   bak = hack_bak(file)
   if(copy):
     if os.path.exists(bak):
-      print "Backup copy already exists, please check differences and delete if needed"
+      print("Backup copy already exists, please check differences and delete if needed")
       sys.exit(2)
     os.system("cp "+file+" "+bak)
   mfilename = hack_msg(file)
@@ -58,28 +59,28 @@ def dehack_file(file):
       print a diff and ask for confirmation
   """
   if not is_hacked(file):
-    print "File was not hacked:",file
+    print("File was not hacked:",file)
     return
   msg = hack_msg(file)
   bak = hack_bak(file)
   if os.path.exists(msg):
-    print "Dehacking file:"+file
+    print("Dehacking file:"+file)
     os.system("cat "+msg)
   if os.path.exists(bak):
-    print "> original"
-    print "< edited"
+    print("> original")
+    print("< edited")
     isdiff = os.system("diff "+file+" "+bak)
     if isdiff!=0:
       try: 
         input = ""
         while input!="y" and input!="n":
-          input = raw_input("Differences with respect to the original file, restore the original? y/n, v to vimdiff, ctrl+c to cancel: ")
+          input = input("Differences with respect to the original file, restore the original? y/n, v to vimdiff, ctrl+c to cancel: ")
           if input == "v": 
             os.system("vimdiff "+bak+" "+file)
         if input == "y": os.system("cp -f "+bak+" "+file)
         os.remove(bak)
       except KeyboardInterrupt:
-        print ""
+        print("")
         sys.exit(1)
   if os.path.exists(msg):
     os.remove(msg)
@@ -124,11 +125,11 @@ def hack_msg(file):
 # ---- check vim
 def check_vim(file):
   if is_hacked(file) and not is_silent(file):
-    print color+file+": this file has (at least) one hack, please check"+endcolor
+    print(color+file+": this file has (at least) one hack, please check"+endcolor)
     msg = hack_msg(file)
     if os.path.exists(msg):
       os.system("cat "+msg)
-    raw_input("")
+    input("")
   
 # ---- check make
 def check_make(makeclean):
@@ -140,21 +141,21 @@ def check_make(makeclean):
     if os.path.isdir(item):
       folderitems = os.listdir(item)
       if len(folderitems) >= 100:
-        print "Skipping folder with too many files:",item,len(folderitems)
+        print("Skipping folder with too many files:",item,len(folderitems))
         continue
       for item2 in folderitems:
         file = os.path.join(item,item2)
         if os.path.isfile(file) and is_hacked(file) and not is_silent(file): hacks.add(file)
         
   if hacks:
-    print color+"You are going to compile files with hacks, please check:"+endcolor
+    print(color+"You are going to compile files with hacks, please check:"+endcolor)
     for i,file in enumerate(hacks):
-      print "#",i,file
+      print("#",i,file)
       msg = hack_msg(file)
       if os.path.exists(msg):
         os.system("cat "+msg)
     if not makeclean:
-      raw_input("")
+      input("")
   return 0
   
 
@@ -200,7 +201,7 @@ parser.add_option ("--make",
 options,args = parser.parse_args()
 # --- enable -e if there is no other option specified
 hasoption = False
-for value in parser.values.__dict__.itervalues():
+for value in parser.values.__dict__.values():
   if value is "files": continue
   if   type(value) == type(True): hasoption = hasoption or value
   elif type(value) == type("")  : hasoption = hasoption or value != ""
@@ -219,12 +220,12 @@ makeclean    = 'clean' in args
 if make:
   sys.exit( check_make(makeclean) )
 if not args and not vim:
-  print "hack.py needs at least one argument (when not running in --make or --vim mode)"
+  print("hack.py needs at least one argument (when not running in --make or --vim mode)")
   sys.exit(1)
 
 for item in args:
   if not os.path.exists(item) and not vim:
-    print "Item does not exist:",item
+    print("Item does not exist:",item)
     args.remove(item)
     continue
   if vim:

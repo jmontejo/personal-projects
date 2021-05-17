@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/bin/env python2.7
 
 from DQUtils import fetch_iovs, process_iovs, process_iovs_changed
 
