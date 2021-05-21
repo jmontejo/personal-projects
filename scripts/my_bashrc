@@ -10,6 +10,11 @@ export HISTSIZE=1000000                   # big big history
 export HISTFILESIZE=1000000               # big big history
 shopt -s histappend                      # append to history, don't overwrite it
 PROMPT_COMMAND='history -a;'
+if [[ ${SHELLOPTS} =~ (vi|emacs) ]]; then
+    bind '"\C-b": backward-word'
+    bind '"\C-f": forward-word'
+    bind '"\C-q": kill-word'
+fi
 
 export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
 alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
