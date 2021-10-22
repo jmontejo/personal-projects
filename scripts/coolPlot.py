@@ -3,8 +3,8 @@ import os.path
 import math
 
 mygit = os. environ['MYGIT']
-root.gROOT.LoadMacro(mygit+"/atlasstyle-00-03-05/AtlasStyle.C")
-root.gROOT.LoadMacro(mygit+"/atlasstyle-00-03-05/AtlasUtils.C")
+root.gROOT.LoadMacro(mygit+"/AtlasStyle.C")
+root.gROOT.LoadMacro(mygit+"/AtlasUtils.C")
 root.SetAtlasStyle()
 root.gStyle.SetOptTitle(0)
 root.gStyle.SetOptStat(0)
