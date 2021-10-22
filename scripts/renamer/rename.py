@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python2.7
 
 import os,sys,glob,shutil,re
 from optparse import OptionParser
@@ -91,7 +91,7 @@ if __name__=="__main__":
                      action="store_true",
                      default=False)
   parser.add_option ("-m","--map",
-                     help="Reorder the wildcards in the output according to this mapping. Format x:x[:x ...]",
+                     help="Reorder the wildcards in the output according to this mapping. Format x:x[:x ...]. Example 2:1:0 for a reverse ordering of 3 wildcards",
                      dest="mapwildcard",
                      default="")
   

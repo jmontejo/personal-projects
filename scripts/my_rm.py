@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/env python2.7
 import sys,os, glob,shutil
 
 def isBackground():
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     if "*" in arg:
       if arg == "*":
         if isBackground():
-          print "Running on background, assume to NOT remove everything"
+          print("Running on background, assume to NOT remove everything")
           sys.exit(2)
         input = raw_input("You are trying to remove everything, are you sure? y/[n]: ")
         if input != "y":
@@ -29,11 +29,11 @@ if __name__ == "__main__":
       if file.endswith(ext):
         try: #to be able to remove files in the trashbin
           shutil.copy(file,os.path.expandvars(trashbin))
-        except Exception, e:
-          print e
+        except Exception as e:
+          print(e)
           pass
         break
 
   stdout = os.popen(cmd).read()
   if stdout != "":
-    print stdout
+    print(stdout)

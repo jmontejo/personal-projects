@@ -1,0 +1,334 @@
+
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+
+\makeatletter
+\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+\makeatother
+
+% adjust the page margins
+\usepackage[scale=0.76]{geometry}
+\setlength{\hintscolumnwidth}{2.05cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+%%%%%%%%%%%%%% Nasty hack to avoid whitespace before the bib
+\makeatletter
+\renewenvironment{thebibliography}[1]{%
+%     \section*{\refname}%
+%      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\hintscolumnwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+\usepackage[normalem]{ulem}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{amstext}
+\usepackage{amssymb}
+\newcommand{\coloredLink}[2]{\textcolor{blue}{\href{#1}{#2}}}
+\usepackage{tikzpagenodes}
+
+
+\newcommand\ttbb{\ensuremath{t\bar{t}b\bar{b}}}
+\newcommand\ttbar{\ensuremath{t\bar{t}}}
+\newcommand\tttt{\ensuremath{t\bar{t}t\bar{t}}}
+\newcommand\ttH{\ensuremath{t\bar{t}H}}
+\newcommand\ttZ{\ensuremath{t\bar{t}Z}}
+\newcommand\ttW{\ensuremath{t\bar{t}W}}
+\newcommand\bbbar{\ensuremath{b\bar{b}}}
+\newcommand{\met}{\ensuremath{E_{{T}}^{{miss}}}}
+\newcommand{\pt}{\ensuremath{p_{T}}}
+
+\newif\ifAddReferences  %% References
+\newif\ifAddStatement  %% Statement of research interest
+\newif\ifAddInternalTalks  %% References
+\newif\ifAddTalks  %% References
+\AddReferencesfalse
+\AddStatementtrue
+\AddInternalTalkstrue
+\AddTalkstrue
+
+\AtBeginDocument{\hypersetup{colorlinks,citecolor=blue,linkcolor=blue,urlcolor=blue}}
+\AtBeginDocument{\renewcommand\refname{~}}
+
+\name{Javier}{Montejo Berlingen} %many FIXME around the CV, find them
+%%%%%%%%%%%%%%%%%%%%%%
+% SINCE YOU ARE READING THIS, LET ME REMIND YOU ABOUT THE IDEA OF HAVING A VERTICAL LINE IN THE MIDDLE
+% AND THE RESULTS AND POSITIONS ON BOTH SIDES TO GIVE CONTEXT OF THE TIMELINE
+%                                                                  CHECK 'CV nuevo layout.key' <----------
+%%%%%%%%%%%%%%%%%%%%%%
+\title{CERN Staff Physicist}                               % optional, remove / comment the line if not wanted
+%\address{CERN 40/5-C11}{1217 Meyrin}{Switzerland}
+%\phone[fixed]{+41~786314562}
+%\email{jmontejo@cern.ch}                               % optional, remove / comment the line if not wanted
+
+
+\usepackage{multibib}
+\newcites{article,confnote,proceedings}{{Articles},{Conference Notes},{Proceedings}}
+
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+\vspace*{-15mm}
+
+\begin{tikzpicture}[remember picture,overlay,shift={(current page.north east)}]
+\node[anchor=north east,xshift=-2cm,yshift=-2.3cm]{\includegraphics[width=5cm]{Javi_foto_curriculum_gimp_crop}};
+\end{tikzpicture}
+
+\section{Personal Information}
+\cvline{Date of birth}{March 26, 1986}
+%\cvline{Place of birth}{Salamanca, Spain}
+%\cvline{Sex}{Male}
+\cvline{Nationality}{Spanish, German}
+\cvline{Email}{jmontejo@cern.ch}
+\cvline{Phone}{+41 786314562}
+
+\vspace*{5mm}
+
+
+
+
+\section{Education and Research Positions}
+\cventry{2017 - today}{CERN Staff Physicist}{}{}{
+\newline{}SUSY R-parity violating and long-lived subgroup convener.
+\newline{}Trigger Level-1 calorimeter algorithm and performance coordinator.
+\newline{}Trigger menu and performance coordinator. 
+\newline{}Member of Physics Coordination group.
+\newline{}Member and Scientific Secretary of the Trigger Coordination Group.
+\newline{}Supervisor of two CERN fellows.}{}
+\cventry{2015 - 2017}{CERN Fellow}{}{}{\newline{}SUSY third-generation subgroup convener.}{}
+\cventry{2012 - 2015}{Ph.D.,}{Universitat Aut\'onoma de Barcelona,}{Spain.}{\newline{}
+UAB physics thesis award.\newline{}ATLAS thesis award.\newline{}Springer thesis award.}{}
+\cventry{2011 - 2012}{M.Sc. in High-Energy Physics,}{Universitat Aut\'onoma de Barcelona,}{Spain.}{}{}
+\cventry{2005 - 2011}{B.Sc. in Computer Science,}{Universidad de Salamanca,}{Spain.}{\newline{}
+Extraordinary Graduation Award.}{}
+\cventry{2005 - 2010}{B.Sc. in Physics,}{Universidad de Salamanca,}{Spain.}{\newline{}Extraordinary Graduation Award.\newline{}National Award for Excellence in Academic Performance.}{}{}
+
+\section{Outreach and mentoring}
+\cvitem{}{Beamline for schools (B4LS) 2020, assistant and analysis support.}
+\cvitem{}{International masterclass 2016--2018, moderator and virtual visits.}
+\cvitem{}{World of work 2018, host and supervisor.}
+\cvitem{}{Supervisor of three summer students, 2016--2019}
+\cvitem{}{ATLAS guide since 2015.}
+
+
+
+
+\clearpage
+\section{Research Experience}
+
+%%%%%%%%%%%%%%%% ttH(bb)
+\cvitem{{Run~1: t\=tH(b\=b)}}{
+At the beginning of my PhD studies, the Higgs boson had recently been discovered, but most of its properties remained to be measured, in particular the couplings to quarks.
+I decided to concentrate on the associated production of a Higgs boson and a top-quark pair (\ttH), given the important role of the top Yukawa coupling which, due to the loop corrections to the Higgs mass, is the main contributor to the hierarchy problem.
+%is the only ``natural'' Yukawa coupling, with $\lambda_\text{t}\approx 1$.
+%Measuring the top Yukawa via the \ttH\ production cross section also provides a handle to identify possible BSM contributions in the dominant Higgs production mode, which is the loop-induced gluon-gluon fusion process, and also the very sensitive decay to two photons.
+%In addition, due to the loop corrections to the Higgs mass, the top Yukawa coupling is the main contributor to the hierarchy problem.
+}
+\cvitem{}{
+In order to compensate for the low \ttH\ production cross section, I decided to target the decay of the Higgs boson to \bbbar\ and semileptonic \ttbar\ decays.
+I focused on the development of the selection, fitting strategy and background estimation, in particular the challenging \ttbb\ background modelling and associated systematic uncertainties.
+A collaboration with theorists was started to model the \ttbb\ process at NLO for the first time. I worked on the integration of this improved modelling in the \ttbb\ subset within the inclusive \ttbar+jets sample, via a multi-dimensional reweighting.
+}
+\cvitem{}{
+The results of the \ttH\ analysis were summarised in publications at 7 TeV and 8 TeV. The analysis was included in the ATLAS Higgs coupling combination, and further combined with CMS, leading to the first evidence of \ttH\ production.
+}
+
+%%%%%%%%%%%%%%%%% BSM ttbb
+\cvitem{{Run~1: BSM t\=tb\=b}}{
+The confirmation of the SM-like nature of the top Yukawa coupling (at least to first order), implied also the corroboration of large loop corrections to the Higgs mass, leading to the hierarchy problem. I therefore decided to explore BSM signatures in the \ttbb\ final state, that could provide solutions to the hierarchy problem via fermionic top partners (vector-like quarks, VLQ) or bosonic top partners (stops) cancelling the contribution from top quarks. Both searches involved a full redesign of the previous \ttH(bb) analysis, tailoring the selection and fitted variables to the considered signals. 
+}
+\cvitem{}{
+The search for a VLQ decaying to a Higgs boson and a top quark ($T\rightarrow H t$) required an improved understanding of the \ttbb\ background in the high-energy and boosted regime. The analysis included, for the first time, combinations with other VLQ searches and set limits on the VLQ mass regardless of its decay branching ratios.}
+\cvitem{}{
+The second search targeted supersymmetric models where the mass difference between the lightest stop and neutralino is close to the top mass, where existing searches had no sensitivity. The search exploited the production of the heavier stop and the subsequent decay to the lightest stop and Higgs boson ($\tilde{t}_2 \rightarrow \tilde{t}_1 H$). The presence of additional missing transverse energy (\met) can be required to suppress backgrounds, but this increases the importance of previously-subdominant backgrounds such as dileptonic \ttbb\ with one lost lepton.
+The results of the search were combined with existing searches in complementary decay channels ($\tilde{t}_2 \rightarrow \tilde{t}_1 Z$, and $\tilde{t}_2 \rightarrow t \tilde{\chi}^0_1$), to provide limits on the stop mass regardless of its decay modes.
+}
+
+\cvitem{Run~1: Tile calorimeter}{During my PhD studies I  also worked on the characterisation and calibration of the timing performance of the Tile calorimeter using collision data. I identified multiple detector and geometrical effects that were previously not accounted for, and introduced a set of selection cuts and corrections that improved the resolution of the time measurement by up to 20\%.}
+\cvitem{}{
+I also gained some hardware experience by contributing to maintenance and repairs of modules during the LS1 phase.
+Building on my work on the calorimeter performance, I contributed as Data Quality Validator and Data Quality Leader for the Tile calorimeter.
+}
+
+\cvitem{{Run~2: RPC SUSY}}{
+The large increase in energy and luminosity at the start of Run~2 made it the perfect moment to embark on BSM searches, which would benefit the most from the increased centre-of-mass energy. 
+As one of the prime candidates to address the hierarchy problem, I focused on searches for supersymmetry, in particular I joined the search for stops in the single-lepton final state.
+%My focus was on the challenging regions of phase-space where top squarks with masses well below 1 TeV were not excluded. 
+}
+\cvitem{}{
+I redesigned the background estimation techniques used in the search in order to reduce the reliance on MC simulation, and developed new selections to further suppress backgrounds.
+The optimised selection increased the relevance of previously subdominant backgrounds with large uncertainties, such as $\ttZ(\nu\bar{\nu})$ or single top, for which I developed dedicated control regions.
+I also contributed to the design of new signal benchmarks, moving away from simplified models in favour of more complex scenarios inspired by feasible and promising pMSSM benchmarks.
+One such example is the production of stop pairs with decays to higgsinos, featuring small mass splittings, and leading to a final state with soft leptons ($\pt \lesssim 5$ GeV) which is experimentally challenging.
+The strong sensitivity and flexibility of the analysis led to a series of publications with integrated luminosities of 3.2~fb$^{-1}$, 14 fb$^{-1}$ and 36 fb$^{-1}$, with increasingly comprehensive coverage of stop production within natural SUSY scenarios.
+}
+\cvitem{}{
+During this period I was appointed as convener of the third-generation SUSY subgroup, where I managed to bring the programme of searches with 36~fb$^{-1}$ of data to a timely completion, and lead the preparation of analyses for the full Run 2 results. I initiated a restructuring of the analysis groups to merge searches for third-generation squarks and searches for dark matter with associated heavy-flavour quarks, leading to stronger and better organised teams that delivered impressive results on both models.
+}
+
+\cvitem{{Run~2: RPV SUSY}}{
+Although supersymmetry is a very compelling extension of the SM, no hint for vanilla SUSY has been observed. This motivates the extension of the searches to less traditional final states. I have developed a completely new search for RPV SUSY in final states with no \met, at least one lepton, and a high number of jets (up to 15 jets and 4 $b$-jets). The absence of \met\ in the final state is a feature that could cause supersymmetric particles to remain unobserved due to the large requirements on \met\ placed by most searches. The background modelling at very high jet multiplicities is extremely challenging, and I developed new data-driven methods to estimate the background. The first iterations of the search focused on strong production of gluinos and stops, and set stringent exclusion limits on models that were previously completely uncovered. Due to its design as a model-independent search, I also contributed to its reinterpretation for dark matter models yielding four-top production.}
+\cvitem{}{
+The analysis with full Run 2 data had as its target benchmark higgsino production. In order to reach sensitivity to such low cross sections, I introduced machine-learning techniques, where custom modifications of the loss function allow the discriminant to be invariant with respect to the number of $b$-jets. This property is exploited to extend the data-driven background estimation to the shape of the discriminant. The sensitivity of the analysis is strongly increased with no additional reliance on MC. 
+The search reaches sensitivity to higgsino production with RPV decay to quarks, and is the first analysis to surpass the limits from LEP.
+%Highlighted in the CERN courier https://cerncourier.com/wp-content/uploads/2021/04/CERNCourier2021MayJun-digitaledition.pdf
+}
+\cvitem{}{
+I am currently the convener of the RPV and long-lived SUSY subgroup. During my term I have proposed several analyses in previously-unexplored final states, which are now being developed. I also initiated a taskforce to explore the interplay of RPC analyses, prompt RPV analyses, and long-lived searches when considering models where the lifetime of the lightest supersymmetric particle could vary from prompt, long-lived, or collider-stable. In this context, I coordinated the work in collaboration with performance groups to develop recommendations for the uncertainties on lepton, jet, $b$-jet and \met\ calibrations, when reconstructing non-prompt decays. The results showed explicitly, for the first time, the good coverage provided across the lifetime range of the different analyses, and also highlighted some sensitivity gaps where dedicated searches would be needed.
+}
+
+\cvitem{{Run~2: BSM Higgs}}{
+So far the properties of the discovered Higgs boson are in good agreement with the SM predictions. However, additional possible decays are still possible, with branching ratios of up to $\mathcal{O}(10\%)$, as well as additional bosons from extended Higgs sectors. I have contributed to the design and optimisation of an analysis targeting the decay of the Higgs boson to two light pseudo-scalars, which in turn decay to pairs of b-quarks. 
+%The pseudo-scalar decays are reconstructed as single jets with two B-hadrons inside. 
+The main background originates from gluon splitting to b-quarks with small angular separation, a regime which suffers from large modelling uncertainties. In order to overcome this I devised a selection and defined analysis regions with very low sensitivity to modelling uncertainties from such backgrounds.
+}
+\cvitem{}{
+In addition, I am currently working on an analysis targeting models where the heavy Higgs sector can exhibit flavour-changing neutral currents. This kind of models feature a rich phenomenology, and can produce yet unexplored signatures such as three-top production.
+}
+
+\cvitem{Run~2: Trigger}{
+I  contributed to the ATLAS trigger menu group throughout Run~2, initially as trigger menu expert and menu on-call, and during 2018--2019 as trigger menu and signature coordinator. As such, I was in charge of coordinating the work of all the signature, detector and physics trigger groups, which encompassed more than a hundred members. In this role I was part of the Physics Coordination group, given the menu's critical relevance to the ATLAS physics programme. 
+During this time I was in charge of defining the menus for the intense period of special runs in 2018, including the low-$\mu$, high-$\beta^*$, and the Heavy-Ion run. I was also responsible for the documentation of the trigger menu evolution in dedicated public notes.
+After the Run 2 data-taking period, I defined the ATLAS physics menu for Run~3. I successfully argued for a strongly increased recording rate for Run 3, which was endorsed by the experiment. Besides the menu composition, I contributed to dedicated studies in order to ensure that the trigger menu being designed would respect all the hardware constraints of the upgraded systems.
+}
+\cvitem{}{
+%\cvitem{Run~3: Trigger}{
+As part of my effort to improve the Run~3 triggers, I am currently Level-1 calorimeter algorithm and trigger performance coordinator.  I am leading the development and optimisation of reconstruction and identification algorithms that can maximise the performance gains from the upgraded calorimeter trigger electronics, exploiting the capabilities of the new system to its full potential.
+}
+
+\ifAddStatement
+\clearpage
+%\setlength{\hintscolumnwidth}{0cm}
+%\setlength{\maincolumnwidth}{15.6cm}
+\input{statement_body_warwick}
+%\setlength{\hintscolumnwidth}{2.05cm}
+\fi
+
+\clearpage
+%\input{full_publications}
+\input{publications_cernIC}
+
+
+\ifAddTalks
+\clearpage
+\ifAddInternalTalks
+\section{Conferences, schools and workshops}
+\else
+\section{Conference talks}
+\fi
+\cventry{Jun 2021}{Large Hadron Collider Physics (LHCP 2021),}{\sout{Paris},}{Virtual}{\newline{}
+BSM Higgs decays at ATLAS+CMS
+    [\coloredLink{https://cds.cern.ch/record/2773144}{ATL-PHYS-SLIDE-2021-283}]
+}{}{}
+\cventry{Jul 2020}{40th International Conference on High Energy Physics (ICHEP 2020),}{\sout{Prague},}{Virtual}{\newline{}
+Triggering in the ATLAS experiment
+    [\coloredLink{https://cds.cern.ch/record/2728145}{ATL-DAQ-SLIDE-2020-320}]
+    [\coloredLink{https://cds.cern.ch/record/2742661}{Proceedings}]}{}{}
+\cventry{May 2019}{27th International Conference on Supersymmetry and Unification of Fundamental Interactions (SUSY 2019),}{Corpus Christi,}{Texas}{\newline{}
+Searches for supersymmetry in R-parity violating signatures at the LHC.
+    [\coloredLink{https://cds.cern.ch/record/2676781}{ATL-PHYS-SLIDE-2019-242}]
+}{}{}
+\ifAddInternalTalks
+\cventry{May 2019}{Trigger workshop,}{Elba,}{Italy.}{\newline{}
+Run-3 baseline menu.}{}{} %https://indico.cern.ch/event/772409/
+\cventry{Sep 2018}{TDAQ week,}{Krakow,}{Poland.}{\newline{}
+Menu considerations for Run 3.}{}{} %https://indico.cern.ch/event/730816
+    \fi
+\cventry{Jul 2018}{23rd International Conference on Computing in High Energy and Nuclear Physics (CHEP 2018),}{Sofia,}{Bulgaria.}{\newline{}
+The ATLAS Trigger Menu design for higher luminosities in Run 2. [\coloredLink{https://cds.cern.ch/record/2631630}{ATL-DAQ-SLIDE-2018-500}][\coloredLink{https://cds.cern.ch/record/2645347}{Proceedings}]
+}{}{} 
+\cventry{May 2018}{(Re)interpreting the results of new physics searches at the LHC (ReINPS2018),}{CERN,}{Geneva}{\newline{}
+Sensitivity of prompt searches to long-lives particles.
+    [\coloredLink{https://cds.cern.ch/record/2319790}{ATL-PHYS-SLIDE-2018-282}]
+}{}{}
+\ifAddInternalTalks
+\cventry{Apr 2018}{Four-tops workshop,}{CERN,}{Geneva}{\newline{}
+Data-driven methods in lepton+jets searches to evaluate the ttbar+jets and W+jets backgrounds.}{}{}
+    \fi
+\cventry{May 2017}{Large Hadron Collider Physics (LHCP),}{Shangai,}{China.}{\newline{}
+Unconventional signatures and RPV supersymmetry. Plenary. [\coloredLink{https://cds.cern.ch/record/2266308}{ATL-PHYS-SLIDE-2017-310}]
+ \newline{}
+The ATLAS Run-2 Trigger Menu for higher luminosities: Design, Performance and Operational Aspects. [\coloredLink{https://cds.cern.ch/record/2265272}{ATL-DAQ-SLIDE-2017-255}] }{}{}
+\ifAddInternalTalks
+\cventry{May 2017}{ATLAS Exotics \& SUSY workshop,}{Bucharest,}{Romania.}{\newline{}
+RPV searches in ATLAS.}{}{}
+\cventry{Feb 2017}{ATLAS trigger workshop,}{University of Geneva,}{Switzerland.}{\newline{}
+Trigger rates and processing time. Pileup dependency.}{}{}
+\cventry{Oct 2016}{ttH workshop,}{CERN,}{Geneva.}{\newline{}
+ttH to invisible.}{}{}
+\cventry{Sep 2016}{TDAQ week,}{Barcelona,}{Spain.}{\newline{}
+Trigger menu rates and CPU projections in 2017.}{}{}
+\cventry{Apr 2016}{Supersymmetry workshop,}{Sussex,}{UK.}{\newline{}
+RPV analyses in ATLAS.}{}{}
+    \fi
+\cventry{Mar 2015}{XXIX Rencontres de Physique de la Vall\'{e}e d'Aoste,}{La Thuile,}{Italy.}{\newline{}
+Search for the Higgs boson in the ttH production channel using the ATLAS detector. 
+    %\newline
+     [\coloredLink{https://cds.cern.ch/record/2002318}{ATL-PHYS-SLIDE-2015-073}]
+    }{}{}
+\ifAddInternalTalks
+\cventry{Nov 2014}{ttH workshop,}{CERN,}{Geneva.}{\newline{}
+Sensitivity projections for ttH.}{}{}
+\cventry{Jun 2014}{European School of High-Energy Physics,}{Garderen,}{Holland.}{}{}
+\cventry{Sep 2013}{ATLAS Higgs to \bbbar\ workshop,}{Marseille,}{France.}{\newline{}
+ttbar modelling for VH and ttH.}{}{}
+    \fi
+\cventry{Aug 2013}{21st International Conference on Supersymmetry and Unification of Fundamental Interactions (SUSY 2013),}{Trieste,}{Italy.}{\newline{}
+Top quark production in the ATLAS detector of the LHC. \newline
+     [\coloredLink{https://cds.cern.ch/record/1596998}{ATL-PHYS-SLIDE-2013-509}]
+}{}{}
+\ifAddInternalTalks
+\cventry{Jun 2013}{ttH workshop,}{CERN,}{Geneva.}{\newline{}
+tt+jets/bb modelling and systematics in ttH(bb) analyses.}{}{}
+    \fi
+\cventry{May 2013}{Large Hadron Collider Physics (LHCP 2013),}{Barcelona,}{Spain.}{\newline{}
+Search for the Standard Model Higgs boson produced in association with top quarks and decaying to $b\bar{b}$ at $\sqrt{s} = 7~TeV$. \newline
+	[\coloredLink{https://cds.cern.ch/record/1551958}{ATL-PHYS-SLIDE-2013-298}]% \newline{}
+   [\coloredLink{http://www.epj-conferences.org/articles/epjconf/abs/2013/21/epjconf_lhcp2013_20028/epjconf_lhcp2013_20028.html}{Proceedings}]}{}{}
+\ifAddInternalTalks
+\cventry{Dec 2012}{ATLAS Higgs to \bbbar\ workshop,}{Saint Genis,}{France.}{\newline{}Talk: Statistical procedures and limit setting in Higgs to \bbbar.}{}{}
+\cventry{Jul 2012}{Hadron Collider Physics School (HASCO 2012),}{G\"ottingen,}{Germany.}{}{}
+\fi
+\cventry{Mar 2012}{LHC commissioning,}{CERN,}{Geneva.}{\newline{}
+ATLAS detector performance in 2011: calorimeters. \newline
+[\coloredLink{https://cds.cern.ch/record/1445591}{ATL-PHYS-SLIDE-2012-154}]}{}{}
+\ifAddInternalTalks
+\cventry{Sep 2011}{4th International Workshop on Top Quark Physics (TOP 2011),}{Sant Feliu de Guixols,}{Spain.}{}{}
+\fi
+\fi
+
+
+\ifAddReferences
+\clearpage
+\input{references_body}
+\fi
+
+\end{document}
+
+
+%% end of file `template.tex'.

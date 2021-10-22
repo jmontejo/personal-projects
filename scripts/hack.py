@@ -1,3 +1,4 @@
+#! /usr/bin/env python2.7
 #FIXME currently with double link naming convention, shoud remove link_old after some time
 import os, sys, time
 from optparse import (OptionParser,BadOptionError)
@@ -19,7 +20,7 @@ class PassThroughOptionParser(OptionParser):
         while rargs:
             try:
                 OptionParser._process_args(self,largs,rargs,values)
-            except BadOptionError:
+            except BadOptionError as e:
                 pass
             except Exception as e:
                 print("exception---",e)
@@ -73,7 +74,7 @@ def dehack_file(file):
       try: 
         input = ""
         while input!="y" and input!="n":
-          input = raw_input("Differences with respect to the original file, restore the original? y/n, v to vimdiff, ctrl+c to cancel: ")
+          input = input("Differences with respect to the original file, restore the original? y/n, v to vimdiff, ctrl+c to cancel: ")
           if input == "v": 
             os.system("vimdiff "+bak+" "+file)
         if input == "y": os.system("cp -f "+bak+" "+file)
@@ -128,7 +129,7 @@ def check_vim(file):
     msg = hack_msg(file)
     if os.path.exists(msg):
       os.system("cat "+msg)
-    raw_input("")
+    input("")
   
 # ---- check make
 def check_make(makeclean):
@@ -154,7 +155,7 @@ def check_make(makeclean):
       if os.path.exists(msg):
         os.system("cat "+msg)
     if not makeclean:
-      raw_input("")
+      input("")
   return 0
   
 

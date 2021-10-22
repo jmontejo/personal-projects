@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/env python2.7
 from optparse import OptionParser
 import sys,os, glob,shutil, time
 
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     sys.exit(1)
   if allow:
     print "FUCKER!!! DON'T GOOF OFF, USE YOUR TIME WISELY!!! -_- ..." 
-    time.sleep(10)
+    time.sleep(1)
     #sys.exit(1)
 
   #file="hosts"

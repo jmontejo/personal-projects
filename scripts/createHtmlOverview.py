@@ -1,4 +1,4 @@
-#!/bin/env python
+#! /usr/bin/env python2.7
 #
 # A simple script to create an html page with an overview of the directory tree.
 # This script walks recursively the directory tree and for each sub-directory
