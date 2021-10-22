@@ -8,8 +8,8 @@ else
 fi
 
 python -i -c "
-print 'from TriggerMenu.api.TriggerAPI import TriggerAPI'
+print ('from TriggerMenu.api.TriggerAPI import TriggerAPI')
 from TriggerMenu.api.TriggerAPI import TriggerAPI
-print 'from TriggerMenu.api.TriggerEnums import TriggerPeriod, TriggerType'
+print ('from TriggerMenu.api.TriggerEnums import TriggerPeriod, TriggerType')
 from TriggerMenu.api.TriggerEnums import TriggerPeriod, TriggerType
 "

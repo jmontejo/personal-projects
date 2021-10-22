@@ -2,10 +2,19 @@ import ROOT as root
 import os.path
 import math
 
+mygit = os. environ['MYGIT']
+root.gROOT.LoadMacro(mygit+"/atlasstyle-00-03-05/AtlasStyle.C")
+root.gROOT.LoadMacro(mygit+"/atlasstyle-00-03-05/AtlasUtils.C")
+root.SetAtlasStyle()
+root.gStyle.SetOptTitle(0)
+root.gStyle.SetOptStat(0)
+root.gStyle.SetOptFit(0)
+root.gStyle.SetHistLineWidth(2)
 root.gStyle.SetLabelFont(43,"XYZ")
 root.gStyle.SetLabelSize(20,"XYZ")
 root.gStyle.SetTitleFont(43,"XYZ")
-root.gStyle.SetTitleSize(20,"XYZ")
+root.gStyle.SetTitleSize(30,"XYZ")
+root.gROOT.SetBatch(1)
 
 Colors = [
     root.kBlack,
@@ -13,9 +22,9 @@ Colors = [
     root.kBlue,
     root.kGreen + 1,
     root.kOrange,
-    root.kGray + 3,
-    root.kRed - 3,
-    root.kBlue - 3,
+    #root.kGray + 3,
+    root.kRed - 2,
+    root.kBlue - 9,
     root.kGreen - 6,
     root.kOrange - 3,
     root.kGray,
@@ -28,12 +37,19 @@ Colors = [
     root.kTeal + 3,
     root.kPink + 10,
 ]
-def mycolor(h):
+def mycolor(h,dummy):
+    if dummy: h -= 1
     return Colors[h]
+def mymarker(h):
+    return h+20
 
 class coolPlot(object):
 
-    def __init__(self, name, histolist, titlelist=None, ref=0,canvas=None,normalized=False,folder="plots/mine/",binning=None,yields=False, rebin=0,log=False,yrange=None,yrangeratio=[0.45,1.55],plotratio=True,formats=("png",), legendTitle=None, sideline=0, additionals=[], delete=False, sbratio=False,ratiofunction="", legendcoord=( 0.6,0.6,0.9,0.9), separation=False, overflow=True, statuncertainty=False, forcehistoption=False):
+    def __init__(self, name, histolist, titlelist=None, ref=0,canvas=None,normalized=False,folder="plots/mine/",binning=None,yields=False, rebin=0,log=False,rangex=None,yrange=None,yrangeratio=[0.45,1.55],plotratio=True,formats=("png",), legendTitle=None, sideline=0, additionals=[], delete=False, sbratio=False,ratiofunction="", legendcoord=( 0.6,0.6,0.9,0.9), separation=False, overflow=True, statuncertainty=False, forcehistoption=False, doMarkers=False, xtitle=None, dummyRef=None):
+        '''
+            dummyRef is used when plotting non-histogram objects such as TEfficiency. Use the dummyRef to get a histogram-like object to draw and then not display it
+        '''
+
 
         self.separation = []
         todel = []
@@ -51,7 +67,11 @@ class coolPlot(object):
                     copy.Scale(1./copy.Integral(0,-1))
                 copylist.append(copy)
         else:
-            copylist = histolist[:]
+            copylist = [h.Clone() for h in histolist]
+        if dummyRef:
+            #dummyRef = dummyRef.Clone()
+            dummyRef.Reset()
+            copylist = [dummyRef]+copylist
         if overflow:
           for hist in copylist:
             lastbin = hist.GetNbinsX()
@@ -60,6 +80,8 @@ class coolPlot(object):
             hist.SetBinContent(1, hist.GetBinContent(1)+hist.GetBinContent(0))
             hist.SetBinError(1, math.sqrt(pow(hist.GetBinError(1),2)+pow(hist.GetBinError(0),2)))
         if titlelist:
+            if dummyRef:
+                titlelist = ["dummyRef"]+titlelist
             for i,title in enumerate(titlelist):
                 copylist[i].SetTitle(title)
         todel.extend(copylist)
@@ -121,24 +143,32 @@ class coolPlot(object):
         hmax = 0
         for h,histo in enumerate(copylist):
             same = "same"
-            if h==0: same=""
+            if h==0 and dummyRef: same="AXIS"
+            if h==0 and not dummyRef: same=""
             if statuncertainty: same+=",e"
             if forcehistoption: same+=",hist"
             if len(copylist)>1:
-                histo.SetLineColor(mycolor(h))
+                histo.SetLineColor(mycolor(h,dummyRef))
                 histo.SetLineWidth(2)
-                histo.SetMarkerColor(mycolor(h))
+                histo.SetMarkerColor(mycolor(h,dummyRef))
+                if doMarkers:
+                    histo.SetMarkerStyle(mymarker(h))
             histo.Draw(same)
-            hmax = max(hmax, histo.GetMaximum())
+            if xtitle and h==0:
+                histo.GetXaxis().SetTitle(xtitle)
+            if not yrange: hmax = max(hmax, histo.GetMaximum())
             if ratiofunction:
-                histo.GetFunction(ratiofunction).SetLineColor(mycolor(h))
+                histo.GetFunction(ratiofunction).SetLineColor(mycolor(h,dummyRef))
                 histo.Draw("FUNC,same")
-            legend.AddEntry(histo)
+            if not (h==0 and dummyRef):
+                legend.AddEntry(histo)
             if yields:
                 if normalized:
                     legend.AddEntry(root.NULL, "%d" % (yieldlist[h]), "")
                 else:
                     legend.AddEntry(root.NULL, "%d" % (histo.Integral(0,-1)), "")
+            if h==0 and rangex:
+                histo.GetXaxis().SetRangeUser(rangex[0],rangex[1])
             if h==0 and yrange:
                 histo.GetYaxis().SetRangeUser(yrange[0],yrange[1])
             if separation:
@@ -183,6 +213,7 @@ class coolPlot(object):
                 same = "same"
                 isfirst = (h==0 and     ratiofunction) or (h==1 and not ratiofunction)
                 if isfirst: same=""
+                if forcehistoption: same+=",hist"
                 ratio = histo.Clone()
                 if titlelist:
                     ratio.SetTitle(titlelist[h])
@@ -206,9 +237,16 @@ class coolPlot(object):
                 ratio.Draw(same)
                 if isfirst:
                     ratio.GetYaxis().SetRangeUser(yrangeratio[0],yrangeratio[1])
+                    if rangex:
+                        ratio.GetXaxis().SetRangeUser(rangex[0],rangex[1])
                 ratio.GetYaxis().SetTitle("")
                 ratio.GetXaxis().SetTitleOffset(4)
-            line = root.TLine(ratio.GetBinLowEdge(1),1,ratio.GetBinLowEdge(ratio.GetNbinsX()+1),1)
+
+            if rangex:
+                xmin,xmax = rangex[0],rangex[1]
+            else:
+                xmin,xmax = ratio.GetBinLowEdge(1), ratio.GetBinLowEdge(ratio.GetNbinsX()+1)
+            line = root.TLine(xmin,1,xmax,1)
             line.SetLineColor(root.kGray)
             line.Draw("same")
             todel.append(line)
@@ -234,15 +272,15 @@ def getSeparation(B1, S1):
 
     ## sanity checks: signal and background histograms must have same number of bins and same limits
     if S.GetNbinsX() != B.GetNbinsX() or S.GetNbinsX() <= 0:
-        print "signal and bkg samples with different number of bins: S(" + str(
-            S.GetNbinsX()) + ") B(" + str(B.GetNbinsX()) + ")"
+        print("signal and bkg samples with different number of bins: S(" + str(
+            S.GetNbinsX()) + ") B(" + str(B.GetNbinsX()) + ")")
         return 0
 
     if S.GetXaxis().GetXmin() != B.GetXaxis().GetXmin() or S.GetXaxis().GetXmax(
     ) != B.GetXaxis().GetXmax() or S.GetXaxis().GetXmax() <= S.GetXaxis(
     ).GetXmin():
-        print "Edges of histos are not right: Smin(" + str(S.GetXaxis().GetXmin()) + ")  Bmin(" + str( B.GetXaxis().GetXmin() ) + " ) "\
-            " Smax(" + str( S.GetXaxis().GetXmax()) + ")  Bmax(" + str(B.GetXaxis().GetXmax())
+        print("Edges of histos are not right: Smin(" + str(S.GetXaxis().GetXmin()) + ")  Bmin(" + str( B.GetXaxis().GetXmin() ) + " ) "\
+            " Smax(" + str( S.GetXaxis().GetXmax()) + ")  Bmax(" + str(B.GetXaxis().GetXmax()))
         return 0
 
     nstep = S.GetNbinsX()
@@ -258,7 +296,7 @@ def getSeparation(B1, S1):
             pass
         sep *= intBin
     else:
-        print "histos with 0 entries: Snb(" + str(nS) + ") Bnb(" + str(nB) + ")"
+        print("histos with 0 entries: Snb(" + str(nS) + ") Bnb(" + str(nB) + ")")
         sep = 0
     del S
     del B

@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 from optparse import OptionParser
 import sys,os,subprocess
 import ROOT as root

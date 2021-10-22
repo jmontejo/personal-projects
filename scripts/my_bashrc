@@ -45,7 +45,7 @@ case `hostname` in
 	#add texlive styles
 	export PATH=/afs/cern.ch/sw/XML/texlive/latest/bin/x86_64-linux:$PATH
     export PATH=$PATH:/afs/cern.ch/user/j/jmontejo/.local/bin
-    export PYTHONPATH=/afs/cern.ch/user/j/jmontejo/.local/lib/python2.7/site-packages:$PYTHONPATH
+    #export PYTHONPATH=/afs/cern.ch/user/j/jmontejo/.local/lib/python2.7/site-packages:$PYTHONPATH
     #export AtlasSetup=/afs/cern.ch/atlas/software/dist/AtlasSetup
     #alias asetup='source $AtlasSetup/scripts/asetup.sh'
     #source /afs/cern.ch/atlas/offline/external/GRID/DA/panda-client/latest/etc/panda/panda_setup.sh
@@ -112,8 +112,8 @@ alias triggerAPI='source $MYGIT/scripts/triggerAPI.sh'
 alias pyroot='source $MYGIT/scripts/pyroot.sh'
 
 #my new commands
-alias comparePath='python $MYGIT/scripts/comparePath.py'
-alias compareTree='python $MYGIT/scripts/compareTree.py'
+alias comparePath='$MYGIT/scripts/comparePath.py'
+alias compareTree='$MYGIT/scripts/compareTree.py'
 alias hack='python $MYGIT/scripts/hack.py'
 alias pdfize='python $MYGIT/scripts/pdfize.py'
 alias webize='python $MYGIT/scripts/createHtmlOverview.py'

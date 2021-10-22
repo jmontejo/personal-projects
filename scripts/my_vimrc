@@ -40,7 +40,7 @@ endif
 
 set tw=0
 set formatoptions=l
-set wrap linebreak nolist
+set wrap "linebreak nolist "avoids breaking words, but then copy paste messes up with paths
 
 "execute pathogen#infect()
 "set statusline+=%#warningmsg#

@@ -13,16 +13,16 @@ if __name__ == "__main__":
   for arg in sys.argv[1:]:
     if not arg.startswith("-"):
       if not os.path.exists(arg):
-        print "File/folder does not exist:",arg
+        print("File/folder does not exist:",arg)
       else:
         files.append(arg)
     elif arg == "-P":
       real = True
     else:
-      print "Skipping unrecognized option:",arg
+      print("Skipping unrecognized option:",arg)
 
   for file in files:
     if real:
-      print os.path.realpath(file)
+      print(os.path.realpath(file))
     else:
-      print os.path.abspath(file)
+      print(os.path.abspath(file))

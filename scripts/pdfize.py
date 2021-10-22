@@ -43,6 +43,7 @@ def header(texfile,docclass):
   texfile.write("\\documentclass{"+docclass+"} \n")
   texfile.write("\\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}\n")
   texfile.write("\\usepackage{graphicx}\n")
+  texfile.write("\\usepackage{listings}\n")
   texfile.write("\\begin{document}\n")
   
 def finish(texfile):
@@ -76,11 +77,11 @@ def processFiles(files,texfile,blocks):
       if not block in file: continue
       for ext in extensions:
         if file.endswith(ext):
-          texfile.write("\n\n"+file+": \n\n")
+          texfile.write("\n\n\\verb|"+file+"|: \n\n")
           if ext=="tex":
             texfile.write(checkTex(file)+"\n\n")
           else:
-            texfile.write(open(file).read()+"\n\n")
+            texfile.write("\\begin{lstlisting}[breaklines]\n"+open(file).read()+"\\end{lstlisting}\n\n")
           break
 
 def checkTex(filename):
