@@ -11,7 +11,7 @@ root.gStyle.SetOptStat(0)
 root.gStyle.SetOptFit(0)
 root.gStyle.SetHistLineWidth(2)
 root.gStyle.SetLabelFont(43,"XYZ")
-root.gStyle.SetLabelSize(20,"XYZ")
+root.gStyle.SetLabelSize(30,"XYZ")
 root.gStyle.SetTitleFont(43,"XYZ")
 root.gStyle.SetTitleSize(30,"XYZ")
 root.gROOT.SetBatch(1)
@@ -21,7 +21,7 @@ Colors = [
     root.kRed,
     root.kBlue,
     root.kGreen + 1,
-    root.kOrange,
+    root.kOrange + 1,
     #root.kGray + 3,
     root.kRed - 2,
     root.kBlue - 9,
@@ -45,7 +45,7 @@ def mymarker(h):
 
 class coolPlot(object):
 
-    def __init__(self, name, histolist, titlelist=None, ref=0,canvas=None,normalized=False,folder="plots/mine/",binning=None,yields=False, rebin=0,log=False,rangex=None,yrange=None,yrangeratio=[0.45,1.55],plotratio=True,formats=("png",), legendTitle=None, sideline=0, additionals=[], delete=False, sbratio=False,ratiofunction="", legendcoord=( 0.6,0.6,0.9,0.9), separation=False, overflow=True, statuncertainty=False, forcehistoption=False, doMarkers=False, xtitle=None, dummyRef=None):
+    def __init__(self, name, histolist, titlelist=None, ref=0,canvas=None,normalized=False,folder="plots/mine/",binning=None,yields=False, rebin=0,log=False,rangex=None,yrange=None,yrangeratio=[0.45,1.55],plotratio=True,formats=("png",), legendTitle=None, sideline=0, additionals=[], delete=False, sbratio=False,ratiofunction="", legendcoord=( 0.6,0.6,0.9,0.9), separation=False, overflow=True, statuncertainty=False, forcehistoption=False, doMarkers=False, xtitle=None, dummyRef=None, noLegend=False):
         '''
             dummyRef is used when plotting non-histogram objects such as TEfficiency. Use the dummyRef to get a histogram-like object to draw and then not display it
         '''
@@ -120,15 +120,16 @@ class coolPlot(object):
             canvas.cd()
             toppad.Draw()
             toppad.cd()
-            toppad.SetTopMargin(0.05)
-            toppad.SetBottomMargin(0.14)
-            toppad.SetLeftMargin(0.14)
-            toppad.SetRightMargin(0.05)
+            toppad.SetTopMargin(0.03)
+            toppad.SetBottomMargin(0.13)
+            toppad.SetLeftMargin(0.13)
+            toppad.SetRightMargin(0.04)
             toppad.SetFrameBorderMode(0)
         canvas.cd() #this fucker avoids a crash in garbage collector O_O
 
         legend = root.TLegend(*legendcoord)
         todel.append(legend)
+        legend.SetTextFont(42)
         legend.SetFillStyle(0)
         legend.SetLineColor(0)
         legend.SetBorderSize(0)
@@ -149,7 +150,6 @@ class coolPlot(object):
             if forcehistoption: same+=",hist"
             if len(copylist)>1:
                 histo.SetLineColor(mycolor(h,dummyRef))
-                histo.SetLineWidth(2)
                 histo.SetMarkerColor(mycolor(h,dummyRef))
                 if doMarkers:
                     histo.SetMarkerStyle(mymarker(h))
@@ -173,13 +173,18 @@ class coolPlot(object):
                 histo.GetYaxis().SetRangeUser(yrange[0],yrange[1])
             if separation:
                 self.separation.append(getSeparation(histo, copylist[0]))
+            #hcum = histo.GetCumulative()
+            #print(name, h, histo.GetName())
+            #for b in range(1,hcum.GetNbinsX()+1):
+            #    print(b,hcum.GetBinLowEdge(b),hcum.GetBinContent(b),1-hcum.GetBinContent(b))
         if not yrange:
             copylist[0].SetMaximum(hmax *(1.2 if not log else 10))
             copylist[0].SetMinimum(0)
                 
         if len(copylist)>1 or legendTitle:
             if legendTitle: legend.SetHeader(legendTitle)
-            legend.Draw("same")
+            if not noLegend:
+                legend.Draw("same")
         
         if log:
             toppad.SetLogy(1)
