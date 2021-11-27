@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://jmontejo.web.cern.ch/jmontejo/jSchroedinger" href="start.jnlp">
+ <information>
+  <title>Webstart Demo Project</title>
+  <vendor>Softwareschneiderei GmbH</vendor>
+  <homepage>http://jmontejo.web.cern.ch/jmontejo/jSchroedinger</homepage>
+  <offline-allowed/>
+ </information>
+ <resources>
+  <j2se version="1.7+" href="http://java.sun.com/products/autodl/j2se"/>
+  <jar href="jSchroedinger.jar" main="true"/>
+  <jar href="jhall.jar"/>
+ </resources>
+ <application-desc name="My Project" main-class="core.Main">
+ </application-desc>
+ <update check="always"/>
+</jnlp>

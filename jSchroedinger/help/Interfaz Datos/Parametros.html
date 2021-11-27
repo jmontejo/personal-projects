@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Javier Montejo">
+	<META NAME="CHANGED" CONTENT="20100810;11465100">
+</HEAD>
+<BODY LANG="es-ES" DIR="LTR">
+<H2>Par&aacute;metros</H2>
+<P>Los diferentes par&aacute;metros controlan los detalles del
+proceso de c&aacute;lculo. Todos los par&aacute;metros son num&eacute;ricos,
+y algunos tienen restricciones debiendo ser enteros y/o positivos. Si
+alg&uacute;n par&aacute;metro tiene un valor no v&aacute;lido se
+impide la realizaci&oacute;n del c&aacute;lculo. Sin embargo s&iacute;
+es posible realizar el c&aacute;lculo con advertencias. Los posibles
+errores y advertencias generados por cada par&aacute;metro se
+detallan a continuaci&oacute;n.</P>
+<H3>Puntos de red</H3>
+<P>Para realizar el c&aacute;lculo num&eacute;rico el espacio se
+discretiza en una cantidad determinada de puntos de red. Cuanto mayor
+sea el n&uacute;mero de puntos m&aacute;s lento ser&aacute; el
+c&aacute;lculo pero mayor ser&aacute; la precisi&oacute;n obtenida.
+Para un desempe&ntilde;o &oacute;ptimo recomendamos usar 1000 puntos
+de red para encontrar las soluciones y a continuaci&oacute;n usar el
+comando &ldquo;Refinar resultados&rdquo; en la pantalla de resultados
+que mejora la precisi&oacute;n de los resultados repitiendo el
+c&aacute;lculo con 10 veces m&aacute;s puntos de red.</P>
+<P>Este par&aacute;metro debe ser entero y positivo</P>
+<H3>Momento angular</H3>
+<P>Para potenciales tridimensionales existe la posibilidad de que la
+part&iacute;cula (o el sistema de part&iacute;culas) tenga momento
+angular. Para potenciales unidimensionales el campo queda bloqueado
+ya que no tiene sentido la existencia de momento angular.</P>
+<P>Este par&aacute;metro debe ser entero y no negativo</P>
+<H3><A NAME="Salto_de_energia"></A>Salto de energ&iacute;a</H3>
+<P>Para hallar las soluciones de energ&iacute;a se recorre la
+distancia entre la energ&iacute;a inicial y la final en intervalos
+del tama&ntilde;o indicado por el salto de energ&iacute;a. Si dos
+soluciones se encuentran dentro del mismo intervalo definido por el
+salto de energ&iacute;a no encontrar&aacute; ninguna de las dos.
+Cuanto mayor sea el valor del salto de energ&iacute;a m&aacute;s
+r&aacute;pidamente recorrer&aacute; el intervalo entre la energ&iacute;a
+inicial y final pero es posible que no encuentre soluciones si &eacute;stas
+se encuentran cercanas. Si al visualizar las ondas de las soluciones
+el n&uacute;mero de nodos no aumenta uniformemente con cada nueva
+soluci&oacute;n es probable que se hayan perdido soluciones y hay que
+repetir el c&aacute;lculo con un paso menor.</P>
+<P>Este par&aacute;metro debe ser no negativo</P>
+<H3>Energ&iacute;a inicial</H3>
+<P>Indica la energ&iacute;a inicial en la que se iniciar&aacute; el
+c&aacute;lculo. La energ&iacute;a inicial tiene que ser menor que la
+energ&iacute;a final y menor que la energ&iacute;a m&aacute;xima para
+la cual existen estados ligados. Si la energ&iacute;a inicial es
+menor que el m&iacute;nimo del potencial el c&aacute;lculo se
+iniciar&aacute; en el m&iacute;nimo del potencial. Si la energ&iacute;a
+inicial es mayor que el m&iacute;nimo del potencial obtendremos una
+advertencia de que puede haber soluciones por debajo de la energ&iacute;a
+inicial. La numeraci&oacute;n de las soluciones ir&aacute; marcada
+con el s&iacute;mbolo ~ ya que no podemos asegurar que realmente se
+haya encontrado el primer estado.</P>
+<P>Este par&aacute;metro debe ser num&eacute;rico, menor que la
+energ&iacute;a final y menor que la energ&iacute;a m&aacute;xima para
+la cual existen estados ligados.</P>
+<H3>Energ&iacute;a final</H3>
+<P>Indica la energ&iacute;a final en la que se detendr&aacute; el
+c&aacute;lculo. La energ&iacute;a final tiene que ser mayor que la
+energ&iacute;a inicial y mayor que la energ&iacute;a m&iacute;nima
+del potencial. Si la energ&iacute;a final es mayor que el m&aacute;ximo
+del potencial el c&aacute;lculo se detendr&aacute; en el m&aacute;ximo.
+</P>
+<P>Este par&aacute;metro debe ser num&eacute;rico, mayor que la
+energ&iacute;a inicial y mayor que el m&iacute;nimo del potencial.</P>
+<H3>N&uacute;mero de soluciones</H3>
+<P>Determina el n&uacute;mero m&aacute;ximo de soluciones que se
+calcular&aacute;n. El c&aacute;lculo se detendr&aacute; tras
+encontrar este n&uacute;mero de soluciones o al alcanzar la energ&iacute;a
+final, lo que ocurra antes.</P>
+<P>Este par&aacute;metro debe ser entero y positivo.</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>
