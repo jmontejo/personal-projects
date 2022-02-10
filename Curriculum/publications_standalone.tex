@@ -1,0 +1,59 @@
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+
+% adjust the page margins
+\usepackage[scale=0.765]{geometry}
+\setlength{\hintscolumnwidth}{2.2cm}                 % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+%%%%%%%%%%%%%%% Nasty hack to avoid whitespace before the bib
+\makeatletter
+\renewenvironment{thebibliography}[1]{%
+%     \section*{\refname}%
+      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\hintscolumnwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+
+\usepackage{color}
+\usepackage{bm}
+\usepackage{amstext}
+
+\newcommand{\coloredLink}[2]{\textcolor{blue}{\href{#1}{#2}}}
+\AtBeginDocument{\renewcommand\refname{~}}
+
+% personal data
+\name{Javier}{Montejo Berlingen}
+\phone[fixed]{+41~786314562}
+\email{jmontejo@cern.ch}                               % optional, remove / comment the line if not wanted
+
+\usepackage{multibib}
+\newcites{article,confnote,proceedings}{{Articles},{Conference Notes},{Proceedings}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+
+\input{publications_cernIC}
+
+\end{document}

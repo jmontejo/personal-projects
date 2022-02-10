@@ -1,0 +1,113 @@
+
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue}                               % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% adjust the page margins
+\usepackage[scale=0.73]{geometry}
+\setlength{\hintscolumnwidth}{0.0cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+\usepackage{color}
+\newcommand{\coloredLink}[2]{\textcolor{blue}{\href{#1}{#2}}}
+
+\newcommand\ttbb{\ensuremath{t\bar{t}b\bar{b}}}
+\newcommand\ttbar{\ensuremath{t\bar{t}}}
+\newcommand\tttt{\ensuremath{t\bar{t}t\bar{t}}}
+\newcommand\ttH{\ensuremath{t\bar{t}H}}
+\newcommand\ttZ{\ensuremath{t\bar{t}Z}}
+\newcommand\ttW{\ensuremath{t\bar{t}W}}
+\newcommand\bbbar{\ensuremath{b\bar{b}}}
+\newcommand{\met}{\ensuremath{E_{{T}}^{{miss}}}}
+\newcommand{\pt}{\ensuremath{p_{T}}}
+
+\newif\ifAddReferences  %% References
+\newif\ifAddStatement  %% Statement of research interest
+\AddReferencestrue
+\AddStatementtrue
+
+\definecolor{moderncvblue}{rgb}{0.22,0.45,0.70}% light blue
+
+% personal data
+\name{\color{moderncvblue}Javier}{Montejo Berlingen}
+%\title{title}                               % optional, remove / comment the line if not wanted
+%\address{CERN 40/5-C11}{1217 Meyrin}{Switzerland}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+%\phone[fixed]{+41~78~631~45~62}
+\phone[fixed]{+41~786314562}
+%\phone[fax]{+3~(456)~789~012}
+\email{jmontejo@cern.ch}                               % optional, remove / comment the line if not wanted
+%\homepage{www.johndoe.com}                         % optional, remove / comment the line if not wanted
+%\social[linkedin]{francesco-rubbo}                        % optional, remove / comment the line if not wanted
+%\social[twitter]{jdoe}                             % optional, remove / comment the line if not wanted
+%\social[github]{francescorubbo}                              % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{some quote}                                 % optional, remove / comment the line if not wanted
+
+% to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
+%\makeatletter
+%\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+%\makeatother
+%\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
+
+\usepackage{multibib}
+\newcites{article,confnote,proceedings}{{Articles},{Conference Notes},{Proceedings}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+\cvitem{}{
+}
+\vspace{4 cm}
+Dear Sir/Madam,
+\newline
+
+%%%%%%%%% applying and blabla give me the job
+I am writing to apply for the Postdoctoral scholar position at the University of California, Irvine.
+Having been a member of the particle physics field for more than ten years, I am committed to deepening our knowledge of fundamental physics, and have extensive experience in many aspects of experimental particle physics.
+I am currently working on the ATLAS experiment as a CERN LD staff. During my period in ATLAS I have performed measurements and searches within the Top, Higgs, Exotics and SUSY groups. I have also contributed strongly in the Tile calorimeter and in the Trigger groups. During this time I have been entrusted with several management and coordination roles with an increasing level of responsibility and leadership. 
+\newline
+
+%%%%%%%%% Short statement about my past activity around the hierarchy problem
+Throughout my career, I have worked on physics analyses targeting different aspects of the hierarchy problem. I was the lead analyser for the first searches for t\=tH, which led to the confirmation of the SM-like nature of the top Yukawa coupling. I then transitioned to searches for beyond-the-standard-model top partners, that could cancel the top-loop corrections to the Higgs mass. I have also led a series of searches for scalar top partners (stops) in the 1-lepton final state, with increasingly comprehensive coverage of multiple SUSY scenarios. Currently, my main physics analysis interest lies in searches for natural supersymmetry, in particular in the most challenging final states, such as R-parity violating models or long-lived decays. I'm also interested in the application of state-of-the-art machine-learning techniques to physics analysis, in particular in the development of new background estimation methods.
+\newline
+
+%%%%%%%%% working through others
+As convener of two different physics subgroups, I have always tried to guide analyses towards the most ambitious targets, where I have helped in the development of new reconstruction techniques and background estimation methods, enriching the groups' physics programme.
+I have also proposed several analyses in previously unexplored final states, which are now being developed. In addition, I have actively supported the subgroups through training and mentoring: I have had the privilege to attract and supervise some outstanding students, post-docs, and fellows. The engagement and creativity of young scientists in the subgroups has clearly been one of the pillars leading to strong and innovative results.
+\newline
+
+%%%%%%%% trigger
+Alongside physics analysis, I have been heavily involved in the trigger group where I have contributed to the operation, development and design of the trigger menu, which defines the data that is recorded by ATLAS, and therefore what physics can be done with the data. I was appointed as trigger menu and signature coordinator, and as such I was part of the Physics Coordination group, as well as the Trigger Coordination group. In this position I was in charge of the physics, detector, and signature trigger subgroups, comprising more than a hundred members.
+I also had the pleasure of defining the Run 3 ATLAS trigger menu, where I successfully argued for a strongly increased recording rate for Run 3, which was endorsed by the experiment. At the same time I performed a critical review of the menu composition and was able to reduce rate and trigger CPU consumption in multiple areas with no impact on the physics programme.
+\newline
+
+%%%%%%%%% Mid-term future, HL-LHC and trigger
+
+Throughout my career, I have pursued and implemented new and innovative ideas, and I have strived to balance my involvement across multiple areas of physics analysis, operations and detector work. 
+In the future, I plan to continue working on new physics searches at ATLAS, as well as contributing to the trigger system. 
+%I plan to take a leading role in the construction and commissioning of the TDAQ phase-2 system for HL-LHC.
+With my expertise I see myself well suited to make substantial contributions to both areas.
+%This is evidenced through the broad range of activities detailed on my CV, and by the increasing level of leadership. 
+I would very much relish the opportunity to use my experience and abilities to further the particle physics programme, and the exciting opportunity to mentor and prepare the next generation of physicists for the future challenges of our field.
+\newline
+
+
+Sincerely,
+\newline
+\newline
+\newline
+Javier Montejo Berlingen
+
+
+
+\end{document}
+
+
+%% end of file `template.tex'.
